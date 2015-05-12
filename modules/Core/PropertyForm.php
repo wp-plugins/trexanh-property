@@ -1,0 +1,592 @@
+<?php
+
+namespace TreXanhProperty\Core;
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+use Zend\Form\Factory as FormFactory;
+use Zend\Form\View\Helper;
+use TreXanhProperty\Core\Property;
+
+/* 
+ * Manage property admin form: show fields, save fields
+ * Modeling following Zend/Form concept
+ */
+
+class PropertyForm {
+    
+    /**
+     *
+     * @var array
+     */
+    protected static $property_fields_input;
+    
+    /**
+     *
+     * @var Zend/Form
+     */
+    protected static $form;
+    
+    /**
+     * 
+     * @return array
+     */
+    public static function get_fieldsets() {
+        //group fields by category so each category will display in a fieldset
+        $fieldsets = array(
+            'primary' => array(
+                'label' => 'Property Info',
+                'fields' => array(
+                    'agent',
+                    'area',
+                    'area_unit',
+                    'status',
+                    'category',                    
+                    'featured',                    
+                )
+            ),
+            //sale price - rent price
+            'price' => array(
+                'label' => 'Price',
+                'fields' => array(
+                    'listing_type',
+                    'price',
+                    'rent',
+                    'rent_period',                    
+                )
+            ),
+            'features' => array(
+                'label' => 'Features',
+                'fields' => array(
+                    'bedrooms',
+                    'bathrooms',
+                    'ensuite',
+                    'toilet',
+                    'garage',
+                    'new_construction',
+                    'air_conditioning',
+                    'pool',
+                    'security_system',                    
+                )
+            ),
+            'address' => array(
+                'label' => 'Address',
+                'fields' => array(
+                    'address_postcode',
+                    'address_street_number',
+                    'address_street',
+                    'address_city',
+                    'address_state',
+                    'address_country',
+                    'address_coordinates',
+                ),
+            ),
+            'media' => array(
+                'label' => 'Media',
+                'fields' => array(
+                    //attachment
+                    'video_url',
+                    'floorplan'                    
+                )
+            ),
+            'payment' => array(
+                'label' => 'Payment',
+                'fields' => array(
+                    'order',
+                )
+            ),
+            'gallery' => array(
+                'label' => 'Photo Gallery',
+                'fields' => array(
+                    'photo_gallery',
+                )
+            ),
+        );
+        return $fieldsets;
+    }
+    
+    /**
+     * Return fields input configuration
+     * Admin edit/add new form will need this information.
+     * 
+     * @return array
+     */
+    public static function get_fields_input( $name = null )
+    {
+        if ( !isset( self::$property_fields_input ) ) {
+            //follow Zend/Form/Factory format
+            //http://framework.zend.com/manual/current/en/modules/zend.form.quick-start.html#creation-via-factory
+            $property_fields_input = array(
+                'agent' => array(
+                    'type' => 'text',
+                    'attributes' => array(
+                        'maxlength' => '60',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Agent', 'txp' ),
+                    )
+                ),
+                'area' => array(
+                    'type' => 'text',
+                    'attributes' => array(
+                        'maxlength' => '11',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Area', 'txp' ),
+                    )
+                ),
+                'area_unit' => array(
+                    'type' => 'select',
+                    'options' => array(
+                        'label' => __( 'Area Unit', 'txp' ),
+                        'value_options' => array(
+                            'square_meter' => __( 'Square Meter', 'txp' ),
+                            'sqft' => __( 'Square Feet', 'txp' ),
+                        ),
+                    )
+                ),
+                'status' => array(
+                    'type' => 'select',
+                    'options' => array(
+                        'label' => __( 'Property Status', 'txp' ),
+                        'value_options' => array(
+                            'current' => __( 'Current', 'txp' ),
+                            'sold' => __( 'Sold', 'txp' ),
+                        ),
+                    )
+                ),
+                'category' => array(
+                    'type' => 'select',
+                    'options' => array(
+                        'label' => __( 'Property Category', 'txp' ),
+                        'value_options' => array(
+                            'House' => __( 'House', 'txp' ),
+                            'Unit' => __( 'Unit', 'txp' ),
+                            'Studio' => __( 'Studio', 'txp' ),
+                            'Apartment' => __( 'Apartment', 'txp' ),
+                            'Flat' => __( 'Flat', 'txp' ),
+                            'Other' => __( 'Other', 'txp' )
+                        ),
+                    )
+                ),
+                'listing_type' => array(
+                    'type' => 'select',
+                    'options' => array(
+                        'label' => __( 'Listing Type', 'txp' ),
+                        'value_options' => array(
+                            'sale' => __( 'Sale', 'txp' ),
+                            'lease' => __( 'Lease', 'txp' ),
+                        ),
+                    )
+                ),
+                'featured' => array(
+                    'type' => 'radio',
+                    'options' => array(
+                        'label' => __( 'Featured', 'txp' ),
+                        'value_options' => array(
+                            'yes' => __( 'Yes', 'txp' ),
+                            'no' => __( 'No', 'txp' )
+                        ),
+                    )
+                ),
+                //features
+                'bedrooms' => array(
+                    'type' => 'number',
+                    'attributes' => array(
+                        'maxlength' => '2',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Bedrooms', 'txp' ),
+                    )
+                ),
+                'bathrooms' => array(
+                    'type' => 'number',
+                    'attributes' => array(
+                        'maxlength' => '2',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Bathrooms', 'txp' ),
+                    )
+                ),
+                'ensuite' => array(
+                    'type' => 'number',
+                    'attributes' => array(
+                        'maxlength' => '2',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Ensuite', 'txp' ),
+                    )
+                ),
+                'toilet' => array(
+                    'type' => 'number',
+                    'attributes' => array(
+                        'maxlength' => '2',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Toilet', 'txp' ),
+                    )
+                ),
+                'garage' => array(
+                    'type' => 'number',
+                    'attributes' => array(
+                        'maxlength' => '2',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Garage', 'txp' ),
+                    )
+                ),
+                'new_construction' => array(
+                    'type' => 'radio',
+                    'options' => array(
+                        'label' => __( 'New Construction', 'txp' ),
+                        'value_options' => array(
+                            'yes' => __( 'Yes', 'txp' ),
+                            'no' => __( 'No', 'txp' )
+                        ),
+                    )
+                ),
+                'air_conditioning' => array(
+                    'type' => 'radio',
+                    'options' => array(
+                        'label' => __( 'Air Conditioning', 'txp' ),
+                        'value_options' => array(
+                            'yes' => __( 'Yes', 'txp' ),
+                            'no' => __( 'No', 'txp' )
+                        ),
+                    )
+                ),
+                'pool' => array(
+                    'type' => 'radio',
+                    'options' => array(
+                        'label' => __( 'Pool', 'txp' ),
+                        'value_options' => array(
+                            'yes' => __( 'Yes', 'txp' ),
+                            'no' => __( 'No', 'txp' )
+                        ),
+                    )
+                ),
+                'security_system' => array(
+                    'type' => 'radio',
+                    'options' => array(
+                        'label' => __( 'Security System', 'txp' ),
+                        'value_options' => array(
+                            'yes' => __( 'Yes', 'txp' ),
+                            'no' => __( 'No', 'txp' )
+                        ),
+                    )
+                ),
+                //address
+                'address_postcode' => array(
+                    'type' => 'text',
+                    'attributes' => array(
+                        'maxlength' => '30',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Postcode', 'txp' ),
+                    )
+                ),
+                'address_street' => array(
+                    'type' => 'text',
+                    'attributes' => array(
+                        'maxlength' => '50',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Street Name', 'txp' ),
+                    )
+                ),
+                'address_street_number' => array(
+                    'type' => 'text',
+                    'attributes' => array(
+                        'maxlength' => '50',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Street Number', 'txp' ),
+                    )
+                ),
+                'address_coordinates' => array(
+                    'type' => 'text',
+                    'attributes' => array(
+                        'maxlength' => '60',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Coordinates', 'txp' ),
+                    )
+                ),
+                'address_country' => array(
+                    'type' => 'text',
+                    'attributes' => array(
+                        'maxlength' => '20',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Country', 'txp' ),
+                    )
+                ),
+                'address_state' => array(
+                    'type' => 'text',
+                    'attributes' => array(
+                        'maxlength' => '30',
+                    ),
+                    'options' => array(
+                        'label' => __( 'State', 'txp' ),
+                    )
+                ),
+                'address_city' => array(
+                    'type' => 'text',
+                    'attributes' => array(
+                        'maxlength' => '30',
+                    ),
+                    'options' => array(
+                        'label' => __( 'City', 'txp' ),
+                    )
+                ),
+                //sale price - rent price
+                'price' => array(
+                    'type' => 'number',
+                    'attributes' => array(
+                        'maxlength' => '20',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Price', 'txp' ),
+                    )
+                ),
+                'rent' => array(
+                    'type' => 'number',
+                    'attributes' => array(
+                        'maxlength' => '20',
+                    ),
+                    'options' => array(
+                        'label' => __( 'Rent Amount', 'txp' ),
+                    )
+                ),
+                'rent_period' => array(
+                    'type' => 'select',
+                    'options' => array(
+                        'label' => __( 'Rent Period', 'txp' ),
+                        'value_options' => array(
+                            'day' => __( 'Day', 'txp' ),
+                            'week' => __( 'Week', 'txp' ),
+                            'month' => __( 'Month', 'txp' ),
+                        ),
+                    )
+                ),
+                //attachment
+                'video_url' => array(
+                    'type' => 'url',
+                    'options' => array(
+                        'label' => __( 'Video URL', 'txp' ),
+                    )
+                ),
+                'floorplan' => array(
+                    'type' => 'url',
+                    'options' => array(
+                        'label' => __( 'Floorplan', 'txp' ),
+                    )
+                ),
+                'order' => array(
+                    'type' => 'hidden',
+                    'options' => array(
+                        'label' => __( 'Order', 'txp' ),
+                    ),
+                    'attributes' => array(
+                        'disabled' => true,
+                    )
+                ),
+                'photo_gallery' => array(
+                    'type' => 'hidden',
+                ),
+            );
+            $prefix = array();
+            foreach ( $property_fields_input as $key => $value ) {
+                $prefix_name = Property::get_input_prefix() . '_' . $key;
+                $value['name'] = $prefix_name;
+                $prefix[$prefix_name] = $value;
+            }
+            self::$property_fields_input = $prefix;
+        }
+        if ( isset( $name ) ) {
+            return self::$property_fields_input[Property::get_input_prefix() . '_' . $name];
+        } else {
+            return self::$property_fields_input;
+        }
+    }
+
+    public static function render_submit_property_form() {
+        $fieldsets = self::get_fieldsets();
+        $ignore_list = array( "payment" );
+        $html = "";
+        foreach ( $fieldsets as $key => $fieldset ) {
+            if ( in_array( $key, $ignore_list ) ) {
+                continue;
+            }
+            $html .= "<fieldset><legend>" . $fieldset['label'] . "</legend></fieldset>";
+            $html .= self::render_form_elements($fieldset['fields']);
+        }
+        return $html;
+    }
+    
+    /**
+     * Render with format of Wordpress admin > meta box
+     * @param type $inputs
+     * @param type $post
+     * @return string
+     */
+    public static function render_form_elements( $inputs, $post = null) {
+        $ignoreList = array("order");
+        
+        $html = '<table class="form-table">
+            <tbody>';
+                foreach ($inputs as $input_name) {
+                    if (in_array($input_name, $ignoreList)) {
+                        $html = "";
+                    } else {
+                        $input = self::render_form_element($input_name, $post);
+
+                        if (  $input_name == 'address_coordinates' ) {
+                            $html .= "<tr>
+                                <th scope='row'><label for='{$input['name']}'>{$input['label']}</label></th>
+                                <td>{$input['html']} <button class='geocoder'>" . __('Map', 'txp') . "</button></td>
+                            </tr>                
+                            <tr class='map' style='display:none'><td colspan='2'></td></tr>
+                            ";
+                        } elseif (  $input_name == 'photo_gallery' ) {
+                            $html .= "<tr><td>" . $input['html'] . "</td></tr>";
+                        } elseif (  $input_name == 'video_url' ) {
+                            $html .= "<tr>
+                                        <th scope='row'><label for='{$input['name']}'>{$input['label']}</label></th>
+                                        <td>{$input['html']}<p>" . __('Please input an youtube or vimeo link', 'txp') . "</p></td>
+                                    </tr>";
+                        } else {
+                                $html .= 
+                                    "<tr>
+                                        <th scope='row'><label for='{$input['name']}'>{$input['label']}</label></th>
+                                        <td>{$input['html']}</td>
+                                    </tr>";
+                            }
+                    }
+                }
+        $html .= '</tbody>
+        </table>';        
+        return $html;
+    }
+    
+    public static function render_form_element($input_name, $post = null, $options = array())
+    {
+        $form = self::get_form();
+        $input = self::get_fields_input($input_name);
+        $element = $form->get($input['name']);
+        if (!empty($options['class'])) {
+            $element->setAttributes(array(
+                'class' => $options['class'],
+            ));
+        }
+        /*
+         * Use get_post_meta() to retrieve an existing value
+         * from the database and use the value for the form.
+         */
+
+        if ($post) {
+            $value = get_post_meta($post->ID, $input['name'], true);
+            $element->setValue(esc_attr($value));
+        }
+
+        $input_html = "";
+        switch ($input['type']) {
+            case 'text' :
+                $viewHelper = new Helper\FormInput();
+                $input_html = $viewHelper->render($element);
+                break;
+            case 'select' :
+                $viewHelper = new Helper\FormSelect();
+                $input_html = $viewHelper->render($element);
+                break;
+            case 'radio' :
+                $viewHelper = new Helper\FormRadio();
+                $input_html = $viewHelper->render($element);
+                break;
+            case 'number' :
+                $viewHelper = new Helper\FormNumber();
+                $input_html = $viewHelper->render($element);
+                break;
+            case 'url' :
+                $viewHelper = new Helper\FormUrl();
+                $input_html = $viewHelper->render($element);
+                break;
+        }
+        if ($input['name'] == Property::get_input_prefix() . '_photo_gallery') {
+            $input_html = "<div class='photo-gallery-container'>";
+            $attachments = array();
+            $current_attachment_ids = array();
+            if ($post) {
+                $attachments = PropertyGallery::get_attachment($post->ID);
+                foreach ($attachments as $attachment) {
+                    $attachment_id = $attachment->ID;
+                    $current_attachment_ids[] = $attachment_id;
+                    $thumbimg = wp_get_attachment_link($attachment_id, 'thumbnail', true);
+                    $input_html.= '<div class="square150 photo-gallery-thumbnail">' . $thumbimg . '<a href="#" class="remove-image remove-current-image" data-id="' . $attachment_id . '">x</a></div>';
+                }
+            }
+            $input_html.= '<div class="custom-upload-button square150">'
+                        . '<input type="file" class="button" title="Add photo" />'
+                    . '</div>';
+            $input_html.= "<p class='gallery-message'" . (( $attachments ) ? " style='display:none;'" : "") . ">" . __("No photo in gallery.", "txp") . "</p>";
+            $input_html.= "</div>";
+            $input_html.= '<input id="open_uploader" class="button" type="button" value="Edit Gallery" />';
+            $input_html.= '<input type="hidden" name="gallery_photo_ids" value="' . implode(",", $current_attachment_ids) .'" />';
+        }
+        $label = __($input['options']['label'], 'txp');
+        return array(
+            'name' => $input['name'],
+            'label' => $label,
+            'html' => $input_html,
+            'type' => $input['type'],
+        );
+    }
+    
+    /**
+     * 
+     * @return Zend\Form\Form
+     */
+    public static function get_form() {
+        if (isset(self::$form)) {
+            return self::$form;
+        }
+        
+        $inputs = self::get_fields_input();
+        
+        //prepare array so we can use Zend/Form/Factory to create
+        //http://framework.zend.com/manual/current/en/modules/zend.form.quick-start.html#creation-via-factory
+        $spec = array();
+        foreach ($inputs as $input) {
+            $input_spec = array();
+            $input_spec['spec'] = $input;
+            $spec[] = $input_spec;
+        }
+        $factory = new FormFactory();
+        $form    = $factory->createForm(array(
+            'hydrator' => 'Zend\Stdlib\Hydrator\ArraySerializable',
+            'elements' => $spec
+        ));
+        
+        self::$form = $form;
+        return self::$form;
+    }
+    
+    public static function save($post_id) {
+        $fields = self::get_fields_input();
+                
+        foreach ( $fields as $field_name => $spec ) {
+            
+            if ( isset( $_REQUEST[$field_name] ) ) {
+                if ($spec['type'] == 'text') {
+                    update_post_meta( $post_id, $field_name, sanitize_text_field( $_REQUEST[$field_name] ) );
+                } else {
+                    update_post_meta( $post_id, $field_name, $_REQUEST[$field_name] );
+                }               
+            }
+
+        }        
+    }
+
+}
