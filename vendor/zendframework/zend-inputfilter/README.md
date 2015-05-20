@@ -1,15 +1,8 @@
-InputFilter Component from ZF2
-==============================
+# zend-inputfilter
 
-This is the InputFilter component for ZF2.
+The `Zend\InputFilter` component can be used to filter and validate generic sets
+of input data. For instance, you could use it to filter `$_GET` or `$_POST`
+values, CLI arguments, etc.
 
-- File issues at https://github.com/zendframework/zf2/issues
-- Create pull requests against https://github.com/zendframework/zf2
-- Documentation is at http://framework.zend.com/docs
-
-LICENSE
--------
-
-The files in this archive are released under the [Zend Framework
-license](http://framework.zend.com/license), which is a 3-clause BSD license.
-
+- File issues at https://github.com/zendframework/zend-inputfilter/issues
+- Documentation is at http://framework.zend.com/manual/current/en/index.html#zend-inputfilter

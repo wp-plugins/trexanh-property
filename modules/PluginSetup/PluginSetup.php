@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use TreXanhProperty\Core\Property;
+use TreXanhProperty\Core\Order;
+use TreXanhProperty\Core\Config;
 
 
 class PluginSetup {
@@ -16,8 +18,6 @@ class PluginSetup {
             'slug' => 'submit-property',
             'wp_options' => array(
                 'id' => 'submit_page_id',
-                'title' => 'submit_page_title',
-                'name' => 'submit_page_name',
             ),
         ),
         array(
@@ -25,8 +25,6 @@ class PluginSetup {
             'slug' => 'submit-property-payment',
             'wp_options' => array(
                 'id' => 'payment_page_id',
-                'title' => 'payment_page_title',
-                'name' => 'payment_page_name',
             ),
         ),
         array(
@@ -34,8 +32,6 @@ class PluginSetup {
             'slug' => 'my-properties',
             'wp_options' => array(
                 'id' => 'my_properties_page_id',
-                'title' => 'my_properties_page_title',
-                'name' => 'my_properties_page_name',
             ),
         ),
         array(
@@ -43,17 +39,13 @@ class PluginSetup {
             'slug' => 'properties',
             'wp_options' => array(
                 'id' => 'properties_page_id',
-                'title' => 'properties_page_title',
-                'name' => 'properties_page_name',
             ),
         ),
         array(
             'name' => 'Submit Property > Payment status',
             'slug' => 'submit-property-payment-status',
             'wp_options' => array(
-                'id' => 'payment_page_id',
-                'title' => 'payment_success_page_title',
-                'name' => 'payment_success_page_name',
+                'id' => 'payment_status_page_id',
             ),
         ),
     );
@@ -63,12 +55,16 @@ class PluginSetup {
             self::create_page(
                 $page['name'], 
                 $page['slug'], 
-                TREXANHPROPERTY_PREFIX . $page['wp_options']['id'], 
-                TREXANHPROPERTY_PREFIX . $page['wp_options']['title'], 
-                TREXANHPROPERTY_PREFIX . $page['wp_options']['name']
+                TREXANHPROPERTY_PREFIX . $page['wp_options']['id']
             );
         }
-
+        
+        if ( ! Config::get_settings( 'general' ) ) {
+            update_option(TREXANHPROPERTY_PREFIX . 'general_settings', array(
+                'enable_property_submission' => true,
+            ));
+        }
+        
     }
 
     public static function uninstall() {
@@ -77,9 +73,7 @@ class PluginSetup {
         // delete pages
         foreach (self::$plugin_pages as $page) {
             self::delete_page(
-                TREXANHPROPERTY_PREFIX . $page['wp_options']['id'], 
-                TREXANHPROPERTY_PREFIX . $page['wp_options']['title'], 
-                TREXANHPROPERTY_PREFIX . $page['wp_options']['name']
+                TREXANHPROPERTY_PREFIX . $page['wp_options']['id']
             );
         }
 
@@ -87,12 +81,16 @@ class PluginSetup {
         $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE '" . TREXANHPROPERTY_PREFIX . "%';");
         
         // delete custom post type posts
-        global $wpdb;
+        $custom_post_types = array(
+            Property::get_post_type(),
+            Order::POST_TYPE,
+        );
+        
         $query = "
-          DELETE FROM `wp_posts`
-          WHERE `post_type` = '" . Property::get_post_type() . "' 
+          DELETE FROM `" . $wpdb->posts . "`
+          WHERE `post_type` IN (" . implode( ',', $custom_post_types ) . ") 
         ";
-
+        
         $wpdb->query($query);
         wp_trash_post();
     }  
@@ -131,16 +129,13 @@ class PluginSetup {
         add_option( $page_id_option_name, $the_page_id );
     }
 
-    public static function delete_page($page_id_option_name, $page_title_option_name, $page_name_option_name) {
+    public static function delete_page($page_id_option_name) {
         //  the id of our page...
         $the_page_id = get_option( $page_id_option_name );
         if( $the_page_id ) {
 
             wp_delete_post( $the_page_id, true );
         }
-
-        delete_option($page_title_option_name);
-        delete_option($page_name_option_name);
         delete_option($page_id_option_name);
     }    
 }

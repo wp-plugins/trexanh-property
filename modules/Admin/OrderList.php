@@ -2,6 +2,8 @@
 
 namespace TreXanhProperty\Admin;
 
+use TreXanhProperty\Core\PaymentGateway\PaymentGatewayService;
+
 class OrderList
 {
     public static function custom_order_column( $column_name, $post_id ) {
@@ -10,7 +12,10 @@ class OrderList
                 echo get_post_status($post_id);
                 break;
             case 'payment_method':
-                echo get_post_meta($post_id, '_payment_method', true);
+                if ($payment_method = get_post_meta($post_id, '_payment_method', true)) {
+                    $payment_service = PaymentGatewayService::getInstance();
+                    echo $payment_service->get($payment_method)->title;
+                }
                 break;
             case 'completed_date':
                 

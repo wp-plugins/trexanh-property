@@ -27,6 +27,86 @@ class PropertySearch
         return $empty;
     }
     
+    public static function get_search_query($value = '')
+    {
+        $description = array();
+        
+        $for = '';
+        if ( get_query_var('s') ) {
+            $description[] = sprintf( __( 'keyword &ldquo;%s&rdquo; ', 'txp' ), esc_html( get_query_var('s') ) );
+            $for = 'for';
+        } else {
+            $description[] = __( 'Any ', 'txp' );
+        }
+        
+        $bedrooms = self::get_query_param( 'bedrooms' );
+        $bathrooms = self::get_query_param( 'bathrooms' );
+        $category = self::get_query_param( 'category' );
+        
+        $min_area = self::get_query_param('min_area');
+        $max_area = self::get_query_param('max_area');
+        $area_unit = self::get_query_param('area_unit');
+        
+        $price_from = self::get_query_param('price_from');
+        $price_to = self::get_query_param('price_to');
+        
+        $listing_type = self::get_query_param('listing_type');
+        
+        $garages = self::get_query_param('garages');
+        
+        if ($category && $category != 'all') {
+            $description[] = sprintf( __( '%s <b>%s</b> ', 'txp' ),$for, esc_html( $category ) );
+            $for = 'for';
+        }
+        
+        if ( $listing_type && $listing_type != 'all' ) {
+            $description[] = sprintf( __( '%s <b>%s</b> ', 'txp' ), $for, esc_html( $listing_type ) );
+        }
+        
+        $with = 'with';
+        if ($bedrooms && $bedrooms !== 'all') {
+            $description[] = sprintf( __( '%s %s bedroom(s)' ),$with, esc_html( $bedrooms) ) ;
+            $with = ',';
+        }
+        
+        if ($bathrooms && $bathrooms !== 'all') {
+            $description[] = sprintf( __( '%s %s bathroom(s)' ), $with , esc_html( $bathrooms) ) ;
+            $with = ',';
+        }
+        
+        if ($garages && $garages !== 'all') {
+            $description[] = sprintf( __( '%s %s garage(s)' ),$with, esc_html( $garages) ) ;
+            $with = ',';
+        }
+        
+        if ( $min_area > 0 && $max_area > 0 && $max_area >= $min_area ) {
+            $area_unit_description = '';
+            if ( $area_unit == 'square_meter' ) {
+                $area_unit_description = 'm<sup>2</sup>';
+            } else if ( $area_unit == 'sqft' ) {
+                $area_unit_description = 'ft<sup>2</sup>';
+            }
+            $description[] = sprintf( __( '%s area from %s %s to %s %s' , 'txp'),$with, esc_html( $min_area ), $area_unit_description, esc_html( $max_area ), $area_unit_description );
+            $with = ',';
+        }
+        
+        // Search by price.
+        if ( $price_from > 0 && $price_to > 0 && $price_to > $price_from ) {
+            
+            $description[] = sprintf( __( '%s price from %s to %s', 'txp' ), $with, txp_currency( $price_from ), txp_currency( $price_to ) );
+            $with = ', ';
+        } else if ( $price_from > 0 ) {
+            $description[] = sprintf( __( '%s price >= %s', 'txp' ), $with, txp_currency( $price_from ) );
+            $with = ', ';
+        } else if ( $price_to > 0 ) {
+            $description[] = sprintf( __( '%s price <= %s', 'txp' ), $with, txp_currency( $price_to ) );
+            $with = ', ';
+        }
+        
+        return implode('', $description);
+    }
+
+
     protected static function add_prefix_meta_key($key)
     {
         return Property::$input_prefix . '_' . $key;

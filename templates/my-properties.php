@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     ?>
                 <li>
                     <a href="<?php echo $p->guid; ?>">
-                        <?php echo $p->post_title; ?>
+                        <?php echo esc_html( $p->post_title ); ?>
                     </a>
                     <?php if ( $order->id ) { ?>
                     (<a href="<?php echo site_url( '?p=' . $order->id ) ?>">#<?php echo $order->id?></a>)
@@ -61,7 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <ul>
                 <?php foreach ($not_approved_posts as $p) : ?>
                 <li>
-                    <?php echo $p->post_title; ?>
+                    <?php echo esc_html( $p->post_title ); ?>
                 </li>
                 <?php endforeach; ?>
             </ul>
@@ -75,7 +75,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <ul>
                 <?php foreach ($awaiting_payment_posts as $p) : ?>
                 <li>
-                    <span><?php echo $p->post_title; ?></span>
+                    <span><?php echo esc_html( $p->post_title ); ?></span>
                     <form method="post" action="<?php echo site_url( '/submit-property-payment/' ); ?>" style="display:inline-block;">
                         <input type="hidden" name="post_id" value="<?php echo $p->ID; ?>" />
                         <input type="submit" value="Do Payment" style="padding: 8px;font-size: 15px;background: transparent;color: black;text-transform: none;text-decoration: underline;" />

@@ -1,15 +1,15 @@
-EventManager Component from ZF2
-===============================
+# zend-eventmanager
 
-This is the EventManager component for ZF2.
+The `Zend\EventManager` is a component designed for the following use cases:
 
-- File issues at https://github.com/zendframework/zf2/issues
-- Create pull requests against https://github.com/zendframework/zf2
-- Documentation is at http://framework.zend.com/docs
+- Implementing simple subject/observer patterns.
+- Implementing Aspect-Oriented designs.
+- Implementing event-driven architectures.
 
-LICENSE
--------
+The basic architecture allows you to attach and detach listeners to named events,
+both on a per-instance basis as well as via shared collections; trigger events;
+and interrupt execution of listeners.
 
-The files in this archive are released under the [Zend Framework
-license](http://framework.zend.com/license), which is a 3-clause BSD license.
 
+- File issues at https://github.com/zendframework/zend-eventmanager/issues
+- Documentation is at http://framework.zend.com/manual/current/en/index.html#zend-eventmanager

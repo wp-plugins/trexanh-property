@@ -29,6 +29,8 @@ class Module
         self::$initiated = true;
 
         add_action( 'admin_menu', array( 'TreXanhProperty\Admin\Module', 'admin_menu' ) );
+        
+        add_action( 'admin_menu', array( 'TreXanhProperty\Admin\Module', 'add_sub_menu' ), 1 );
 
         //Admin : list
         add_filter( 'manage_edit-property_columns', array( 'TreXanhProperty\Admin\PropertyList', 'set_custom_edit_property_columns' ) );
@@ -94,9 +96,20 @@ class Module
             array( 'TreXanhProperty\Admin\Module', 'create_homepage' ),
             'dashicons-admin-home',
             '25.1'
-        );        
+        );
     }
     
+    public static function add_sub_menu()
+    {
+        add_submenu_page(
+            'trexanh_property_homepage',
+            'TreXanh Property Help',
+            __( 'Help', 'txp' ),
+            'manage_options',
+            'trexanh_property_homepage',
+            array( __CLASS__, 'create_homepage' )
+        );
+    }
     /**
      * Options page callback
      */
@@ -104,7 +117,22 @@ class Module
     {
         ?>
         <div class="wrap">
-            <h2>TreXanh Property Setting page</h2>
+            <h2>TreXanh Property Help</h2>
+            To setup and config the plugin correctly, please check through help items:
+            <ul>
+                <li>
+                <a href="http://trexanhproperty.com/doc/set-up-properties/">How to create properties.</a>
+                </li>
+                <li>
+                <a href="http://trexanhproperty.com/doc/properties-search-and-listing-on-frontend/">How to enable properties search and listing on frontend</a>
+                </li>
+                <li>
+                <a href="http://trexanhproperty.com/doc/shortcodes/">Shortcodes specification</a>
+                </li>
+                <li>
+                <a href="http://trexanhproperty.com/doc/submit-property/">How to enable Submit property on frontend, then customize that flow</a>
+                </li>
+            </ul>
         </div>
         <?php
     }

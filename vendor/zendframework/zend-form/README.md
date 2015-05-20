@@ -1,15 +1,10 @@
-Form Component from ZF2
-=======================
+# zend-form
 
-This is the Form component for ZF2.
+The `Zend\Form` is intended primarily as a bridge between your domain models and
+the View Layer. It composes a thin layer of objects representing form elements,
+an InputFilter, and a small number of methods for binding data to and from the
+form and attached objects.
 
-- File issues at https://github.com/zendframework/zf2/issues
-- Create pull requests against https://github.com/zendframework/zf2
-- Documentation is at http://framework.zend.com/docs
 
-LICENSE
--------
-
-The files in this archive are released under the [Zend Framework
-license](http://framework.zend.com/license), which is a 3-clause BSD license.
-
+- File issues at https://github.com/zendframework/zend-form/issues
+- Documentation is at http://framework.zend.com/manual/current/en/index.html#zend-form

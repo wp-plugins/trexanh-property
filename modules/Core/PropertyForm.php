@@ -535,7 +535,15 @@ class PropertyForm {
             $input_html.= '<input id="open_uploader" class="button" type="button" value="Edit Gallery" />';
             $input_html.= '<input type="hidden" name="gallery_photo_ids" value="' . implode(",", $current_attachment_ids) .'" />';
         }
-        $label = __($input['options']['label'], 'txp');
+        
+        if ($input['name'] == Property::get_input_prefix() . '_video_url') {
+            $input_html .= "<p>" . __('Please input an youtube or vimeo link', 'txp') . "</p>";
+        }
+        if ($input['name'] == Property::get_input_prefix() . '_address_coordinates') {
+            $input_html .= "<button class='geocoder'>" . __('Map', 'txp') . "</button>";
+        }
+        
+        $label = isset($input['options']['label']) ? $input['options']['label'] : '';
         return array(
             'name' => $input['name'],
             'label' => $label,
@@ -577,15 +585,9 @@ class PropertyForm {
         $fields = self::get_fields_input();
                 
         foreach ( $fields as $field_name => $spec ) {
-            
             if ( isset( $_REQUEST[$field_name] ) ) {
-                if ($spec['type'] == 'text') {
-                    update_post_meta( $post_id, $field_name, sanitize_text_field( $_REQUEST[$field_name] ) );
-                } else {
-                    update_post_meta( $post_id, $field_name, $_REQUEST[$field_name] );
-                }               
+                update_post_meta( $post_id, $field_name, sanitize_text_field( $_REQUEST[$field_name] ) );
             }
-
         }        
     }
 

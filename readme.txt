@@ -1,24 +1,24 @@
 === TreXanh Property ===
 Contributors: trexanhlab
-Donate link: http://trexanhlab.com/wp/trexanh-property
+Donate link: http://trexanhproperty.com
 Tags:  property, real estate, property portal, real estate portal, listings, property listings, property management, realtor, wp-property, wordpress property, wp property, wp-realestate, wordpress real estate, wp real estate, submit property, paid listing, payment, paypal
 Requires at least: 4.1.0
-Tested up to: 4.2
-Stable tag: 0.1
+Tested up to: 4.2.2
+Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-TreXanh Property plugin - a clean, neat and easy to use real estate solution for wordpress
+TreXanh Property plugin - A clean, powerful and easy to use real estate solution on Wordpress
 
 == Description ==
 
-TreXanh Property is a clean, neat and easy to use real estate solution. It help you quickly add property to your site or allow user to submit property to your site for free or with a fee. 
+TreXanh Property is a clean, powerful and easy to use real estate solution on Wordpress. It help you quickly add property to your site or allow user to submit property to your site for free or with a fee. 
 
->[Plugin Homepage](http://trexanhlab.com/wp/trexanh-property/ "TreXanh Property Homepage") | [Demo](http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/ "Demo")
+>[Plugin Homepage](http://trexanhproperty.com/ "TreXanh Property Homepage") | [Demo](http://trexanhproperty.com/demo/twentyfifteen/ "Demo") | [Docs](http://trexanhproperty.com/doc/ "Documentation, User guide") 
 
 * It's quick to add property from wordpress admin or using wordpress import feature. Each property will have a lot of custom fields, map, gallery image.
 * Allow user to submit property for free or with a fee. User will pay through paypal. More payment gateways are being added. Submitted properties can display on site right away or need admin's approval
-* Compatible with almost every theme. Please check list of demo themes here at http://trexanhlab.com/wp/trexanh-property
+* Compatible with almost every theme. Please check list of demo themes here at http://trexanhproperty.com
 * Also included: Search property widget, property listing shortcode with filter
 
 = Shortcodes =
@@ -68,12 +68,19 @@ Example of usage:
 
 == Changelog ==
 
-* Please wait our 0.2 version.
+= 0.2 =
+
+* Feature - Allowed admin disabled property submission.
+* Feature - Support Stripe Payment Gateway
+* Fix - Some bugs.
 
 == Frequently Asked Questions ==
 
-* Please wait our 0.2 version.
+* Not yet
 
 == Upgrade Notice ==
 
-* Please wait our 0.2 version.
+= 0.2 - 20 May 2015 =
+* Feature - Add stripe payment gateway.
+* Fix - Empty search criteria summary in search result
+* Fix - Migrate jquery.prettyPhoto.js library to 3.1.6 TO fix bug XSS vulnerability http://www.perucrack.net/2014/07/haciendo-un-xss-en-plugin-prettyphoto.html

@@ -16,7 +16,7 @@
 <!-- 7. WordPress will then import each of the posts, pages, comments, categories, etc. -->
 <!--    contained in this file into your site. -->
 
-<!-- generator="WordPress/4.1.1" created="2015-04-30 03:14" -->
+<!-- generator="WordPress/4.2.2" created="2015-05-19 06:27" -->
 <rss version="2.0"
 	xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -26,26 +26,25 @@
 >
 
 <channel>
-	<title>Trexanh Property</title>
-	<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen</link>
-	<description>TreXanh-Property - a clean, neat and easy to use real estate solution for wordpress</description>
-	<pubDate>Thu, 30 Apr 2015 03:14:27 +0000</pubDate>
+	<title>TreXanh Property</title>
+	<link>http://trexanhproperty.com/demo/twentyfifteen</link>
+	<description>TreXanh Property plugin - A clean, powerful and easy to use real estate solution on Wordpress</description>
+	<pubDate>Tue, 19 May 2015 06:27:46 +0000</pubDate>
 	<language>en-US</language>
 	<wp:wxr_version>1.2</wp:wxr_version>
-	<wp:base_site_url>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen</wp:base_site_url>
-	<wp:base_blog_url>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen</wp:base_blog_url>
+	<wp:base_site_url>http://trexanhproperty.com/demo/twentyfifteen</wp:base_site_url>
+	<wp:base_blog_url>http://trexanhproperty.com/demo/twentyfifteen</wp:base_blog_url>
 
-	<wp:author><wp:author_id>9</wp:author_id><wp:author_login>trexanh-property</wp:author_login><wp:author_email>service@trexanhlab.com</wp:author_email><wp:author_display_name><![CDATA[trexanh-property]]></wp:author_display_name><wp:author_first_name><![CDATA[]]></wp:author_first_name><wp:author_last_name><![CDATA[]]></wp:author_last_name></wp:author>
+	<wp:author><wp:author_id>2</wp:author_id><wp:author_login>trexanh-property</wp:author_login><wp:author_email>service@trexanhlab.com</wp:author_email><wp:author_display_name><![CDATA[trexanh-property]]></wp:author_display_name><wp:author_first_name><![CDATA[]]></wp:author_first_name><wp:author_last_name><![CDATA[]]></wp:author_last_name></wp:author>
 
-
-	<generator>http://wordpress.org/?v=4.1.1</generator>
+	<generator>http://wordpress.org/?v=4.2.2</generator>
 
 	<item>
 		<title>Big House</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/big-house/</link>
-		<pubDate>Mon, 27 Apr 2015 04:30:48 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/big-house/</link>
+		<pubDate>Wed, 13 May 2015 09:46:28 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/big-house/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/big-house/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -55,9 +54,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>294</wp:post_id>
-		<wp:post_date>2015-04-27 04:30:48</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:30:48</wp:post_date_gmt>
+		<wp:post_id>15</wp:post_id>
+		<wp:post_date>2015-05-13 09:46:28</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:46:28</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>big-house</wp:post_name>
@@ -166,10 +165,10 @@ Credit:
 	</item>
 	<item>
 		<title>Green property</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/green-property/</link>
-		<pubDate>Mon, 27 Apr 2015 04:30:55 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/green-property/</link>
+		<pubDate>Wed, 13 May 2015 09:46:39 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/green-property/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/green-property/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -179,9 +178,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>295</wp:post_id>
-		<wp:post_date>2015-04-27 04:30:55</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:30:55</wp:post_date_gmt>
+		<wp:post_id>16</wp:post_id>
+		<wp:post_date>2015-05-13 09:46:39</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:46:39</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>green-property</wp:post_name>
@@ -221,7 +220,7 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_rent_period</wp:meta_key>
-			<wp:meta_value><![CDATA[monthly]]></wp:meta_value>
+			<wp:meta_value><![CDATA[month]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_bedrooms</wp:meta_key>
@@ -272,10 +271,6 @@ Credit:
 			<wp:meta_value><![CDATA[Banksia Street]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
-			<wp:meta_key>txp_property_address_city</wp:meta_key>
-			<wp:meta_value><![CDATA[MOCARDY]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
 			<wp:meta_key>txp_property_address_state</wp:meta_key>
 			<wp:meta_value><![CDATA[NSW]]></wp:meta_value>
 		</wp:postmeta>
@@ -294,10 +289,10 @@ Credit:
 	</item>
 	<item>
 		<title>Light filled small house</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/light-filled-small-house/</link>
-		<pubDate>Mon, 27 Apr 2015 04:31:03 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/light-filled-small-house/</link>
+		<pubDate>Wed, 13 May 2015 09:46:50 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/light-filled-small-house/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/light-filled-small-house/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -307,9 +302,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>296</wp:post_id>
-		<wp:post_date>2015-04-27 04:31:03</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:31:03</wp:post_date_gmt>
+		<wp:post_id>17</wp:post_id>
+		<wp:post_date>2015-05-13 09:46:50</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:46:50</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>light-filled-small-house</wp:post_name>
@@ -349,7 +344,7 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_rent_period</wp:meta_key>
-			<wp:meta_value><![CDATA[monthly]]></wp:meta_value>
+			<wp:meta_value><![CDATA[month]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_bedrooms</wp:meta_key>
@@ -400,10 +395,6 @@ Credit:
 			<wp:meta_value><![CDATA[Banksia Street]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
-			<wp:meta_key>txp_property_address_city</wp:meta_key>
-			<wp:meta_value><![CDATA[MOCARDY]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
 			<wp:meta_key>txp_property_address_state</wp:meta_key>
 			<wp:meta_value><![CDATA[VIC]]></wp:meta_value>
 		</wp:postmeta>
@@ -422,10 +413,10 @@ Credit:
 	</item>
 	<item>
 		<title>Stylish property</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/stylish-property/</link>
-		<pubDate>Mon, 27 Apr 2015 04:31:10 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/stylish-property/</link>
+		<pubDate>Wed, 13 May 2015 09:47:02 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/stylish-property/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/stylish-property/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -435,9 +426,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>297</wp:post_id>
-		<wp:post_date>2015-04-27 04:31:10</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:31:10</wp:post_date_gmt>
+		<wp:post_id>18</wp:post_id>
+		<wp:post_date>2015-05-13 09:47:02</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:47:02</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>stylish-property</wp:post_name>
@@ -520,10 +511,6 @@ Credit:
 			<wp:meta_value><![CDATA[Shannon Court]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
-			<wp:meta_key>txp_property_address_city</wp:meta_key>
-			<wp:meta_value><![CDATA[IRONBARK]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
 			<wp:meta_key>txp_property_address_state</wp:meta_key>
 			<wp:meta_value><![CDATA[SA]]></wp:meta_value>
 		</wp:postmeta>
@@ -542,10 +529,10 @@ Credit:
 	</item>
 	<item>
 		<title>Awesome 2 bedrooms</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/awesome-2-bedrooms/</link>
-		<pubDate>Mon, 27 Apr 2015 04:31:16 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/awesome-2-bedrooms/</link>
+		<pubDate>Wed, 13 May 2015 09:47:11 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/awesome-2-bedrooms/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/awesome-2-bedrooms/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -555,9 +542,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>298</wp:post_id>
-		<wp:post_date>2015-04-27 04:31:16</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:31:16</wp:post_date_gmt>
+		<wp:post_id>19</wp:post_id>
+		<wp:post_date>2015-05-13 09:47:11</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:47:11</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>awesome-2-bedrooms</wp:post_name>
@@ -597,7 +584,7 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_rent_period</wp:meta_key>
-			<wp:meta_value><![CDATA[weekly]]></wp:meta_value>
+			<wp:meta_value><![CDATA[week]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_bedrooms</wp:meta_key>
@@ -666,10 +653,10 @@ Credit:
 	</item>
 	<item>
 		<title>Perfect family style</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/perfect-family-style/</link>
-		<pubDate>Mon, 27 Apr 2015 04:31:24 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/perfect-family-style/</link>
+		<pubDate>Wed, 13 May 2015 09:47:19 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/perfect-family-style/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/perfect-family-style/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -679,9 +666,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>299</wp:post_id>
-		<wp:post_date>2015-04-27 04:31:24</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:31:24</wp:post_date_gmt>
+		<wp:post_id>20</wp:post_id>
+		<wp:post_date>2015-05-13 09:47:19</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:47:19</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>perfect-family-style</wp:post_name>
@@ -721,7 +708,7 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_rent_period</wp:meta_key>
-			<wp:meta_value><![CDATA[weekly]]></wp:meta_value>
+			<wp:meta_value><![CDATA[week]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_bedrooms</wp:meta_key>
@@ -794,10 +781,10 @@ Credit:
 	</item>
 	<item>
 		<title>Brand new</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/brand-new/</link>
-		<pubDate>Mon, 27 Apr 2015 04:31:30 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/brand-new/</link>
+		<pubDate>Wed, 13 May 2015 09:47:28 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/brand-new/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/brand-new/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -807,9 +794,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>300</wp:post_id>
-		<wp:post_date>2015-04-27 04:31:30</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:31:30</wp:post_date_gmt>
+		<wp:post_id>21</wp:post_id>
+		<wp:post_date>2015-05-13 09:47:28</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:47:28</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>brand-new</wp:post_name>
@@ -849,7 +836,7 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_rent_period</wp:meta_key>
-			<wp:meta_value><![CDATA[weekly]]></wp:meta_value>
+			<wp:meta_value><![CDATA[week]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_bedrooms</wp:meta_key>
@@ -914,10 +901,10 @@ Credit:
 	</item>
 	<item>
 		<title>Recently built</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/recently-built/</link>
-		<pubDate>Mon, 27 Apr 2015 04:31:36 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/recently-built/</link>
+		<pubDate>Wed, 13 May 2015 09:47:38 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/recently-built/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/recently-built/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -927,9 +914,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>301</wp:post_id>
-		<wp:post_date>2015-04-27 04:31:36</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:31:36</wp:post_date_gmt>
+		<wp:post_id>22</wp:post_id>
+		<wp:post_date>2015-05-13 09:47:38</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:47:38</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>recently-built</wp:post_name>
@@ -969,7 +956,7 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_rent_period</wp:meta_key>
-			<wp:meta_value><![CDATA[weekly]]></wp:meta_value>
+			<wp:meta_value><![CDATA[week]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_bedrooms</wp:meta_key>
@@ -1038,10 +1025,10 @@ Credit:
 	</item>
 	<item>
 		<title>Beautiful landscape view</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/beautiful-landscape-view/</link>
-		<pubDate>Mon, 27 Apr 2015 04:31:41 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/beautiful-landscape-view/</link>
+		<pubDate>Wed, 13 May 2015 09:47:45 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/beautiful-landscape-view/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/beautiful-landscape-view/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -1051,9 +1038,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>302</wp:post_id>
-		<wp:post_date>2015-04-27 04:31:41</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:31:41</wp:post_date_gmt>
+		<wp:post_id>23</wp:post_id>
+		<wp:post_date>2015-05-13 09:47:45</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:47:45</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>beautiful-landscape-view</wp:post_name>
@@ -1093,7 +1080,7 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_rent_period</wp:meta_key>
-			<wp:meta_value><![CDATA[monthly]]></wp:meta_value>
+			<wp:meta_value><![CDATA[month]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_bedrooms</wp:meta_key>
@@ -1140,10 +1127,6 @@ Credit:
 			<wp:meta_value><![CDATA[Goebels Road]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
-			<wp:meta_key>txp_property_address_city</wp:meta_key>
-			<wp:meta_value><![CDATA[IRONBARK]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
 			<wp:meta_key>txp_property_address_state</wp:meta_key>
 			<wp:meta_value><![CDATA[NSW]]></wp:meta_value>
 		</wp:postmeta>
@@ -1162,10 +1145,10 @@ Credit:
 	</item>
 	<item>
 		<title>Spectacular Views, Stylish Interiors</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/spectacular-views-stylish-interiors/</link>
-		<pubDate>Mon, 27 Apr 2015 04:31:47 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/spectacular-views-stylish-interiors/</link>
+		<pubDate>Wed, 13 May 2015 09:47:53 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/spectacular-views-stylish-interiors/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/spectacular-views-stylish-interiors/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -1175,9 +1158,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>303</wp:post_id>
-		<wp:post_date>2015-04-27 04:31:47</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:31:47</wp:post_date_gmt>
+		<wp:post_id>24</wp:post_id>
+		<wp:post_date>2015-05-13 09:47:53</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:47:53</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>spectacular-views-stylish-interiors</wp:post_name>
@@ -1282,10 +1265,10 @@ Credit:
 	</item>
 	<item>
 		<title>Waterfront Estate</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/waterfront-estate/</link>
-		<pubDate>Mon, 27 Apr 2015 04:31:52 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/waterfront-estate/</link>
+		<pubDate>Wed, 13 May 2015 09:47:59 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/waterfront-estate/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/waterfront-estate/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -1295,9 +1278,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>304</wp:post_id>
-		<wp:post_date>2015-04-27 04:31:52</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:31:52</wp:post_date_gmt>
+		<wp:post_id>25</wp:post_id>
+		<wp:post_date>2015-05-13 09:47:59</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:47:59</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>waterfront-estate</wp:post_name>
@@ -1398,10 +1381,10 @@ Credit:
 	</item>
 	<item>
 		<title>Premium site with many trees</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/premium-site-with-many-trees/</link>
-		<pubDate>Mon, 27 Apr 2015 04:31:57 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/premium-site-with-many-trees/</link>
+		<pubDate>Wed, 13 May 2015 09:48:05 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/premium-site-with-many-trees/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/premium-site-with-many-trees/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -1411,9 +1394,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>305</wp:post_id>
-		<wp:post_date>2015-04-27 04:31:57</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:31:57</wp:post_date_gmt>
+		<wp:post_id>26</wp:post_id>
+		<wp:post_date>2015-05-13 09:48:05</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:48:05</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>premium-site-with-many-trees</wp:post_name>
@@ -1496,10 +1479,6 @@ Credit:
 			<wp:meta_value><![CDATA[Argyle Street]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
-			<wp:meta_key>txp_property_address_city</wp:meta_key>
-			<wp:meta_value><![CDATA[WALLANBAH]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
 			<wp:meta_key>txp_property_address_state</wp:meta_key>
 			<wp:meta_value><![CDATA[WA]]></wp:meta_value>
 		</wp:postmeta>
@@ -1514,10 +1493,10 @@ Credit:
 	</item>
 	<item>
 		<title>Fabulous unit</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/fabulous-unit/</link>
-		<pubDate>Mon, 27 Apr 2015 04:32:03 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/fabulous-unit/</link>
+		<pubDate>Wed, 13 May 2015 09:48:10 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/fabulous-unit/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/fabulous-unit/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -1527,9 +1506,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>306</wp:post_id>
-		<wp:post_date>2015-04-27 04:32:03</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:32:03</wp:post_date_gmt>
+		<wp:post_id>27</wp:post_id>
+		<wp:post_date>2015-05-13 09:48:10</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:48:10</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>fabulous-unit</wp:post_name>
@@ -1569,7 +1548,7 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_rent_period</wp:meta_key>
-			<wp:meta_value><![CDATA[monthly]]></wp:meta_value>
+			<wp:meta_value><![CDATA[month]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_bedrooms</wp:meta_key>
@@ -1616,10 +1595,6 @@ Credit:
 			<wp:meta_value><![CDATA[Cubbine Road]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
-			<wp:meta_key>txp_property_address_city</wp:meta_key>
-			<wp:meta_value><![CDATA[WALLANBAH]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
 			<wp:meta_key>txp_property_address_state</wp:meta_key>
 			<wp:meta_value><![CDATA[ACT]]></wp:meta_value>
 		</wp:postmeta>
@@ -1642,10 +1617,10 @@ Credit:
 	</item>
 	<item>
 		<title>Charming unit</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/charming-unit/</link>
-		<pubDate>Mon, 27 Apr 2015 04:32:09 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/charming-unit/</link>
+		<pubDate>Wed, 13 May 2015 09:48:17 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/charming-unit/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/charming-unit/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -1655,9 +1630,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>307</wp:post_id>
-		<wp:post_date>2015-04-27 04:32:09</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:32:09</wp:post_date_gmt>
+		<wp:post_id>28</wp:post_id>
+		<wp:post_date>2015-05-13 09:48:17</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:48:17</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>charming-unit</wp:post_name>
@@ -1697,7 +1672,7 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_rent_period</wp:meta_key>
-			<wp:meta_value><![CDATA[monthly]]></wp:meta_value>
+			<wp:meta_value><![CDATA[month]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_bedrooms</wp:meta_key>
@@ -1744,10 +1719,6 @@ Credit:
 			<wp:meta_value><![CDATA[Argyle Street]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
-			<wp:meta_key>txp_property_address_city</wp:meta_key>
-			<wp:meta_value><![CDATA[IRONBARK]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
 			<wp:meta_key>txp_property_address_state</wp:meta_key>
 			<wp:meta_value><![CDATA[TAS]]></wp:meta_value>
 		</wp:postmeta>
@@ -1762,10 +1733,10 @@ Credit:
 	</item>
 	<item>
 		<title>Amazing apartments</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/amazing-apartments/</link>
-		<pubDate>Mon, 27 Apr 2015 04:32:14 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/amazing-apartments/</link>
+		<pubDate>Wed, 13 May 2015 09:48:25 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/amazing-apartments/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/amazing-apartments/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -1775,9 +1746,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>308</wp:post_id>
-		<wp:post_date>2015-04-27 04:32:14</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:32:14</wp:post_date_gmt>
+		<wp:post_id>29</wp:post_id>
+		<wp:post_date>2015-05-13 09:48:25</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:48:25</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>amazing-apartments</wp:post_name>
@@ -1817,7 +1788,7 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_rent_period</wp:meta_key>
-			<wp:meta_value><![CDATA[monthly]]></wp:meta_value>
+			<wp:meta_value><![CDATA[month]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_bedrooms</wp:meta_key>
@@ -1882,10 +1853,10 @@ Credit:
 	</item>
 	<item>
 		<title>Panoramic harbor views</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/panoramic-harbor-views/</link>
-		<pubDate>Mon, 27 Apr 2015 04:32:20 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/panoramic-harbor-views/</link>
+		<pubDate>Wed, 13 May 2015 09:48:34 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/panoramic-harbor-views/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/panoramic-harbor-views/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -1895,9 +1866,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>309</wp:post_id>
-		<wp:post_date>2015-04-27 04:32:20</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:32:20</wp:post_date_gmt>
+		<wp:post_id>30</wp:post_id>
+		<wp:post_date>2015-05-13 09:48:34</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:48:34</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>panoramic-harbor-views</wp:post_name>
@@ -1998,10 +1969,10 @@ Credit:
 	</item>
 	<item>
 		<title>A grand design</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/a-grand-design/</link>
-		<pubDate>Mon, 27 Apr 2015 04:32:25 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/a-grand-design/</link>
+		<pubDate>Wed, 13 May 2015 09:48:42 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/a-grand-design/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/a-grand-design/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -2011,9 +1982,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>310</wp:post_id>
-		<wp:post_date>2015-04-27 04:32:25</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:32:25</wp:post_date_gmt>
+		<wp:post_id>31</wp:post_id>
+		<wp:post_date>2015-05-13 09:48:42</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:48:42</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>a-grand-design</wp:post_name>
@@ -2122,10 +2093,10 @@ Credit:
 	</item>
 	<item>
 		<title>Large block</title>
-		<link>http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/large-block/</link>
-		<pubDate>Mon, 27 Apr 2015 04:32:30 +0000</pubDate>
+		<link>http://trexanhproperty.com/demo/twentyfifteen/property/large-block/</link>
+		<pubDate>Wed, 13 May 2015 09:48:51 +0000</pubDate>
 		<dc:creator><![CDATA[trexanh-property]]></dc:creator>
-		<guid isPermaLink="false">http://trexanhlab.com/wp/trexanh-property/demo/twentyfifteen/property/large-block/</guid>
+		<guid isPermaLink="false">http://trexanhproperty.com/demo/twentyfifteen/property/large-block/</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is a sample house description. 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -2135,9 +2106,9 @@ Credit:
 * Sample house image from http://www.hdwallpaperscool.com/beautiful-houses-hd-wallpapers/
 * Sample floor plan from http://www.conceptdraw.com/samples]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>311</wp:post_id>
-		<wp:post_date>2015-04-27 04:32:30</wp:post_date>
-		<wp:post_date_gmt>2015-04-27 04:32:30</wp:post_date_gmt>
+		<wp:post_id>32</wp:post_id>
+		<wp:post_date>2015-05-13 09:48:51</wp:post_date>
+		<wp:post_date_gmt>2015-05-13 09:48:51</wp:post_date_gmt>
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>large-block</wp:post_name>

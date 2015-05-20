@@ -12,7 +12,7 @@ global $property;
 
 <article id="post-<?php the_ID(); ?>" class="property-item">
     <div class="property-meta right">
-        <?php echo $property->category; ?>
+        <?php echo esc_html( $property->category ); ?>
     </div>
     
     <div class="property-meta">
@@ -59,19 +59,19 @@ global $property;
     </a>
     <div class="entry-summary">
         <h1 class="entry-title">
-            <a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a>
+            <a href="<?php the_permalink(); ?>" rel="bookmark"><?php esc_html( the_title() ); ?></a>
         </h1>
         <div class="dashicons dashicons-location"></div>
         <?php
             echo
-                $property->address_postcode  . ', '  .
-                $property->address_street_number . ' ' . $property->address_street . ', '  .
-                $property->address_city . ', '  .
-                $property->address_state . ', '  .
-                $property->address_country;
+                esc_html( $property->address_postcode )  . ', '  .
+                esc_html( $property->address_street_number ) . ' ' . esc_html( $property->address_street ) . ', '  .
+                esc_html( $property->address_city ) . ', '  .
+                esc_html( $property->address_state ) . ', ' .
+                esc_html( $property->address_country );
         ?>
         <hr>
-        <?php echo $property->bedrooms; ?> <?php echo __( 'beds', 'txp' ); ?>&nbsp;
-        <?php echo $property->bathrooms; ?> <?php echo __( 'baths', 'txp' ); ?>
+        <?php echo esc_html( $property->bedrooms ); ?> <?php echo __( 'beds', 'txp' ); ?>&nbsp;
+        <?php echo esc_html( $property->bathrooms ); ?> <?php echo __( 'baths', 'txp' ); ?>
     </div>
 </article>

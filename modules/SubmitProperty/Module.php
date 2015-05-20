@@ -35,7 +35,7 @@ class Module {
         //Note: wordpress can be in root directory or in subfolder
         //wordpress base path
         $base_path = parse_url(get_site_url());
-        $base_path = $base_path['path'];
+        $base_path = isset($base_path['path']) ? $base_path['path'] : '';
         $routes = array(
             '/submit-property/',
             '/submit-property-payment/',

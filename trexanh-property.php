@@ -6,21 +6,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 /*
 Plugin Name: TreXanh Property
 Plugin URI: http://trexanhlab.com/wp/trexanh-property
-Description: TreXanh-Property is clean, neat and easy to use real estate solution for wordpress
-Version: 0.1
+Description: A clean, powerful and easy to use real estate solution on Wordpress.
+Version: 0.2
 Author: trexanhlab
 Author URI: http://trexanhlab.com
 License: GPLv2 or later
-Text Domain: akismet
+Text Domain: txp
 */
 
-define( 'TREXANHPROPERTY_VERSION', '0.1' );
-define( 'TREXANHPROPERTY__MINIMUM_WP_VERSION', '3.1' );
+define( 'TREXANHPROPERTY_VERSION', '0.2' );
+define( 'TREXANHPROPERTY__MINIMUM_WP_VERSION', '4.1.0' );
 define( 'TREXANHPROPERTY__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'TREXANHPROPERTY__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TREXANHPROPERTY_PREFIX', 'trexanhproperty_' );
 require_once( TREXANHPROPERTY__PLUGIN_DIR . 'vendor/autoload.php' );
-require_once( TREXANHPROPERTY__PLUGIN_DIR . 'includes/CoreFunctions.php' );
 
 \TreXanhProperty\Core\Module::init();
 

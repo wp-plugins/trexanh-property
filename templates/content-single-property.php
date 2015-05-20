@@ -4,7 +4,7 @@ global $property;
 ?>
 <div id="property-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="summary entry-summary">
-        <h1 itemprop="name" class="product_title entry-title"><?php the_title(); ?></h1>
+        <h1 itemprop="name" class="product_title entry-title"><?php esc_html(the_title()); ?></h1>
         <?php
             $attachments = get_posts(array(
                 'post_type' => 'attachment',
@@ -97,19 +97,19 @@ global $property;
             </tr>
             <tr>
                 <th><?php echo __( "Beds", "txp" ); ?></th>
-                <td><?php echo $property->bedrooms; ?></td>
+                <td><?php echo esc_html( $property->bedrooms ); ?></td>
             </tr>
             <tr>
                 <th><?php echo __( "Baths", "txp" ); ?></th>
-                <td><?php echo $property->bathrooms; ?></td>
+                <td><?php echo esc_html( $property->bathrooms ); ?></td>
             </tr>
             <tr>
                 <th><?php echo __( "Garages", "txp" ); ?></th>
-                <td><?php echo $property->garage; ?></td>
+                <td><?php echo esc_html( $property->garage ); ?></td>
             </tr>
             <tr>
                 <th><?php echo __( "Toilets", "txp" ); ?></th>
-                <td><?php echo $property->toilet; ?></td>
+                <td><?php echo esc_html( $property->toilet ); ?></td>
             </tr>
             <tr>
                 <th><?php echo __( "Featured", "txp" ); ?></th>
@@ -121,7 +121,7 @@ global $property;
             <?php echo the_content(); ?>
         </p>
         <p>
-            <strong><?php echo __( "AMENTITIES", "txp" ); ?></strong>
+            <strong><?php echo __( "AMENITIES", "txp" ); ?></strong>
         </p>
         <table>
             <tr>
@@ -155,11 +155,11 @@ global $property;
         <span class="dashicons-before dashicons-location">
         <?php
             echo
-                $property->address_postcode  . ', '  .
-                $property->address_street_number . ' ' . $property->address_street . ', '  .
-                $property->address_city . ', '  .
-                $property->address_state . ', '  .
-                $property->address_country;
+            esc_html( $property->address_postcode ) . ', '  .
+                esc_html( $property->address_street_number ) . ' ' . esc_html( $property->address_street ) . ', '  .
+                esc_html( $property->address_city ) . ', '  .
+                esc_html( $property->address_state ) . ', '  .
+                esc_html( $property->address_country );
         ?>
         </span>
         <div id="map-canvas"></div>
@@ -200,7 +200,7 @@ global $property;
             <p>
                 <strong><?php echo __( "FLOORPLAN", "txp" ); ?></strong>
             </p>
-            <img src="<?php echo $property->floorplan; ?>" class="floorplan-image" />
+            <img src="<?php echo esc_attr( $property->floorplan ); ?>" class="floorplan-image" />
         <?php } ?>
         <?php if ( $property->video_url ) {
             $video_url = $property->video_url;

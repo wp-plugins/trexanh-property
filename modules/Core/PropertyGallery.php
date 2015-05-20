@@ -69,7 +69,7 @@ class PropertyGallery
                 $current_attachment_ids[] = $attachment->ID;
             }
         }
-        if ($_POST['gallery_photo_ids']) {
+        if ( !empty( $_POST['gallery_photo_ids'] ) ) {
             $new_attachment_ids = explode(",", $_POST['gallery_photo_ids']);
             foreach($new_attachment_ids as $p_id) {
                 // add link between the new attachment and the property

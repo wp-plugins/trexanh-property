@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use TreXanhProperty\Core\Directory;
 use TreXanhProperty\Core\Formatter;
+use TreXanhProperty\Core\PaymentGateway\PaymentGatewayService;
 
 class SettingPage
 {
@@ -75,6 +76,23 @@ class SettingPage
             array( $this, 'print_section_info' ), // Callback
             $this->general_settings_key // Page
         );
+        
+        add_settings_field(
+            'enable_property_submission', // ID
+            __( 'Enable Property Submission', 'txp' ), // Title 
+            array( $this, 'render_field' ), // Callback
+            $this->general_settings_key, // Page
+            'setting_section_submitting', // Section
+            array(
+                'name' => sprintf('%s[%s]', $this->general_settings_key, 'enable_property_submission'),
+                'type' => 'checkbox',
+                'attributes' => array(
+                    'id' => 'enable_property_submission',
+                ),
+                'value' => isset( $this->general_settings['enable_property_submission'] ) ? $this->general_settings['enable_property_submission'] : '',
+            )  
+        );
+        
         add_settings_field(
             'require_admin_to_approve', // ID
             __( 'Require admin to approve', 'txp' ), // Title 
@@ -225,8 +243,11 @@ class SettingPage
         $input_class = '\Zend\Form\Element\\' . ucfirst( $args['type']);
         
         /* @var $input \Zend\Form\Element\Checkbox */
-        $value = $args['value'];
-        unset($args['value']);
+        $value = '';
+        if (isset($args['value'])) {
+            $value = $args['value'];
+            unset($args['value']);
+        }
         $input = new $input_class($name, $args);
         $input->setValue($value);
         if ( isset( $args['attributes'] ) ) {
@@ -235,172 +256,43 @@ class SettingPage
         echo $helper->render($input);
     }
     
-    /*
-     * Registers the advanced settings and appends the
-     * key to the plugin settings tabs array.
-     */
-    public function register_payment_settings() {
+    public function register_payment_settings()
+    {
+        register_setting($this->payment_settings_key, $this->payment_settings_key);
+        $gateways = PaymentGatewayService::getInstance();
+        $payment_methods = $gateways->get_payment_classes();
         
-        register_setting(
-            $this->payment_settings_key, // Option group
-            $this->payment_settings_key // Option group
-        );
-        
-        // General settings
-        add_settings_section(
-            'payment_general_settings',
-            __( 'General', 'txp' ),
-            null,
-            $this->payment_settings_key
-        );
-        
-        // Settings for paypal
-        add_settings_section(
-            'paypal_gateway',
-            __( 'Paypal settings', 'txp' ),
-            array($this, 'section_paypal_description'),
-            $this->payment_settings_key
-        );
-        
-        add_settings_section(
-            'paypal_gateway',
-            __( 'Paypal settings', 'txp' ),
-            array($this, 'section_paypal_description'),
-            $this->payment_settings_key
-        );
-        
-        
-        add_settings_field(
-            'paypal_username',
-            __( 'Username', 'txp' ),
-            array($this, 'paypal_username_callback'),
-            $this->payment_settings_key,
-            'paypal_gateway'
-        );
-        
-        add_settings_field(
-            'paypal_password',
-            __( 'Password', 'txp' ),
-            array($this, 'paypal_password_callback'),
-            $this->payment_settings_key,
-            'paypal_gateway'
-        );
-        
-        add_settings_field(
-            'paypal_signature',
-            __( 'Signature', 'txp' ),
-            array($this, 'paypal_signature_callback'),
-            $this->payment_settings_key,
-            'paypal_gateway'
-        );
-        
-        // Settings for paypalsabox
-        add_settings_section(
-            'paypal_gateway_sanbox',
-            __( 'Paypal Sanbox settings', 'txp' ),
-            array($this, 'section_paypal_sanbox_description'),
-            $this->payment_settings_key
-        );
-        
-        add_settings_field(
-            'paypal_use_sanbox',
-            __( 'Sanbox', 'txp' ),
-            array($this, 'paypal_use_sanbox_callback'),
-            $this->payment_settings_key,
-            'paypal_gateway_sanbox'
-        );
-        
-        add_settings_field(
-            'paypal_sanbox_api_username',
-            __( 'Sanbox Username', 'txp' ),
-            array($this, 'paypal_sanbox_username_callback'),
-            $this->payment_settings_key,
-            'paypal_gateway_sanbox'
-        );
-        
-        
-        add_settings_field(
-            'paypal_sanbox_password',
-            __( 'Sanbox Password', 'txp' ),
-            array($this, 'paypal_sanbox_password_callback'),
-            $this->payment_settings_key,
-            'paypal_gateway_sanbox'
-        );
-        
-        add_settings_field(
-            'paypal_sanbox_signature',
-            __( 'Sanbox Signature', 'txp' ),
-            array($this, 'paypal_sanbox_signature_callback'),
-            $this->payment_settings_key,
-            'paypal_gateway_sanbox'
-        );
-        
+        foreach ($payment_methods as $method_id => $method_class) {
+            $method = $gateways->get($method_id);
+            $fields = $method->get_setting_fields();
+            add_settings_section(
+                $method->id,
+                sprintf( __( '%s settings', 'txp' ), $method->title ),
+                array($method, 'print_description'),
+                $this->payment_settings_key
+            );
+            
+            $this->register_payment_fields($fields, $method->id);
+        }
     }
     
-    public function paypal_sanbox_username_callback()
+    protected function register_payment_fields($fields, $section = '')
     {
-        printf(
-            '<input type="text" name="' . $this->payment_settings_key . '[paypal_sanbox_username]" value="%s" size=40 />',
-            isset( $this->payment_settings['paypal_sanbox_username'] ) ? esc_attr( $this->payment_settings['paypal_sanbox_username']) : ''
-        );
-    }
-    
-    public function paypal_sanbox_password_callback()
-    {
-        printf(
-            '<input type="text" name="' . $this->payment_settings_key . '[paypal_sanbox_password]" value="%s" size=40 />',
-            isset( $this->payment_settings['paypal_sanbox_password'] ) ? esc_attr( $this->payment_settings['paypal_sanbox_password']) : ''
-        );
-    }
-    
-    public function paypal_sanbox_signature_callback()
-    {
-        printf(
-            '<textarea type="text" name="' . $this->payment_settings_key . '[paypal_sanbox_signature]" cols="40" />%s</textarea>',
-            isset( $this->payment_settings['paypal_sanbox_signature'] ) ? esc_attr( $this->payment_settings['paypal_sanbox_signature']) : ''
-        );
-    }
-    
-    public function paypal_use_sanbox_callback()
-    {
-        printf(
-            '<input type="checkbox" id="use-sanbox" name="' . $this->payment_settings_key . '[paypal_use_sanbox]" %s />',
-            (isset( $this->payment_settings['paypal_use_sanbox'] ) && $this->payment_settings['paypal_use_sanbox']) ? 'checked' : ''
-        );
-    }
-    
-    public function paypal_username_callback()
-    {
-        printf(
-            '<input type="text" name="' . $this->payment_settings_key . '[paypal_username]" value="%s" size=40 />',
-            isset( $this->payment_settings['paypal_username'] ) ? esc_attr( $this->payment_settings['paypal_username']) : ''
-        );
-    }
-    
-    public function paypal_password_callback()
-    {
-        printf(
-            '<input type="text" name="' . $this->payment_settings_key . '[paypal_password]" value="%s" size=40 />',
-            isset( $this->payment_settings['paypal_password'] ) ? esc_attr( $this->payment_settings['paypal_password']) : ''
-        );
-    }
-    
-    public function paypal_signature_callback()
-    {
-        printf(
-            '<textarea type="text" name="' . $this->payment_settings_key . '[paypal_signature]" cols="40" />%s</textarea>',
-            isset( $this->payment_settings['paypal_signature'] ) ? esc_attr( $this->payment_settings['paypal_signature']) : ''
-        );
-    }
-    
-    public function section_paypal_description()
-    {
-        echo __( 'Settings authentication with paypal.', 'txp' );
-    }
-    
-    public function section_paypal_sanbox_description()
-    {
-        echo __( 'Settings authentication with paypal using sanbox mode.', 'txp' );
+        foreach ($fields as $id => $field) {
+            if ( ! isset($field['name'] ) ) {
+                $field['name'] = sprintf('%s[%s]', $this->payment_settings_key, $id);
+            }
+            
+            $field['value'] = isset( $this->payment_settings[$id] ) ? $this->payment_settings[$id] : '';
+            
+            add_settings_field(
+                    $id,
+                    $field['title'],
+                    array($this, 'render_field'),
+                    $this->payment_settings_key, $section,
+                    $field
+            );
+        }
     }
 	
     /*
@@ -410,46 +302,36 @@ class SettingPage
      * to render the tabs.
      */
 
-    public function plugin_options_page() {
+    public function plugin_options_page()
+    {
         $tab = isset( $_GET['tab'] ) ? $_GET['tab'] : $this->general_settings_key;
-    
+        $setting_updated = false;
+        if ( isset( $_GET['settings-updated'] ) && $_GET['settings-updated'] == 'true' ) {
+            $setting_updated = true;
+        }
         ?>
-    <div class="wrap">
-    <?php $this->plugin_options_tabs(); ?>
-            <form method="post" action="options.php">
+            <div class="wrap">
+                <?php
+                if ($setting_updated) {
+                    ?>
+                    <div id="message" class="updated">
+                        <p><?php echo __('Your settings has been updated.', 'txp'); ?></p>
+                    </div>
+                    <?php
+                }
+                ?>
+        <?php $this->plugin_options_tabs(); ?>
+                    <form method="post" action="options.php">
         <?php wp_nonce_field( 'update-options' ); ?>
         <?php settings_fields( $tab ); ?>
         <?php do_settings_sections( $tab ); ?>  
         <?php submit_button(); ?>
-            </form>
-        </div>
-        <script>
-            (function($) {
-                
-                var pageLoadingCompleted = false;
-                $(window).load(function() {
-                    pageLoadingCompleted = true;
-                });
-                
-                var requirePayment = $("#require_payment_to_submit");
-                var submitFee = $("#submit_fee");
-                var requirePaymentClickHandler = function() {
-                    if (requirePayment.prop("checked")) {
-                        submitFee.closest("tr").show();
-                        // focus on submit fee if require payment checkbed is check but not do this on page load
-                        if (pageLoadingCompleted) {
-                            submitFee.focus();
-                        }
-                    } else {
-                        submitFee.closest("tr").hide();
-                    }
-                };
-                requirePayment.click(requirePaymentClickHandler);
-                requirePaymentClickHandler();
-            })(jQuery);
-        </script>
-    <?php
+                    </form>
+                </div>
+        <?php
+        wp_enqueue_script( 'settings-page', TREXANHPROPERTY__PLUGIN_URL . 'modules/Admin/assets/js/settings-page.js', array( 'jquery' ) );
     }
+
     /*
      * Renders our tabs in the plugin options page,
      * walks through the object's tabs array and prints
@@ -500,6 +382,10 @@ class SettingPage
     {
         $new_input = array();
         
+        if ( ! empty( $input['enable_property_submission'] )) {
+            $new_input['enable_property_submission'] = true;
+        }
+        
         if( !empty( $input['require_admin_to_approve'] ) ) {
             $new_input['require_admin_to_approve'] = true;
         }
@@ -540,7 +426,6 @@ class SettingPage
      */
     public function print_section_info()
     {
-//        print 'Enter your settings below:';
         print '';
     }
 }

@@ -20,7 +20,11 @@ get_header( 'property' );
             <h1 class="page-title">
                 <?php
                 if ( is_search() ) {
-                    echo sprintf( __( 'Search Results for: &ldquo;%s&rdquo;', 'txp' ), get_search_query() );
+                    if ( get_query_var( 's' ) ) {
+                        echo sprintf( __( 'Search Result for &ldquo;%s&rdquo;', 'txp' ), get_search_query() );
+                    } else {
+                        echo __( 'Search Result', 'txp' );
+                    }
                 }
                 ?>
             </h1>

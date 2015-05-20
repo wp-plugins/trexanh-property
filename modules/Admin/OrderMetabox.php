@@ -110,7 +110,7 @@ class OrderMetabox
         <h2><?php echo sprintf( __( 'Order #%s Details', 'txp' ), $order->id ); ?></h2>
         <i class="order-description">
             <?php
-                echo sprintf(__('Payment via %s', 'txp'), $order->payment_method);
+                echo sprintf(__('Payment via %s', 'txp'), $order->get_payment_gateway()->title);
                 
                 if ( $order->transaction_id ) {
                     echo ' (' . esc_html(  $order->transaction_id  ). ')';
@@ -129,7 +129,7 @@ class OrderMetabox
                 </th>
                 <td>
                     <?php
-                    $property = new \TreXanhProperty\Core\Property( $order->property_id );
+                    $property = txp_get_property($order->property_id);
                     if ( $property->post->post_author ) {
                         $user = get_userdata( $property->post->post_author );
                         echo '<a href="' .admin_url('user-edit.php?user_id=' . $user->ID) . '">';
@@ -186,7 +186,14 @@ class OrderMetabox
                 </th>
                 <td>
                     <select name="payment_method">
-                        <option value="paypal"><?php echo __( 'Paypal', 'txp' );?></option>
+                    <?php
+                    $gateways = txp_get_available_payment_gateways();
+                    foreach ($gateways as $gateway) {
+                        ?>
+                        <option value="<?php echo esc_attr($gateway->id); ?>" <?php selected( $order->payment_method, $gateway->id ); ?>><?php echo esc_html($gateway->title); ?></option>
+                        <?php
+                    }
+                    ?>
                     </select>
                 </td>
             </tr>

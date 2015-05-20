@@ -3,6 +3,7 @@
 namespace TreXanhProperty\Core;
 
 use TreXanhProperty\Core\Config;
+use TreXanhProperty\Core\PaymentGateway\PaymentGatewayService;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -11,6 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @property float $amount
  * @property string $completed_date
+ * @property string $transaction_id
+ * @property string $order_currency
+ * @property int $customer_user
+ * @property string $completed_date
+ * @property string $payment_method
  */
 class Order
 {
@@ -40,6 +46,15 @@ class Order
             $this->id = absint( $order->ID );
             $this->post = $order;
         }
+    }
+    
+    public function get_payment_gateway()
+    {
+        $services = PaymentGatewayService::getInstance();
+        if ( ! $this->payment_method ) {
+            return null;
+        }
+        return $services->get($this->payment_method);
     }
 
     /**

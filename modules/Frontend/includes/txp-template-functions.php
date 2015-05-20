@@ -41,3 +41,8 @@ function txp_get_template_part( $template_name, $params = array() ) {
     }
     include( $template );
 }
+
+function txp_get_search_query()
+{
+    return \TreXanhProperty\Frontend\Model\PropertySearch::get_search_query();
+}

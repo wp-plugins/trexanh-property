@@ -47,7 +47,7 @@ class PropertyMetabox {
      * 
      * @param WP_Post $post The object for the current post/page.
      */
-    function meta_box_callback( $post, $callback_args ) {
+    public static function meta_box_callback( $post, $callback_args ) {
         wp_nonce_field( 'txp_meta_box', 'txp_meta_box_nonce' );
         
         $inputs = $callback_args['args'];

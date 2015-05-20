@@ -11,7 +11,7 @@ use TreXanhProperty\Core\Property;
 use TreXanhProperty\Core\Order;
 use TreXanhProperty\Core\Config;
 use TreXanhProperty\Core\EmailTemplate;
-use Omnipay\Omnipay;
+use TreXanhProperty\Core\PaymentGateway\PaymentGatewayService;
 
 /* 
  * Handling submit property flow.
@@ -19,7 +19,23 @@ use Omnipay\Omnipay;
  */
 
 class SubmitPropertyController {
-    public static function form() {
+    
+     protected static function check_enable_submission_status()
+     {
+        $user_can_submit = Config::get_setting('enable_property_submission', 'general', false);
+        if ( ! $user_can_submit) {
+            wp_die(
+                __( 'You cannot submit new property in this time. The feature has been disabled by site administrator. Please go back and try later.', 'txp' ),
+                    __( 'Feature not allowed', 'txp' )
+            );
+        }
+     }
+
+
+     public static function form() {
+         
+         self::check_enable_submission_status();
+         
         ob_start();
         txp_get_template_part('submit-property.php');
         $html = ob_get_clean();
@@ -27,10 +43,14 @@ class SubmitPropertyController {
     }
     
     public static function save() {
+        
+        self::check_enable_submission_status();
+        
         $data = $_POST;
         $post_status = self::get_status_for_new_property();
         $property = array(
             'post_title' => sanitize_text_field( $data['post_title'] ),
+            'post_content' => sanitize_text_field( $data['post_content'] ),
             'post_status' => $post_status,
             'post_type' => Property::get_post_type(),
         );
@@ -48,6 +68,7 @@ class SubmitPropertyController {
         if ( !$is_user_logged_in ) {
             self::post_handle_guest_submit($property_id);
         }
+        $property = txp_get_property($property_id);
         // set order
         $general_settings = Config::get_settings('general');
         $payment_required = isset($general_settings['require_payment_to_submit']) ? $general_settings['require_payment_to_submit'] : null ;
@@ -70,10 +91,8 @@ class SubmitPropertyController {
                 txp_get_template_part( 
                     'submit-property/select-payment-method.php', 
                     array( 
-                        'post'          => $property,
-                        'order'         => $order ,
-                        'order_data'    => $order_data,
-                        'post_id'       => $property_id
+                        'property'          => $property,
+                        'order'         => $order,
                     )
                 );
                 return ob_get_clean();
@@ -164,66 +183,69 @@ class SubmitPropertyController {
      * 
      * @return \Omnipay\Common\AbstractGateway
      */
-    protected static function get_payment_gateway()
+    protected static function get_payment_gateway( $payment_method )
     {
-        $payment_settings = Config::get_settings('payment');
-        $enabled_gateway = 'paypal';
-        $gateway_prefix = $enabled_gateway . '_';
-        $testmode = false;
-        if ($payment_settings[$gateway_prefix . 'use_sanbox']) {
-            $gateway_prefix .= 'sanbox_';
-            $testmode = true;
-        }
-        
-        $parameters = array(
-            'username' => $payment_settings[$gateway_prefix . 'username'],
-            'password' => $payment_settings[$gateway_prefix . 'password'],
-            'signature' => $payment_settings[$gateway_prefix . 'signature'],
-            'currency' => Config::get_setting('currency', 'general'),
-            'testMode' => $testmode,
-        );
-        
-        $gateway = Omnipay::create('PayPal\Express');
-        $gateway->initialize($parameters);
-        
-        return $gateway;
+        $gateways = PaymentGatewayService::getInstance();
+        return $gateways->get( $payment_method );
     }
 
     public static function payment() {
+        
+        self::check_enable_submission_status();
+        
         $app = \Slim\Slim::getInstance();
         $post_id = $app->request->post('post_id');
+        $payment_method = $app->request->post('payment_method');
+        
         $the_post = get_post($post_id);
         if (!$the_post) {
             return __('Not found property', 'txp');
         }
         
-        $property = new Property($the_post);
+        $property = txp_get_property( $the_post );
         $order = $property->get_order();
         
-        update_post_meta($order->id, '_payment_method', 'Paypal');
+        $gateways = PaymentGatewayService::getInstance();
         
-        $gateway = self::get_payment_gateway();
-        $response = $gateway->purchase( array(
-            'amount' => floatval($order->amount),
-            'returnUrl' => get_permalink(get_page_by_path('submit-property-payment-status')) . '?action=success&txp_property=' . $post_id,
-            'cancelUrl' => get_permalink(get_page_by_path('submit-property-payment-status')) . '?action=cancel&txp_property=' . $post_id,
-        ))->send();
-        
-        if ($response->isSuccessful()) {
-            // Payment was successful
-        } elseif ($response->isRedirect()) {
-            // Redirect to offsite payment gateway
-            $response->redirect();
-        } else {
-            // Payment failed
-            echo $response->getMessage();
+        if ( ! $gateways->is_valid_payment_gateway( $payment_method ) ) {
+            ob_start();
+            txp_get_template_part(
+                'submit-property/select-payment-method.php', 
+                array( 
+                    'property'  => $property,
+                    'order'     => $order,
+                    'message' => __( 'Invalid payment method.', 'txp' )
+                )
+            );
+            return ob_get_clean();
         }
         
+        $gateway = self::get_payment_gateway($payment_method);
+        
+        update_post_meta($order->id, '_payment_method', $gateway->id);
+        
         ob_start();
+        /* @var $result \TreXanhProperty\Core\PaymentGateway\PaymentResult */
+        $result = $gateway->process_payment($order);
+        if ($result->is_success()) {
+            return self::payment_success_handler( $order, $result->get_transaction_id() );
+        } else if ($result->is_error()) {
+            txp_get_template_part( 
+                'submit-property/select-payment-method.php', 
+                array( 
+                    'property'  => $property,
+                    'order'     => $order,
+                    'message' => $result->get_message()
+                )
+            );
+            return ob_get_clean();
+        }
         return ob_get_clean();
     }
     
     public static function payment_success() {
+        
+        self::check_enable_submission_status();
         
         $property_id = isset($_GET['txp_property']) ? $_GET['txp_property'] : 0;
         $the_post = get_post($property_id);
@@ -232,39 +254,47 @@ class SubmitPropertyController {
         }
         $property = new Property($the_post);
         
-        $gateway = self::get_payment_gateway();
-        
         $order = $property->get_order();
         
-        $response = $gateway->completePurchase(array(
-            'amount' => floatval($order->amount),
-        ))->send();
+        $gateway = self::get_payment_gateway($order->payment_method);
         
+        /* @var $result \TreXanhProperty\Core\PaymentGateway\PaymentResult */
+        $result = $gateway->payment_complete($order);
         ob_start();
-        if ($response->isSuccessful()) {
-            add_action( 'trexanhproperty_payment_completed', array( __CLASS__, 'send_email_payment_success' ) );
-            $order->payment_complete( $response->getTransactionReference() );
-            // Need approve by administrator
-            if ( self::is_approve_required() ) {
-                self::send_email_payment_success($property->post, 'require_admin_to_approve');
-                return __("Your property is submitted successfully. It now need to be approved by admin before it can be listed.", 'txp');
-            }
-            
-            // Pulish property
-            wp_update_post(array('ID' => $property_id, 'post_status' => 'publish'));
-            do_action( 'trexanhproperty_payment_completed', $property->post );
-            return sprintf(__('Your property is submitted and published successfully! <a href="%s">Click here</a> to view your property.'), get_permalink( $property_id ));
-            
-        } elseif ($response->isRedirect()) {
+        
+        if ($result->is_success()) {
+            return self::payment_success_handler($order, $result->get_transaction_id());
+        } else if ($result->is_error()) {
+            echo $result->get_message();
+        } elseif ($result->is_redirect()) {
             // Redirect to offsite payment gateway
-            $response->redirect();
-        } else {
-            // Payment failed
-            echo $response->getMessage();
+            $location = $result->get_redirect();
+            header('Location: ' . $location);
+            exit();
         }
+        
         return ob_get_clean();
     }
     
+    protected static function payment_success_handler( $order, $transaction_id = '' )
+    {
+        add_action( 'trexanhproperty_payment_completed', array( __CLASS__, 'send_email_payment_success' ) );
+        $order->payment_complete( $transaction_id );
+        $property_id = $order->property_id;
+        $property = new Property( $property_id );
+        // Need approve by administrator
+        if ( self::is_approve_required() ) {
+            self::send_email_payment_success($property->post, 'require_admin_to_approve');
+            return __("Your property is submitted successfully. It now need to be approved by admin before it can be listed.", 'txp');
+        }
+
+        // Pulish property
+        wp_update_post(array('ID' => $property_id, 'post_status' => 'publish'));
+        do_action( 'trexanhproperty_payment_completed', $property->post );
+        return sprintf(__('Your property is submitted and published successfully! <a href="%s">Click here</a> to view your property.'), get_permalink( $property_id ));
+        
+    }
+
     /**
      * 
      * @return boolean | string
@@ -280,6 +310,12 @@ class SubmitPropertyController {
         return true;
     }
 
+    /**
+     * 
+     * @param Property $post
+     * @param string $status
+     * @return boolean
+     */
     public static function send_email_payment_success( $post, $status = '' )
     {
         $key = 'payment_success';
@@ -300,7 +336,7 @@ class SubmitPropertyController {
         
         $message_values = array(
             'recipient' => $author['name'],
-            'payment_method' => 'Paypal',
+            'payment_method' => $order->get_payment_gateway()->title,
             'transaction_id' => $order->transaction_id,
             'amount' => txp_currency($order->amount),
             'property_title' => $post->post_title,
