@@ -1,0 +1,31 @@
+@base-margin: 5px;
+@danger-color: #a94442;
+@muted-color: #777;
+.square150 {
+    width:150px;
+    height:150px;
+}
+.remove-image {
+    text-decoration: none;
+    font-weight: bold; 
+    color: @danger-color;
+}
+.photo-gallery-thumbnail {
+    display: inline-block;
+    position: relative;
+    margin-right: @base-margin;
+    float: left;
+    .remove-image {
+        position: absolute;
+        right: 0;
+        top: 0;
+        background: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 20px;
+        text-align: center;
+        color: gray;
+        font-size: 14px;
+        font-family: arial;
+    }
+}
