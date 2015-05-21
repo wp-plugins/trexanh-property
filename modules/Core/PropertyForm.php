@@ -446,7 +446,7 @@ class PropertyForm {
                         if (  $input_name == 'address_coordinates' ) {
                             $html .= "<tr>
                                 <th scope='row'><label for='{$input['name']}'>{$input['label']}</label></th>
-                                <td>{$input['html']} <button class='geocoder'>" . __('Map', 'txp') . "</button></td>
+                                <td>{$input['html']}</td>
                             </tr>                
                             <tr class='map' style='display:none'><td colspan='2'></td></tr>
                             ";
@@ -455,7 +455,7 @@ class PropertyForm {
                         } elseif (  $input_name == 'video_url' ) {
                             $html .= "<tr>
                                         <th scope='row'><label for='{$input['name']}'>{$input['label']}</label></th>
-                                        <td>{$input['html']}<p>" . __('Please input an youtube or vimeo link', 'txp') . "</p></td>
+                                        <td>{$input['html']}</td>
                                     </tr>";
                         } else {
                                 $html .= 
