@@ -14,11 +14,11 @@ TreXanh Property plugin - A clean, powerful and easy to use real estate solution
 
 TreXanh Property is a clean, powerful and easy to use real estate solution on Wordpress. It help you quickly add property to your site or allow user to submit property to your site for free or with a fee. 
 
->[Plugin Homepage](http://trexanhproperty.com/ "TreXanh Property Homepage") | [Demo](http://trexanhproperty.com/demo/twentyfifteen/ "Demo") | [Docs](http://trexanhproperty.com/doc/ "Documentation, User guide") 
+>[Demo 1](http://trexanhproperty.com/demo/twentyfifteen/ "Demo with Twenty Fifteen theme") | [Demo 2](http://trexanhproperty.com/demo/estato/ "Demo with Custom theme") | [Docs](http://trexanhproperty.com/doc/ "Documentation, User guide") | [Plugin Homepage](http://trexanhproperty.com/ "TreXanh Property Homepage")
 
 * It's quick to add property from wordpress admin or using wordpress import feature. Each property will have a lot of custom fields, map, gallery image.
-* Allow user to submit property for free or with a fee. User will pay through paypal. More payment gateways are being added. Submitted properties can display on site right away or need admin's approval
-* Compatible with almost every theme. Please check list of demo themes here at http://trexanhproperty.com
+* Allow user to submit property for free or with a fee. User will pay through paypal, stripe. More payment gateways are being added. Submitted properties can display on site right away or need admin's approval
+* Compatible with almost every theme. Please check list of demo themes here at [trexanhproperty.com](http://trexanhproperty.com/ "trexanhproperty.com")
 * Also included: Search property widget, property listing shortcode with filter
 
 = Shortcodes =
