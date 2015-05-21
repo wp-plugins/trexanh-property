@@ -147,7 +147,7 @@ class Order
         $order_data = array();
         $order_data['post_type'] = self::POST_TYPE;
         $order_data['post_status'] = apply_filters('txp_default_order_status', self::STATUS_AWAITING_PAYMENT);
-        $order_data['post_author']   = 1;
+        $order_data['post_author']   = get_current_user_id();
         $order_data['post_title']    = sprintf( __( 'Order &ndash; %s', 'txp' ), strftime( _x( '%b %d, %Y @ %I:%M %p', 'Order date parsed by strftime', 'txp' ) ) );
         $order_id = wp_insert_post( apply_filters( 'txp_new_order_data', $order_data ), true );
 
@@ -160,7 +160,7 @@ class Order
         }
 
         update_post_meta( $order_id, '_order_key', 'txp_' . apply_filters( 'txp_generate_order_key', uniqid( 'order_' ) ) );
-        update_post_meta( $order_id, '_order_currency', Config::get_setting( 'currency', 'general') );
+        update_post_meta( $order_id, '_order_currency', Config::get_setting( 'currency', 'general', 'USD') );
         update_post_meta( $order_id, '_amount', $args['amount']);
 
         return new Order($order_id);

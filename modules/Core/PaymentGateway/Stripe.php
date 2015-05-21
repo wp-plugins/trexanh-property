@@ -124,7 +124,7 @@ class Stripe extends AbstractPaymentGateway
         $response = $gateway->purchase(array(
             // Number format is required by Stripe Payment Gateway.
             'amount' => number_format($order->amount, 2),
-            'currency' => Config::get_setting('currency', 'general'),
+            'currency' => $order->order_currency,
             'token' => $card_token,
         ))->send();
         

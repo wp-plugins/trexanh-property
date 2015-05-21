@@ -62,6 +62,7 @@ class PluginSetup {
         if ( ! Config::get_settings( 'general' ) ) {
             update_option(TREXANHPROPERTY_PREFIX . 'general_settings', array(
                 'enable_property_submission' => true,
+                'currency' => 'USD'
             ));
         }
         

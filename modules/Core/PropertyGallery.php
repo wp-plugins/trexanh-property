@@ -42,16 +42,26 @@ class PropertyGallery
     }
 
     /**
-     * Update gallery's images for property
+     * Update gallery's images for property. This is called when post is updated.
      * 
      * @param type $post_id property's id
      * @param type $post property's post which include gallery's images
      */
     public static function update_gallery($post_id, $post)
     {
-        if (strtolower($_SERVER['REQUEST_METHOD']) !== 'post') {
+        // Post will be updated when payment complete
+        // In those cases, just need to update post status and should do nothing with the gallery
+        // If payment with paypal payment gateway, a get request will be sent to update post status
+        // If payment with stripe payment gateway, a post request will be sent with payment method data to update post status
+        // in both cases, we do nothing here
+        $request_method = strtolower( $_SERVER['REQUEST_METHOD'] );
+        if ( $request_method === 'get' ) {
             return;
         }
+        if ( $request_method === 'post' && isset( $_POST['payment_method'] ) ) {
+            return;
+        }
+        // otherwise, update the gallery
         require_once(ABSPATH . "wp-admin" . '/includes/image.php');
         require_once(ABSPATH . "wp-admin" . '/includes/file.php');
         require_once(ABSPATH . "wp-admin" . '/includes/media.php');
