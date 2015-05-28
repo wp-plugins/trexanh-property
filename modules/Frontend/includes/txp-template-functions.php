@@ -28,7 +28,7 @@ add_action('the_post', 'txp_setup_property_data');
 function txp_get_template_part( $template_name, $params = array() ) {
     //locate theme's template
     $template_names[] = $template_name;
-    $template = locate_template( $template_names );
+    $template = txp_locate_template( $template_names );
     
     
     //locate plugin's template
@@ -40,6 +40,43 @@ function txp_get_template_part( $template_name, $params = array() ) {
         extract($params);
     }
     include( $template );
+}
+
+/**
+ * Retrieve the name of the highest priority template file that exists.
+ *
+ * Searches in the STYLESHEETPATH before TEMPLATEPATH so that themes which
+ * inherit from a parent theme can just overload one file.
+ * 
+ * Files will be searched in trexanh-property folder in the theme folder first
+ * 
+ * @since 2.7.0
+ *
+ * @param string|array $template_names Template file(s) to search for, in order.
+ * @param bool $load If true the template file will be loaded if it is found.
+ * @param bool $require_once Whether to require_once or require. Default true. Has no effect if $load is false.
+ * @return string The template filename if one is located.
+ */
+function txp_locate_template($template_names, $load = false, $require_once = true)
+{
+    $located = '';
+    $templates_folder = "trexanh-property";
+    foreach ((array) $template_names as $template_name) {
+        if (!$template_name)
+            continue;
+        if (file_exists(STYLESHEETPATH . "/$templates_folder/" . $template_name)) {
+            $located = STYLESHEETPATH . "/$templates_folder/" . $template_name;
+            break;
+        } else if (file_exists(TEMPLATEPATH . "/$templates_folder/" . $template_name)) {
+            $located = TEMPLATEPATH . "/$templates_folder/" . $template_name;
+            break;
+        }
+    }
+
+    if ($load && '' != $located)
+        load_template($located, $require_once);
+
+    return $located;
 }
 
 function txp_get_search_query()

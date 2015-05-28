@@ -4,7 +4,7 @@ Donate link: http://trexanhproperty.com
 Tags:  property, real estate, property portal, real estate portal, listings, property listings, property management, realtor, wp-property, wordpress property, wp property, wp-realestate, wordpress real estate, wp real estate, submit property, paid listing, payment, paypal
 Requires at least: 4.1.0
 Tested up to: 4.2.2
-Stable tag: 0.2
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,13 +23,23 @@ TreXanh Property is a clean, powerful and easy to use real estate solution on Wo
 
 = Shortcodes =
 
-Shortcodes allow to insert your properties into posts and pages. The [txp_properties_listing] shortcode quickly outputs properties.
+Shortcodes allow to insert your properties into posts and pages.
+
+The [txp_properties_listing] shortcode quickly outputs properties.
 
 Example of usage:
 
 * Featured properties: [txp_properties_listing featured="yes" limit=4]
 * Latest properties: [txp_properties_listing orderby="time" order="descending" limit=4] or just [txp_properties_listing limit=4]
 * Specific properties by id: [txp_properties_listing ids="1,10,100"]
+
+The [txp_properties_map_listing] shortcode makes it easy to display properties on map.
+
+Example of usage:
+
+* Featured properties display on map: [txp_properties_map_listing featured="yes" limit=100 height=450]
+* Latest properties display on map: [txp_properties_map_listing orderby="time" order="descending" limit=40 height=400] or just [txp_properties_map_listing limit=40 height=400]
+* Specific properties by id display on map: [txp_properties_map_listing ids="1,10,100" height=600]
 
 == Installation ==
 
@@ -67,6 +77,12 @@ Example of usage:
 6. **Backend** > Submit property setting
 
 == Changelog ==
+
+= 0.3 =
+
+* Feature - Show search results in map mode
+* Feature - Support listing properties on map using shortcode
+* Improvement - Show payment link in order list and payment form in order detail for orders which not payment yet
 
 = 0.2 =
 

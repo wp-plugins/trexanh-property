@@ -96,17 +96,26 @@ class Module
         
         register_post_status( 'completed', array(
                 'label'                     => _x( 'Completed', 'Order status', 'txp' ),
-                'public'                    => true,
-                'exclude_from_search'       => false,
+                'public'                    => is_admin(),
+                'exclude_from_search'       => true,
                 'show_in_admin_all_list'    => true,
                 'show_in_admin_status_list' => true,
                 'label_count'               => _n_noop( 'Completed <span class="count">(%s)</span>', 'Completed <span class="count">(%s)</span>', 'txp' )
         ) );
         
+        register_post_status( 'cancelled', array(
+                'label'                     => _x( 'Cancelled', 'Order status', 'txp' ),
+                'public'                    => is_admin(),
+                'exclude_from_search'       => true,
+                'show_in_admin_all_list'    => true,
+                'show_in_admin_status_list' => true,
+                'label_count'               => _n_noop( 'Cancelled <span class="count">(%s)</span>', 'Cancelled <span class="count">(%s)</span>', 'txp' )
+        ) );
+        
         register_post_status( 'awaiting_payment', array(
                 'label'                     => _x( 'Awaiting Payment', 'Order status', 'txp' ),
-                'public'                    => true,
-                'exclude_from_search'       => false,
+                'public'                    => is_admin(),
+                'exclude_from_search'       => true,
                 'show_in_admin_all_list'    => true,
                 'show_in_admin_status_list' => true,
                 'label_count'               => _n_noop( 'Awaiting Payment <span class="count">(%s)</span>', 'Awaiting Payment <span class="count">(%s)</span>', 'txp' )

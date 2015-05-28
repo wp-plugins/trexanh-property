@@ -14,6 +14,10 @@ class PropertySearch
 {
     public static function on_search_property( WP_Query $query )
     {
+        // no paging if search results is shown in map mode
+        if (array_key_exists( "display", $_GET ) && "map" == $_GET['display'] ) {
+            $query->set('posts_per_page', -1);
+        }
         add_filter( 'posts_clauses', array( __CLASS__, 'posts_clauses' ) );
         return $query;
     }
@@ -236,7 +240,13 @@ class PropertySearch
                 'compare' => $compare,
             );
         }
-
+        if (array_key_exists( "display", $_GET ) && "map" == $_GET['display'] ) {
+            $meta_queries[] = array(
+                'key' => self::add_prefix_meta_key('address_coordinates'),
+                'value' => '""',
+                'compare' => "!=",
+            );
+        }
         $query = new WP_Meta_Query( $meta_queries );
         $sub_queries = $query->get_sql( 'post', $wpdb->posts, 'ID' );
 

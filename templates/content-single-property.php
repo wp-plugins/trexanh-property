@@ -4,7 +4,7 @@ global $property;
 ?>
 <div id="property-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="summary entry-summary">
-        <h1 itemprop="name" class="product_title entry-title"><?php esc_html(the_title()); ?></h1>
+        <h1 itemprop="name" class="product_title entry-title"><?php echo esc_html( get_the_title() ); ?></h1>
         <?php
             $attachments = get_posts(array(
                 'post_type' => 'attachment',
@@ -53,13 +53,31 @@ global $property;
         </p>
         <table>
             <tr>
-                <th><?php echo __( "Price", "txp" ); ?></th>
+                <th>
+                    <span>
+                        <?php switch( $property->listing_type ) {
+                            case "sale":
+                                echo __( "Sale", "txp" );
+                                break;
+                            case "lease":
+                                echo __( "Rent", "txp" );
+                                break;
+                        } ?>
+                    </span>
+                </th>
                 <td>
-                    <?php if ( ! $property->price ) { ?>
+                    <?php if ( ! $property->price && ! $property->rent ) { ?>
                         -
                     <?php } else { ?>
-                        <span class="price-tag">
-                            <?php echo txp_currency( $property->price ); ?>
+                        <span>
+                            <?php switch( $property->listing_type ) {
+                                case "sale":
+                                    echo txp_currency( $property->price );
+                                    break;
+                                case "lease":
+                                    echo sprintf( __( "%s per %s", 'txp' ), txp_currency( $property->rent ), $property->rent_period );
+                                    break;
+                            } ?>
                         </span>
                     <?php } ?>
                 </td>
@@ -68,29 +86,6 @@ global $property;
                 <th><?php echo __( "Property type", "txp" ); ?></th>
                 <td><?php echo ucwords( $property->category ); ?></td>
             </tr>
-            <tr>
-                <th><?php echo __( "Contract type", "txp" ); ?></th>
-                <td>
-                    <?php switch( $property->listing_type ) {
-                        case "sale":
-                            echo __( "For Sale", "txp" );
-                            break;
-                        case "lease":
-                            $for_rent = true;
-                            echo __( "For Rent", "txp" );
-                            break;
-                        case "both":
-                            echo __( "Sale / Rent", "txp" );
-                            break;
-                    } ?>
-                </td>
-            </tr>
-            <?php if ( ! empty( $for_rent ) ) { ?>
-            <tr>
-                <th><?php echo __( "Rent Period", "txp" ); ?></th>
-                <td><?php echo ucwords( $property->rent_period ); ?></td>
-            </tr>
-            <?php } ?>
             <tr>
                 <th><?php echo __( "Status", "txp" ); ?></th>
                 <td><?php echo ucwords( $property->status ); ?></td>
@@ -154,12 +149,8 @@ global $property;
         </p>
         <span class="dashicons-before dashicons-location">
         <?php
-            echo
-            esc_html( $property->address_postcode ) . ', '  .
-                esc_html( $property->address_street_number ) . ' ' . esc_html( $property->address_street ) . ', '  .
-                esc_html( $property->address_city ) . ', '  .
-                esc_html( $property->address_state ) . ', '  .
-                esc_html( $property->address_country );
+            $location_string = txp_get_property_location_string( $property );
+            echo $location_string ? $location_string : "-";
         ?>
         </span>
         <div id="map-canvas"></div>
@@ -184,15 +175,23 @@ global $property;
                         slideshow : 5000
                     } );
                 } )( jQuery );
-                <?php // show map ?>
-                var location = {
-                    street_number : '<?php echo $property->address_street_number; ?>',
-                    street : '<?php echo $property->address_street; ?>',
-                    city : '<?php echo $property->address_city; ?>',
-                    state : '<?php echo $property->address_state; ?>',
-                    country : '<?php echo $property->address_country; ?>'
-                };
-                window.txl_map.ajax_gen_map( 'map-canvas', location );
+                <?php if ( $property->address_coordinates ) {
+                    $coordinates = explode( ",", $property->address_coordinates ); ?>
+                    window.txl_map.show_map_at_coordinates(
+                        'map-canvas',
+                        '<?php echo trim( $coordinates[0] ); ?>',
+                        '<?php echo trim( $coordinates[1] ); ?>'
+                    );
+                <?php } else { ?>
+                    var location = {
+                        street_number : '<?php echo $property->address_street_number; ?>',
+                        street : '<?php echo $property->address_street; ?>',
+                        city : '<?php echo $property->address_city; ?>',
+                        state : '<?php echo $property->address_state; ?>',
+                        country : '<?php echo $property->address_country; ?>'
+                    };
+                    window.txl_map.ajax_gen_map( 'map-canvas', location);
+                <?php } ?>
             })();
         </script>
         <?php if ( $property->floorplan ) { ?>

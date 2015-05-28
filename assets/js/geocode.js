@@ -1,8 +1,32 @@
-/* 
- * Get lat, long from address info
- */
 window.txl_map = {};
-window.txl_map.ajax_gen_map = function( target_element_id, location, success_callback, error_callback ) {
+
+/**
+ * show address on map based on pre-provided address coordinates
+ * no need to send request outside to ask for coordinates
+ */
+window.txl_map.show_map_at_coordinates = function( target_element_id, latitude, longitude, marker_icon, map_styles ) {
+    var myLatlng = new google.maps.LatLng( latitude, longitude );
+    var map_options = {
+            zoom: 12,
+            center: myLatlng
+    };
+    if ( map_styles ) {
+        map_options.styles = map_styles;
+    }
+    var map = new google.maps.Map( document.getElementById( target_element_id ), map_options );
+
+    var marker = new google.maps.Marker( {
+            position: myLatlng,
+            map: map,
+            icon: marker_icon
+    } );
+};
+
+/**
+ * take address information as params then send request to google to ask for address coordinates
+ * then show address on map
+ */
+window.txl_map.ajax_gen_map = function( target_element_id, location, success_callback, error_callback, marker_icon, map_styles ) {
     var loc_string = location.street_number + ' ' + location.street + ', ' + location.city + ', ' + location.state + ', ' + location.country;
     //replace multiple spaces with single one
     loc_string = loc_string.replace( / +/g, " " );
@@ -15,17 +39,7 @@ window.txl_map.ajax_gen_map = function( target_element_id, location, success_cal
             if ( success_callback ) {
                 success_callback( latitude, longitude );
             }
-            var myLatlng = new google.maps.LatLng( latitude, longitude );
-            var mapOptions = {
-                    zoom: 12,
-                    center: myLatlng
-            };
-            var map = new google.maps.Map( document.getElementById( target_element_id ), mapOptions );
-
-            var marker = new google.maps.Marker( {
-                    position: myLatlng,
-                    map: map
-            } );
+            window.txl_map.show_map_at_coordinates( target_element_id, latitude, longitude, marker_icon, map_styles );
         } else {
             if ( error_callback ) {
                 error_callback();

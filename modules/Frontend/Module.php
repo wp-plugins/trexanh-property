@@ -28,6 +28,7 @@ class Module
 
         add_action( 'template_include', array('TreXanhProperty\Frontend\TemplateLoader', 'template_loader'));
         add_action( 'wp_enqueue_scripts', array('TreXanhProperty\Frontend\Module', 'wp_enqueue_scripts') );
+        add_action( 'wp_head', array('TreXanhProperty\Frontend\Module', 'include_map_info_box_template') );
         Frontend::init();
     }
     
@@ -51,5 +52,9 @@ class Module
         wp_enqueue_script( 'txp-lightbox-script', plugins_url( $plugin_base_dir . '/assets/lib/prettyphoto/js/jquery.prettyPhoto.js' ), array( 'jquery' ) );
         wp_register_script('my-upload', plugins_url( $plugin_base_dir . '/assets/js/photo-gallery.js'), array('jquery'));
         wp_enqueue_script('my-upload');
+    }
+    
+    public static function include_map_info_box_template() {
+        echo txp_get_template_part('js-templates/map-info-box.php');
     }
 }
