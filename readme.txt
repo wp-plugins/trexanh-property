@@ -14,10 +14,13 @@ TreXanh Property plugin - A clean, powerful and easy to use real estate solution
 
 TreXanh Property is a clean, powerful and easy to use real estate solution on Wordpress. It help you quickly add property to your site or allow user to submit property to your site for free or with a fee. 
 
->[Demo 1](http://trexanhproperty.com/demo/twentyfifteen/ "Demo with Twenty Fifteen theme") | [Demo 2](http://trexanhproperty.com/demo/estato/ "Demo with Custom theme") | [Docs](http://trexanhproperty.com/doc/ "Documentation, User guide") | [Plugin Homepage](http://trexanhproperty.com/ "TreXanh Property Homepage")
+>[Demo with default theme](http://trexanhproperty.com/demo/twentyfifteen/ "Demo with Twenty Fifteen theme") | [Demo with custom theme](http://trexanhproperty.com/demo/estato/ "Demo with Custom theme") 
+
+>[Docs](http://trexanhproperty.com/doc/ "Documentation, User guide") | [Plugin Homepage](http://trexanhproperty.com/ "TreXanh Property Homepage")
 
 * It's quick to add property from wordpress admin or using wordpress import feature. Each property will have a lot of custom fields, map, gallery image.
 * Allow user to submit property for free or with a fee. User will pay through paypal, stripe. More payment gateways are being added. Submitted properties can display on site right away or need admin's approval
+* Display properties on map
 * Compatible with almost every theme. Please check list of demo themes here at [trexanhproperty.com](http://trexanhproperty.com/ "trexanhproperty.com")
 * Also included: Search property widget, property listing shortcode with filter
 
@@ -25,7 +28,7 @@ TreXanh Property is a clean, powerful and easy to use real estate solution on Wo
 
 Shortcodes allow to insert your properties into posts and pages.
 
-The [txp_properties_listing] shortcode quickly outputs properties.
+**[txp_properties_listing]** shortcode quickly outputs properties.
 
 Example of usage:
 
@@ -33,7 +36,7 @@ Example of usage:
 * Latest properties: [txp_properties_listing orderby="time" order="descending" limit=4] or just [txp_properties_listing limit=4]
 * Specific properties by id: [txp_properties_listing ids="1,10,100"]
 
-The [txp_properties_map_listing] shortcode makes it easy to display properties on map.
+**[txp_properties_map_listing]** shortcode makes it easy to display properties on map.
 
 Example of usage:
 
@@ -70,11 +73,13 @@ Example of usage:
 == Screenshots ==
 
 1. **Frontend** > Search property, Property listing
-2. **Frontend** > Single property
-3. **Frontend** > Property submit
-4. **Frontend** > Property submit payment
-5. **Backend** > Property add form
-6. **Backend** > Submit property setting
+2. **Frontend** > List properties on map (with shortcode)
+3. **Frontend** > Single property
+4. **Frontend** > Property submit
+5. **Frontend** > Property submit payment
+6. **Backend** > Property add form
+7. **Backend** > Submit property setting
+8. **Backend** > Paypal, Stripe setting
 
 == Changelog ==
 
@@ -92,7 +97,7 @@ Example of usage:
 
 == Frequently Asked Questions ==
 
-* Not yet
+* We are building this
 
 == Upgrade Notice ==
 
