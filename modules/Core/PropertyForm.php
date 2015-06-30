@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Zend\Form\Factory as FormFactory;
 use Zend\Form\View\Helper;
 use TreXanhProperty\Core\Property;
+use TreXanhProperty\Admin\SettingPage;
 
 /* 
  * Manage property admin form: show fields, save fields
@@ -28,84 +29,6 @@ class PropertyForm {
      * @var Zend/Form
      */
     protected static $form;
-    
-    /**
-     * 
-     * @return array
-     */
-    public static function get_fieldsets() {
-        //group fields by category so each category will display in a fieldset
-        $fieldsets = array(
-            'primary' => array(
-                'label' => 'Property Info',
-                'fields' => array(
-                    'agent',
-                    'area',
-                    'area_unit',
-                    'status',
-                    'category',                    
-                    'featured',                    
-                )
-            ),
-            //sale price - rent price
-            'price' => array(
-                'label' => 'Price',
-                'fields' => array(
-                    'listing_type',
-                    'price',
-                    'rent',
-                    'rent_period',                    
-                )
-            ),
-            'features' => array(
-                'label' => 'Features',
-                'fields' => array(
-                    'bedrooms',
-                    'bathrooms',
-                    'ensuite',
-                    'toilet',
-                    'garage',
-                    'new_construction',
-                    'air_conditioning',
-                    'pool',
-                    'security_system',                    
-                )
-            ),
-            'address' => array(
-                'label' => 'Address',
-                'fields' => array(
-                    'address_postcode',
-                    'address_street_number',
-                    'address_street',
-                    'address_city',
-                    'address_state',
-                    'address_country',
-                    'address_coordinates',
-                ),
-            ),
-            'media' => array(
-                'label' => 'Media',
-                'fields' => array(
-                    //attachment
-                    'video_url',
-                    'floorplan'                    
-                )
-            ),
-            'payment' => array(
-                'label' => 'Payment',
-                'fields' => array(
-                    'order',
-                )
-            ),
-            'gallery' => array(
-                'label' => 'Photo Gallery',
-                'fields' => array(
-                    'photo_gallery',
-                )
-            ),
-        );
-        return $fieldsets;
-    }
     
     /**
      * Return fields input configuration
@@ -135,7 +58,7 @@ class PropertyForm {
                     ),
                     'options' => array(
                         'label' => __( 'Area', 'txp' ),
-                    )
+                    ),
                 ),
                 'area_unit' => array(
                     'type' => 'select',
@@ -145,7 +68,7 @@ class PropertyForm {
                             'square_meter' => __( 'Square Meter', 'txp' ),
                             'sqft' => __( 'Square Feet', 'txp' ),
                         ),
-                    )
+                    ),
                 ),
                 'status' => array(
                     'type' => 'select',
@@ -179,7 +102,7 @@ class PropertyForm {
                             'sale' => __( 'Sale', 'txp' ),
                             'lease' => __( 'Lease', 'txp' ),
                         ),
-                    )
+                    ),
                 ),
                 'featured' => array(
                     'type' => 'radio',
@@ -189,93 +112,7 @@ class PropertyForm {
                             'yes' => __( 'Yes', 'txp' ),
                             'no' => __( 'No', 'txp' )
                         ),
-                    )
-                ),
-                //features
-                'bedrooms' => array(
-                    'type' => 'number',
-                    'attributes' => array(
-                        'maxlength' => '2',
                     ),
-                    'options' => array(
-                        'label' => __( 'Bedrooms', 'txp' ),
-                    )
-                ),
-                'bathrooms' => array(
-                    'type' => 'number',
-                    'attributes' => array(
-                        'maxlength' => '2',
-                    ),
-                    'options' => array(
-                        'label' => __( 'Bathrooms', 'txp' ),
-                    )
-                ),
-                'ensuite' => array(
-                    'type' => 'number',
-                    'attributes' => array(
-                        'maxlength' => '2',
-                    ),
-                    'options' => array(
-                        'label' => __( 'Ensuite', 'txp' ),
-                    )
-                ),
-                'toilet' => array(
-                    'type' => 'number',
-                    'attributes' => array(
-                        'maxlength' => '2',
-                    ),
-                    'options' => array(
-                        'label' => __( 'Toilet', 'txp' ),
-                    )
-                ),
-                'garage' => array(
-                    'type' => 'number',
-                    'attributes' => array(
-                        'maxlength' => '2',
-                    ),
-                    'options' => array(
-                        'label' => __( 'Garage', 'txp' ),
-                    )
-                ),
-                'new_construction' => array(
-                    'type' => 'radio',
-                    'options' => array(
-                        'label' => __( 'New Construction', 'txp' ),
-                        'value_options' => array(
-                            'yes' => __( 'Yes', 'txp' ),
-                            'no' => __( 'No', 'txp' )
-                        ),
-                    )
-                ),
-                'air_conditioning' => array(
-                    'type' => 'radio',
-                    'options' => array(
-                        'label' => __( 'Air Conditioning', 'txp' ),
-                        'value_options' => array(
-                            'yes' => __( 'Yes', 'txp' ),
-                            'no' => __( 'No', 'txp' )
-                        ),
-                    )
-                ),
-                'pool' => array(
-                    'type' => 'radio',
-                    'options' => array(
-                        'label' => __( 'Pool', 'txp' ),
-                        'value_options' => array(
-                            'yes' => __( 'Yes', 'txp' ),
-                            'no' => __( 'No', 'txp' )
-                        ),
-                    )
-                ),
-                'security_system' => array(
-                    'type' => 'radio',
-                    'options' => array(
-                        'label' => __( 'Security System', 'txp' ),
-                        'value_options' => array(
-                            'yes' => __( 'Yes', 'txp' ),
-                            'no' => __( 'No', 'txp' )
-                        ),
-                    )
                 ),
                 //address
                 'address_postcode' => array(
@@ -285,7 +122,8 @@ class PropertyForm {
                     ),
                     'options' => array(
                         'label' => __( 'Postcode', 'txp' ),
-                    )
+                    ),
+                    'is_core_attribute' => true,
                 ),
                 'address_street' => array(
                     'type' => 'text',
@@ -294,7 +132,8 @@ class PropertyForm {
                     ),
                     'options' => array(
                         'label' => __( 'Street Name', 'txp' ),
-                    )
+                    ),
+                    'is_core_attribute' => true,
                 ),
                 'address_street_number' => array(
                     'type' => 'text',
@@ -303,7 +142,8 @@ class PropertyForm {
                     ),
                     'options' => array(
                         'label' => __( 'Street Number', 'txp' ),
-                    )
+                    ),
+                    'is_core_attribute' => true,
                 ),
                 'address_coordinates' => array(
                     'type' => 'text',
@@ -312,7 +152,8 @@ class PropertyForm {
                     ),
                     'options' => array(
                         'label' => __( 'Coordinates', 'txp' ),
-                    )
+                    ),
+                    'is_core_attribute' => true,
                 ),
                 'address_country' => array(
                     'type' => 'text',
@@ -321,7 +162,8 @@ class PropertyForm {
                     ),
                     'options' => array(
                         'label' => __( 'Country', 'txp' ),
-                    )
+                    ),
+                    'is_core_attribute' => true,
                 ),
                 'address_state' => array(
                     'type' => 'text',
@@ -330,7 +172,8 @@ class PropertyForm {
                     ),
                     'options' => array(
                         'label' => __( 'State', 'txp' ),
-                    )
+                    ),
+                    'is_core_attribute' => true,
                 ),
                 'address_city' => array(
                     'type' => 'text',
@@ -339,7 +182,8 @@ class PropertyForm {
                     ),
                     'options' => array(
                         'label' => __( 'City', 'txp' ),
-                    )
+                    ),
+                    'is_core_attribute' => true,
                 ),
                 //sale price - rent price
                 'price' => array(
@@ -349,7 +193,8 @@ class PropertyForm {
                     ),
                     'options' => array(
                         'label' => __( 'Price', 'txp' ),
-                    )
+                    ),
+                    'is_core_attribute' => true,
                 ),
                 'rent' => array(
                     'type' => 'number',
@@ -358,7 +203,8 @@ class PropertyForm {
                     ),
                     'options' => array(
                         'label' => __( 'Rent Amount', 'txp' ),
-                    )
+                    ),
+                    'is_core_attribute' => true,
                 ),
                 'rent_period' => array(
                     'type' => 'select',
@@ -369,20 +215,22 @@ class PropertyForm {
                             'week' => __( 'Week', 'txp' ),
                             'month' => __( 'Month', 'txp' ),
                         ),
-                    )
+                    ),
                 ),
                 //attachment
                 'video_url' => array(
                     'type' => 'url',
                     'options' => array(
                         'label' => __( 'Video URL', 'txp' ),
-                    )
+                    ),
+                    'is_core_attribute' => true,
                 ),
                 'floorplan' => array(
                     'type' => 'url',
                     'options' => array(
                         'label' => __( 'Floorplan', 'txp' ),
-                    )
+                    ),
+                    'is_core_attribute' => true,
                 ),
                 'order' => array(
                     'type' => 'hidden',
@@ -395,6 +243,10 @@ class PropertyForm {
                 ),
                 'photo_gallery' => array(
                     'type' => 'hidden',
+                    'options' => array(
+                        'label' => __( 'Photo gallery', 'txp' ),
+                    ),
+                    'is_core_attribute' => true,
                 ),
             );
             $prefix = array();
@@ -411,19 +263,23 @@ class PropertyForm {
             return self::$property_fields_input;
         }
     }
-
-    public static function render_submit_property_form() {
-        $fieldsets = self::get_fieldsets();
-        $ignore_list = array( "payment" );
-        $html = "";
-        foreach ( $fieldsets as $key => $fieldset ) {
-            if ( in_array( $key, $ignore_list ) ) {
-                continue;
+    
+    public $custom_attributes = array();
+    
+    public static function is_custom_attribute($attribute_id)
+    {
+        $attribute_id = Property::get_input_prefix() . "_" . $attribute_id;
+        
+        $options = get_option(SettingPage::get_config_property_settings_key());
+        
+        $custom_attributes = $options['custom_attributes'];
+        
+        foreach ($custom_attributes as $custom_attribute) {
+            if ($attribute_id == $custom_attribute['id']) {
+                return true;
             }
-            $html .= "<fieldset><legend>" . $fieldset['label'] . "</legend></fieldset>";
-            $html .= self::render_form_elements($fieldset['fields']);
         }
-        return $html;
+        return false;
     }
     
     /**
@@ -432,38 +288,42 @@ class PropertyForm {
      * @param type $post
      * @return string
      */
-    public static function render_form_elements( $inputs, $post = null) {
+    public static function render_form_elements( $inputs, $post = null)
+    {
         $ignoreList = array("order");
-        
         $html = '<table class="form-table">
             <tbody>';
                 foreach ($inputs as $input_name) {
                     if (in_array($input_name, $ignoreList)) {
-                        $html = "";
+                        $html .= '</tbody></table>';
+                        return $html;
+                    }
+                    $is_custom_attribute = self::is_custom_attribute($input_name);
+                    if ($is_custom_attribute) {
+                        $input = self::render_custom_attribute_form_element(Property::get_input_prefix() . "_" . $input_name, $post);
                     } else {
                         $input = self::render_form_element($input_name, $post);
-
-                        if (  $input_name == 'address_coordinates' ) {
-                            $html .= "<tr>
+                    }
+                    if (  $input_name == 'address_coordinates' ) {
+                        $html .= "<tr>
+                            <th scope='row'><label for='{$input['name']}'>{$input['label']}</label></th>
+                            <td>{$input['html']}</td>
+                        </tr>                
+                        <tr class='map' style='display:none'><td colspan='2'></td></tr>
+                        ";
+                    } elseif (  $input_name == 'photo_gallery' ) {
+                        $html .= "<tr><td colspan='2'>" . $input['html'] . "</td></tr>";
+                    } elseif (  $input_name == 'video_url' ) {
+                        $html .= "<tr>
+                                    <th scope='row'><label for='{$input['name']}'>{$input['label']}</label></th>
+                                    <td>{$input['html']}</td>
+                                </tr>";
+                    } else {
+                        $html .= 
+                            "<tr>
                                 <th scope='row'><label for='{$input['name']}'>{$input['label']}</label></th>
                                 <td>{$input['html']}</td>
-                            </tr>                
-                            <tr class='map' style='display:none'><td colspan='2'></td></tr>
-                            ";
-                        } elseif (  $input_name == 'photo_gallery' ) {
-                            $html .= "<tr><td>" . $input['html'] . "</td></tr>";
-                        } elseif (  $input_name == 'video_url' ) {
-                            $html .= "<tr>
-                                        <th scope='row'><label for='{$input['name']}'>{$input['label']}</label></th>
-                                        <td>{$input['html']}</td>
-                                    </tr>";
-                        } else {
-                                $html .= 
-                                    "<tr>
-                                        <th scope='row'><label for='{$input['name']}'>{$input['label']}</label></th>
-                                        <td>{$input['html']}</td>
-                                    </tr>";
-                            }
+                            </tr>";
                     }
                 }
         $html .= '</tbody>
@@ -471,10 +331,65 @@ class PropertyForm {
         return $html;
     }
     
+    public static function render_custom_attribute_form_element($attribute_id, $post = null, $options = array())
+    {
+        $config = get_option( SettingPage::get_config_property_settings_key() );
+        $custom_attributes_config = $config['custom_attributes'];
+        $meta_values = get_post_meta( $post->ID );
+        foreach ( $custom_attributes_config as $attribute )  {
+            $element_name = $attribute['id'];
+            if ( $element_name != $attribute_id ) {
+                continue;
+            }
+            $value = ( isset( $meta_values[$element_name] ) ? $meta_values[$element_name][0] : "" );
+            
+            $result = array(
+                'name' => $element_name,
+                'label' => $attribute['title'],
+                'html' => '',
+                'type' => $attribute['type'],
+            );
+            switch ( $attribute['input'] ) {
+                case "text":
+                    $result['html'] = "<input type='text' data-custom-attribute-element name='$element_name' id='$element_name' value='$value' />";
+                    break;
+                case "textarea":
+                    $result['html'] = "<textarea data-custom-attribute-element name='$element_name' id='$element_name' value='$value'></textarea>";
+                    break;
+                case "checkbox":
+                    if ( "yes" == $value ) {
+                        $checked = "checked";
+                    } else {
+                        $checked = "";
+                    }
+                    $result['html'] = "<input data-custom-attribute-element type='hidden' name='$element_name' value='no' />";
+                    $result['html'] .= "<input data-custom-attribute-element type='checkbox' name='$element_name' id='$element_name' $checked value='yes' />";
+                    break;
+                case "currency":
+                case "number":
+                    $result['html'] = "<input data-custom-attribute-element type='number' name='$element_name' id='$element_name' value='$value' />";
+                    break;
+                case "select":
+                    $select = "<select name='$element_name' id='$element_name'>";
+                    $select .= "<option value=''" . (('' == $value) ? " selected" : '') . ">-</option>";
+                    foreach ($attribute['options'] as $option) {
+                        $select .= "<option value='$option'" . (($option == $value) ? " selected" : '') . ">$option</option>";
+                    }
+                    $select .= "</select>";
+                    $result['html'] = $select;
+                    break;
+            }
+            return $result;
+        }
+    }
+    
     public static function render_form_element($input_name, $post = null, $options = array())
     {
         $form = self::get_form();
         $input = self::get_fields_input($input_name);
+        if ( ! $input ) {
+            return array();
+        }
         $element = $form->get($input['name']);
         if (!empty($options['class'])) {
             $element->setAttributes(array(
@@ -532,7 +447,7 @@ class PropertyForm {
                     . '</div>';
             $input_html.= "<p class='gallery-message'" . (( $attachments ) ? " style='display:none;'" : "") . ">" . __("No photo in gallery.", "txp") . "</p>";
             $input_html.= "</div>";
-            $input_html.= '<input id="open_uploader" class="button" type="button" value="Edit Gallery" />';
+            $input_html.= '<button id="open_uploader" class="button" type="button">Edit Gallery</button>';
             $input_html.= '<input type="hidden" name="gallery_photo_ids" value="' . implode(",", $current_attachment_ids) .'" />';
         }
         
@@ -583,12 +498,34 @@ class PropertyForm {
     
     public static function save($post_id) {
         $fields = self::get_fields_input();
-                
+
         foreach ( $fields as $field_name => $spec ) {
             if ( isset( $_REQUEST[$field_name] ) ) {
                 update_post_meta( $post_id, $field_name, sanitize_text_field( $_REQUEST[$field_name] ) );
             }
-        }        
+        }
+        // save custom attributes
+        $options = get_option( SettingPage::get_config_property_settings_key() );
+        $property_type_key = Property::get_input_prefix() . "_property_type";
+        if ( isset( $_REQUEST[$property_type_key] ) && ! empty( $options['property_types'] ) ) {
+            $property_type = $_REQUEST[$property_type_key];
+            foreach ( $options['property_types'] as $types ) {
+                if ( $types['id'] == $property_type ) {
+                    update_post_meta( $post_id, $property_type_key, sanitize_text_field( $_REQUEST[$property_type_key] ) );
+                    break;
+                }
+            }
+        }
+        
+        if ( ! empty( $options['custom_attributes'] ) ) {
+            foreach ( $options['custom_attributes'] as $attribute ) {
+                if ( isset( $_REQUEST[$attribute['id']] ) ) {
+                    update_post_meta( $post_id, $attribute['id'], sanitize_text_field( $_REQUEST[$attribute['id']] ) );
+                } else {
+                    delete_post_meta( $post_id, $attribute['id'] );
+                }
+            }            
+        }
     }
 
 }

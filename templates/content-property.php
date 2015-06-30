@@ -60,7 +60,11 @@ global $property;
             echo $location_string ? esc_html($location_string) : "-";
         ?>
         <hr>
-        <?php echo esc_html( $property->bedrooms ); ?> <?php echo __( 'beds', 'txp' ); ?>&nbsp;
-        <?php echo esc_html( $property->bathrooms ); ?> <?php echo __( 'baths', 'txp' ); ?>
+        <?php if ($property->bedrooms) { ?>
+            <?php echo esc_html( $property->bedrooms ); ?> <?php echo __( 'beds', 'txp' ); ?>&nbsp;
+        <?php } ?>
+        <?php if ($property->bathrooms) { ?>
+            <?php echo esc_html( $property->bathrooms ); ?> <?php echo __( 'baths', 'txp' ); ?>
+        <?php } ?>
     </div>
 </article>

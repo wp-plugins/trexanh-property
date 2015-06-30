@@ -28,7 +28,8 @@ class Properties
     {
         ob_start();
 
-        $properties = self::build_query( $atts );
+        $paging_supported = 'yes';
+        $properties = self::build_query( $atts, $paging_supported );
 
         if ( $properties->have_posts() ) :
             ?>
@@ -36,13 +37,18 @@ class Properties
             <?php while ( $properties->have_posts() ) : $properties->the_post(); ?>
 
                 <?php 
-                txp_get_template_part( 'content-property.php' ); 
+                txp_get_template_part( 'content-property.php' );
                 ?>
 
             <?php endwhile; // end of the loop. ?>
             </div>
         <?php
-
+            if ( is_array( $atts ) && array_key_exists('paging', $atts) && 'yes' == $atts['paging'] ) {
+                $args = array(
+                    'total' => $properties->max_num_pages,
+                );
+                txp_get_template_part( 'shortcode-paginator.php', array( 'paginate_links' => paginate_links( $args ) ) );
+            }
         endif;
 
         return ob_get_clean();
@@ -119,7 +125,7 @@ class Properties
         return ob_get_clean();
     }
     
-    protected static function build_query( $atts )
+    protected static function build_query( $atts, $paging_supported = "no" )
     {
         $atts = shortcode_atts( array(
             // newest properties first by default
@@ -127,14 +133,16 @@ class Properties
             'order' => 'desc',
             'ids' => '',
             // unlimited by default
-            'limit' => -1,
+            'items_per_page' => -1,
             'featured' => 0,
             'sorting' => '',
+            'paged' => '',
+            'paging' => '',
         ), $atts );
         
         $meta_query = array();
         
-        // featured listing - example of usage: [txp_properties featured=1 limit=4]
+        // featured listing - example of usage: [txp_properties featured=1 items_per_page=4]
         if ( $atts['featured'] === 'yes' ) {
             $meta_query[] = array(
                 'key' => Property::get_input_prefix() . '_featured',
@@ -142,7 +150,7 @@ class Properties
             );
         }
         
-        // latest first sorting - example of usage: [txp_properties sorting="latest first" limit=6]
+        // latest first sorting - example of usage: [txp_properties sorting="latest first" items_per_page=6]
         if ( $atts['orderby'] === 'time' ) {
             $atts['orderby'] = 'post_date';
             if ($atts['order'] === 'descending') {
@@ -151,17 +159,19 @@ class Properties
                 $atts['order'] = 'asc';
             }
         }
-
+        
         $args = array(
             'post_type' => 'property',
             'post_status' => 'publish',
             'ignore_sticky_posts' => 1,
             'orderby' => $atts['orderby'],
             'order' => $atts['order'],
-            'posts_per_page' => intval( $atts['limit'] ),
-            'meta_query' => $meta_query
+            'posts_per_page' => intval( $atts['items_per_page'] ),
+            'meta_query' => $meta_query,
         );
-
+        if ( 'yes' == $paging_supported ) {
+            $args['paged'] = intval( $atts['paged'] );
+        }
         if ( !empty( $atts['ids'] ) ) {
             $ids = explode( ',', $atts['ids'] );
             $ids = array_map( 'trim', $ids );

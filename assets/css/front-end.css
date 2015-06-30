@@ -64,6 +64,7 @@
   outline: none !important;
   border-bottom: 0 !important;
   color: #ccc;
+  text-decoration: none;
 }
 li.active a,
 li.active a:hover {
@@ -219,6 +220,10 @@ li.active a:hover {
 }
 .single-property #bx-pager {
   text-align: center;
+  top: -100px;
+  z-index: 1;
+  position: relative;
+  margin-bottom: -80px;
 }
 .single-property #bx-pager a {
   display: inline-block;
@@ -253,49 +258,6 @@ li.active a:hover {
   top: 5px;
   position: relative;
 }
-.single-property .price-tag {
-  display: inline-block;
-  width: auto;
-  height: 38px;
-  background-color: #979797;
-  -webkit-border-radius: 3px 4px 4px 3px;
-  -moz-border-radius: 3px 4px 4px 3px;
-  border-radius: 3px 4px 4px 3px;
-  border-left: 1px solid #979797;
-  /* This makes room for the triangle */
-  margin-left: 19px;
-  position: relative;
-  color: white;
-  font-weight: 300;
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 22px;
-  line-height: 38px;
-  padding: 0 10px 0 10px;
-  /* Makes the triangle */
-  /* Makes the circle */
-}
-.single-property .price-tag:before {
-  content: "";
-  position: absolute;
-  display: block;
-  left: -19px;
-  width: 0;
-  height: 0;
-  border-top: 19px solid transparent;
-  border-bottom: 19px solid transparent;
-  border-right: 19px solid #979797;
-}
-.single-property .price-tag:after {
-  content: "";
-  background-color: white;
-  border-radius: 50%;
-  width: 4px;
-  height: 4px;
-  display: block;
-  position: absolute;
-  left: -9px;
-  top: 17px;
-}
 .single-property #map-canvas {
   width: 100%;
   height: 300px;
@@ -310,9 +272,6 @@ li.active a:hover {
 @media (max-width: 755px) {
   .single-property #bx-pager {
     display: none;
-  }
-  .single-property .price-tag {
-    font-size: 14px;
   }
 }
 /* property search widget style */

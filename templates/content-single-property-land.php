@@ -1,14 +1,11 @@
 <?php
 /**
- * 
  * @version 0.4
- * 
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-
 /* @var $property Txp_Property */
 global $property;
 $config = txp_get_property_type_config( $property->property_type );
@@ -31,6 +28,17 @@ if (!empty($ungrouped_attributes)) {
     );
 }
 $manually_rendered_attributes = array(
+    "price",
+    "bedrooms",
+    "bathrooms",
+    "garage",
+    "ensuite",
+    "toilet",
+    "new_construction",
+    "air_conditioning",
+    "security_system",
+    "pool",
+    "area",
     "address_postcode",
     "address_coordinates",
     "address_street_number",
@@ -101,13 +109,85 @@ foreach ($config['groups'] as $g_index => $group) {
             }
         ?>
         <p>
-            <strong><?php echo __( "PROPERTY TYPE", "txp" ); ?></strong>
-            <div><?php echo $config['name']; ?></div>
+            <strong><?php echo __( "OVERVIEW", "txp" ); ?></strong>
         </p>
+        <table>
+            <?php if ( $property->price ) { ?>
+            <tr>
+                <th><?php echo __( "Price", "txp" ); ?></th>
+                <td><?php echo txp_currency( esc_html( $property->price ) ); ?></td>
+            </tr>
+            <?php } ?>
+            <?php if ( $property->area ) { ?>
+            <tr>
+                <th><?php echo __( "Area", "txp" ); ?></th>
+                <td><?php echo esc_html( $property->area ); ?> m<sup>2</sup></td>
+            </tr>
+            <?php } ?>
+            <?php if ( $property->bedrooms ) { ?>
+            <tr>
+                <th><?php echo __( "Beds", "txp" ); ?></th>
+                <td><?php echo esc_html( $property->bedrooms ); ?></td>
+            </tr>
+            <?php } ?>
+            <?php if ( $property->bathrooms ) { ?>
+            <tr>
+                <th><?php echo __( "Baths", "txp" ); ?></th>
+                <td><?php echo esc_html( $property->bathrooms ); ?></td>
+            </tr>
+            <?php } ?>
+            <?php if ( $property->garage ) { ?>
+            <tr>
+                <th><?php echo __( "Garages", "txp" ); ?></th>
+                <td><?php echo esc_html( $property->garage ); ?></td>
+            </tr>
+                <?php } ?>
+            <?php if ( $property->toilet ) { ?>
+            <tr>
+                <th><?php echo __( "Toilets", "txp" ); ?></th>
+                <td><?php echo esc_html( $property->toilet ); ?></td>
+            </tr>
+            <?php } ?>
+            <?php if ( $property->ensuite ) { ?>
+            <tr>
+                <th><?php echo __( "Ensuite", "txp" ); ?></th>
+                <td><?php echo ucwords( $property->ensuite ); ?></td>
+            </tr>
+            <?php } ?>
+        </table>
         <p>
             <strong><?php echo __( "DESCRIPTION", "txp" ); ?></strong>
             <?php echo the_content(); ?>
         </p>
+        <p>
+            <strong><?php echo __( "AMENITIES", "txp" ); ?></strong>
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <span class="amentity<?php echo ($property->new_construction == "on") ? " dashicons-before dashicons-yes" : " dashicons-before dashicons-no-alt unavailable" ?>">
+                        <?php echo __( "New construction", "txp" ); ?>
+                    </span>
+                </td>
+                <td>
+                    <span class="amentity<?php echo ($property->pool == "on") ? " dashicons-before dashicons-yes" : " dashicons-before dashicons-no-alt unavailable" ?>">
+                        <?php echo __( "Pool", "txp" ); ?>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="amentity<?php echo ($property->air_conditioning == "on") ? " dashicons-before dashicons-yes" : " dashicons-before dashicons-no-alt unavailable" ?>">
+                        <?php echo __( "Air conditioning", "txp" ); ?>
+                    </span>
+                </td>
+                <td>
+                    <span class="amentity<?php echo ($property->security_system == "on") ? " dashicons-before dashicons-yes" : " dashicons-before dashicons-no-alt unavailable" ?>">
+                        <?php echo __( "Security system", "txp" ); ?>
+                    </span>
+                </td>
+            </tr>
+        </table>
         <?php foreach ($config['groups'] as $group) { ?>
             <p>
                 <strong><?php echo strtoupper( $group['name'] ) ?></strong>
@@ -115,9 +195,6 @@ foreach ($config['groups'] as $g_index => $group) {
             <table>
                 <?php foreach ($group['attributes'] as $index => $attribute_id) {
                     $attribute = $config['attributes_data'][$attribute_id];
-                    if (!$property->{$attribute['id']}) {
-                        continue;
-                    }
                 ?>
                 <tr>
                     <th><?php echo $attribute['label']; ?></th>

@@ -1,14 +1,11 @@
 <?php
 /**
- * 
  * @version 0.4
- * 
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-
 /* @var $property Txp_Property */
 global $property;
 $config = txp_get_property_type_config( $property->property_type );
@@ -19,9 +16,19 @@ $has_gallery = false;
 if (in_array('photo_gallery', $config['attributes'])) {
     $has_gallery = true;
 }
+$amenities_group = array();
+$overview_group = array();
 $ungrouped_attributes = $config['attributes'];
-foreach ($config['groups'] as $group) {
+foreach ($config['groups'] as $index => $group) {
     $ungrouped_attributes = array_diff($ungrouped_attributes, $group['attributes']);
+    if ('overview' == $group['id']) {
+        $overview_group = $group;
+        unset($config['groups'][$index]);
+    }
+    if ('amenities' == $group['id']) {
+        $amenities_group = $group;
+        unset($config['groups'][$index]);
+    }
 }
 if (!empty($ungrouped_attributes)) {
     $config['groups']['ungrouped_attributes'] = array(
@@ -100,14 +107,52 @@ foreach ($config['groups'] as $g_index => $group) {
             <?php }
             }
         ?>
-        <p>
-            <strong><?php echo __( "PROPERTY TYPE", "txp" ); ?></strong>
-            <div><?php echo $config['name']; ?></div>
-        </p>
+        <?php if (!empty($overview_group)) { ?>
+            <p>
+                <strong><?php echo __( "OVERVIEW", "txp" ); ?></strong>
+            </p>
+            <table>
+                <?php foreach ($overview_group['attributes'] as $index => $attribute_id) {
+                    $attribute = $config['attributes_data'][$attribute_id];
+                    if (!$property->{$attribute['id']}) {
+                        continue;
+                    }
+                ?>
+                <tr>
+                    <th><?php echo $attribute['label']; ?></th>
+                    <?php if ($attribute['type'] == 'checkbox' || $attribute['type'] == 'radio') { ?>
+                        <td><?php echo ( $property->{$attribute['id']} ? __("Yes", "txp") : __("No", "txp") ); ?></td>
+                    <?php } elseif ($attribute['type'] == 'currency' || $attribute_id == 'price' || $attribute_id == 'rent') { ?>
+                        <td><?php echo ( $property->{$attribute['id']} ? txp_currency($property->{$attribute['id']}) : "-" ); ?></td>
+                    <?php } else { ?>
+                        <td><?php echo ( $property->{$attribute['id']} ? ucwords( $property->{$attribute['id']} ) : "-" ); ?></td>
+                    <?php } ?>
+                </tr>
+                <?php } ?>
+            </table>
+        <?php } ?>
         <p>
             <strong><?php echo __( "DESCRIPTION", "txp" ); ?></strong>
             <?php echo the_content(); ?>
         </p>
+        <?php if (!empty($amenities_group)) { ?>
+            <p>
+                <strong><?php echo __( "AMENITIES", "txp" ); ?></strong>
+            </p>
+            <table>
+                <?php foreach ($amenities_group['attributes'] as $index => $attribute_id) {
+                    $attribute = $config['attributes_data'][$attribute_id];
+                ?>
+                <tr>
+                    <td>
+                        <span class="amentity<?php echo ($property->{$attribute['id']} == "yes") ? " dashicons-before dashicons-yes" : " dashicons-before dashicons-no-alt unavailable" ?>">
+                            <?php echo $attribute['label']; ?>
+                        </span>
+                    </td>
+                </tr>
+                <?php } ?>
+            </table>
+        <?php } ?>
         <?php foreach ($config['groups'] as $group) { ?>
             <p>
                 <strong><?php echo strtoupper( $group['name'] ) ?></strong>

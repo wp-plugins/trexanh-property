@@ -13,7 +13,11 @@ window.txl_map.show_map_at_coordinates = function( target_element_id, latitude, 
     if ( map_styles ) {
         map_options.styles = map_styles;
     }
-    var map = new google.maps.Map( document.getElementById( target_element_id ), map_options );
+    var target = document.getElementById(target_element_id);
+    if ( ! parseInt( window.getComputedStyle( target, null ).getPropertyValue( "height" ) ) ) {
+        target.style.minHeight = "300px";
+    }
+    var map = new google.maps.Map( target, map_options );
 
     var marker = new google.maps.Marker( {
             position: myLatlng,

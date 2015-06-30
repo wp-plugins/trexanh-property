@@ -43,6 +43,40 @@ function txp_get_template_part( $template_name, $params = array() ) {
 }
 
 /**
+ * load property template for property detail page
+ * if template file for a certain property type exists, it will be loaded
+ * otherwise, load the default template
+ * 
+ * @param string $property_type
+ * @param array $params
+ */
+function txp_get_property_detail_template_by_type( $property_type, $params = array() ) {
+    //locate theme's template
+    $template_name = "content-single-property-{$property_type}.php";
+    $template_names[] = $template_name;
+    $template_names[] = 'content-single-property.php';
+    $template = txp_locate_template( $template_names );
+    
+    if ( ! $template ) {
+        if ( file_exists( TREXANHPROPERTY__PLUGIN_DIR . "templates/" . $template_name ) ) {
+            $template = TREXANHPROPERTY__PLUGIN_DIR . "templates/" . $template_name ;
+        }
+        
+    }
+    
+    if (!$template) {
+         if ( file_exists( TREXANHPROPERTY__PLUGIN_DIR . "templates/content-single-property.php" ) ) {
+            $template = TREXANHPROPERTY__PLUGIN_DIR . "templates/content-single-property.php" ;
+        }
+    }
+    
+    if ( ! empty( $params ) )  {
+        extract($params);
+    }
+    include( $template );
+}
+
+/**
  * Retrieve the name of the highest priority template file that exists.
  *
  * Searches in the STYLESHEETPATH before TEMPLATEPATH so that themes which

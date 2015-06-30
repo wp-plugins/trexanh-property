@@ -4,7 +4,7 @@ Donate link: http://trexanhproperty.com
 Tags:  property, real estate, property portal, real estate portal, listings, property listings, property management, realtor, wp-property, wordpress property, wp property, wp-realestate, wordpress real estate, wp real estate, submit property, paid listing, payment, paypal
 Requires at least: 4.1.0
 Tested up to: 4.2.2
-Stable tag: 0.3
+Stable tag: 0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,30 +19,12 @@ TreXanh Property is a clean, powerful and easy to use real estate solution on Wo
 >[Docs](http://trexanhproperty.com/doc/ "Documentation, User guide") | [Plugin Homepage](http://trexanhproperty.com/ "TreXanh Property Homepage")
 
 * It's quick to add property from wordpress admin or using wordpress import feature. Each property will have a lot of custom fields, map, gallery image.
-* Allow user to submit property for free or with a fee. User will pay through paypal, stripe. More payment gateways are being added. Submitted properties can display on site right away or need admin's approval
+* User define new property type (e.g. House); with a property type we can add/remove/change attribute (e.g. Bath room number); Each property type can have its own template or fall back to default template.
 * Display properties on map
 * Compatible with almost every theme. Please check list of demo themes here at [trexanhproperty.com](http://trexanhproperty.com/ "trexanhproperty.com")
-* Also included: Search property widget, property listing shortcode with filter
+* Search property widget, property listing shortcode with filter
+* Allow user to submit property for free or with a fee. User will pay through paypal, stripe. More payment gateways are being added. Submitted properties can display on site right away or need admin's approval
 
-= Shortcodes =
-
-Shortcodes allow to insert your properties into posts and pages.
-
-**[txp_properties_listing]** shortcode quickly outputs properties.
-
-Example of usage:
-
-* Featured properties: [txp_properties_listing featured="yes" limit=4]
-* Latest properties: [txp_properties_listing orderby="time" order="descending" limit=4] or just [txp_properties_listing limit=4]
-* Specific properties by id: [txp_properties_listing ids="1,10,100"]
-
-**[txp_properties_map_listing]** shortcode makes it easy to display properties on map.
-
-Example of usage:
-
-* Featured properties display on map: [txp_properties_map_listing featured="yes" limit=100 height=450]
-* Latest properties display on map: [txp_properties_map_listing orderby="time" order="descending" limit=40 height=400] or just [txp_properties_map_listing limit=40 height=400]
-* Specific properties by id display on map: [txp_properties_map_listing ids="1,10,100" height=600]
 
 == Installation ==
 
@@ -75,13 +57,19 @@ Example of usage:
 1. **Frontend** > Search property, Property listing
 2. **Frontend** > List properties on map (with shortcode)
 3. **Frontend** > Single property
-4. **Frontend** > Property submit
-5. **Frontend** > Property submit payment
-6. **Backend** > Property add form
-7. **Backend** > Submit property setting
-8. **Backend** > Paypal, Stripe setting
+4. **Backend** > Config property type and property attribute
+5. **Frontend** > Property submit
+6. **Frontend** > Property submit payment
+7. **Backend** > Property add form
+8. **Backend** > Submit property setting
+9. **Backend** > Paypal, Stripe setting
 
 == Changelog ==
+
+= 0.4 =
+
+* Feature - allow to define new property type (e.g. Landing); with a property type we can add/remove/change attribute (e.g. Bath room number); Each property type can have its own template or fall back to default template
+* Feature - Shortcode supports paging
 
 = 0.3 =
 
