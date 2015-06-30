@@ -165,4 +165,13 @@ class Order
 
         return new Order($order_id);
     }
+    
+    /**
+     * 
+     * @return boolean
+     */
+    public function is_completed()
+    {
+        return $this->get_status() == static::STATUS_COMPLETED;
+    }
 }

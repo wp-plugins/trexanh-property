@@ -66,6 +66,9 @@ class PluginSetup {
             ));
         }
         
+        update_option(TREXANHPROPERTY_PREFIX . 'db_version', TREXANHPROPERTY_DB_VERSION);
+        update_option(TREXANHPROPERTY_PREFIX . 'code_version', TREXANHPROPERTY_VERSION);
+        
     }
 
     public static function uninstall() {

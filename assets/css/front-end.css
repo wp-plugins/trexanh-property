@@ -26,6 +26,60 @@
   font-size: 14px;
   font-family: arial;
 }
+.pull-right {
+  float: right !important;
+}
+.pull-left {
+  float: left !important;
+}
+.hide {
+  display: none !important;
+}
+/*----- Tabs -----*/
+.tabs {
+  width: 100%;
+  display: inline-block;
+}
+/*----- Tab Links -----*/
+.tab-links {
+  margin-bottom: 0;
+  padding: 0;
+}
+/* Clearfix */
+.tab-links:after {
+  display: block;
+  clear: both;
+  content: '';
+}
+.tab-links li {
+  margin: 0px 5px;
+  float: left;
+  list-style: none;
+}
+.tab-links a {
+  padding: 9px 15px;
+  display: inline-block;
+  font-size: 16px;
+  transition: all linear 0.15s;
+  outline: none !important;
+  border-bottom: 0 !important;
+  color: #ccc;
+}
+li.active a,
+li.active a:hover {
+  color: #4c4c4c;
+  border-bottom: 2px solid !important;
+}
+/*----- Content of Tabs -----*/
+.tab-content {
+  padding: 25px;
+}
+.tab {
+  display: none;
+}
+.tab.active {
+  display: block;
+}
 .photo-gallery-thumbnail .remove-image {
   font-size: 11px;
 }
@@ -94,6 +148,16 @@
   border: none;
   box-shadow: none;
   -webkit-box-shadow: none;
+}
+.properties-listing .display-mode-container {
+  text-align: right;
+}
+.properties-listing .display-mode-container .dashicons {
+  position: relative;
+  top: 5px;
+}
+.properties-listing .display-mode-container a.selected {
+  color: red;
 }
 .property-items-container {
   display: -webkit-flex;
@@ -294,4 +358,54 @@
 }
 #payment_method_box {
   margin: 10px 0;
+}
+.map-info-box {
+  border-top: 0;
+  width: auto;
+  background: #fff;
+  min-width: 400px;
+}
+.map-info-box td {
+  border: none;
+  vertical-align: top;
+  padding: 10px;
+}
+.map-info-box td h3 {
+  margin: 0;
+}
+.map-info-box .label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+.map-info-box .label.label-warning {
+  background-color: #f0ad4e;
+}
+.map-info-box .control-label {
+  position: absolute;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #ffffff;
+  padding: 7px 7px;
+  line-height: 1;
+  top: 15px;
+  left: 0;
+  z-index: 1000;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.map-info-box .control-label.sale {
+  background-color: #a2bf52;
+}
+.map-info-box .control-label.new {
+  background-color: #60a7d4;
 }
