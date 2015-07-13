@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * @version 0.4
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
@@ -49,6 +54,8 @@ $price_arr = array(
     5000000 =>	txp_currency(5000000),
     10000000=>	txp_currency(10000000),
 );
+
+$display_mode = esc_attr( isset( $_GET['display'] ) ? $_GET['display'] : "grid" );
 
 function select_options($input_name, $options, $selected_value = '', $attrs = array())
 {
@@ -187,4 +194,5 @@ function select_options($input_name, $options, $selected_value = '', $attrs = ar
     <br>
     <input type="submit" value="<?php echo esc_attr( $submit_label ); ?>" />
     <input type="hidden" name="post_type" value="property" />
+    <input type="hidden" value="<?php echo $display_mode ?>" name="display" />
 </form>

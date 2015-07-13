@@ -29,11 +29,70 @@ class Module
     public static function init_hooks() {
         self::$initiated = true;
         add_action( 'init', array('\TreXanhProperty\Core\Module', 'register_post_type'), 0 );        
+        
+        // Search order
+        add_action( 'parse_query', array(__CLASS__, 'on_search_order') );
+        add_filter( 'get_search_query', array(__CLASS__, 'get_search_query_order' ) );
+        
         add_action( 'widgets_init', array(__CLASS__, 'register_widgets') );
         
         add_action( 'save_post', array( '\TreXanhProperty\Core\PropertyGallery', 'update_gallery' ), 1, 2);
     }
     
+    /**
+     * 
+     * @global string $pagenow
+     * @param \WP_Query $wp
+     * @return type
+     */
+    public static function on_search_order($wp)
+    {
+        global $pagenow;
+        if ( 'edit.php' != $pagenow || empty( $wp->query_vars['s'] ) || $wp->query_vars['post_type'] != Order::POST_TYPE ) {
+            return;
+        }
+        
+        $keyword = esc_sql($wp->query_vars['s']);
+        
+        // input is order id
+        if ( is_numeric( $keyword )) {
+            $wp->query_vars['post_type'] = Order::POST_TYPE;
+            $wp->query_vars['post__in'] = array($keyword);
+        } else {
+            // search by user
+            $users = get_users(array('search' => esc_sql($wp->query_vars['s'])));
+            
+            if (!$users) {
+                return $wp;
+            }
+            
+            $user_ids = array();
+            foreach ($users as $user) {
+                $user_ids[] = $user->ID;
+            }
+            $wp->query_vars['author__in'] = $user_ids;
+        }
+        
+        // Prevent search by title & content (Default of wordpress).
+        unset($wp->query_vars['s']);
+        return $wp;
+    }
+    
+    public static function get_search_query_order($query)
+    {
+        global $pagenow, $typenow;
+
+        if ( 'edit.php' != $pagenow ) {
+                return $query;
+        }
+
+        if ( $typenow != Order::POST_TYPE ) {
+                return $query;
+        }
+
+        return wp_unslash( $_GET['s'] );
+    }
+
     public static function register_post_type()
     {
         $post_type = Property::get_post_type();
@@ -73,8 +132,10 @@ class Module
             'labels' => array(
                 'name' => __( 'Orders', 'txp' ),
                 'singular_name' => __( 'Order', 'txp' ),
-                'edit_item' => __('Edit Order', 'txp'),
-                'not_found' => __('Order Not Found', 'txp'),
+                'edit_item' => __( 'Edit Order', 'txp' ),
+                'update_item' => __( 'Update Order' ),
+                'search_items' => __( 'Search Order', 'txp' ),
+                'not_found' => __( 'Order Not Found', 'txp' ),
                 'not_found_in_trash' => __('Order Not Found in Trash', 'txp')
             ),
             'public' => true,
@@ -96,24 +157,29 @@ class Module
         
         register_post_status( 'completed', array(
                 'label'                     => _x( 'Completed', 'Order status', 'txp' ),
-                'public'                    => true,
-                'exclude_from_search'       => false,
+                'public'                    => is_admin(),
+                'exclude_from_search'       => true,
                 'show_in_admin_all_list'    => true,
                 'show_in_admin_status_list' => true,
                 'label_count'               => _n_noop( 'Completed <span class="count">(%s)</span>', 'Completed <span class="count">(%s)</span>', 'txp' )
         ) );
         
+        register_post_status( 'cancelled', array(
+                'label'                     => _x( 'Cancelled', 'Order status', 'txp' ),
+                'public'                    => is_admin(),
+                'exclude_from_search'       => true,
+                'show_in_admin_all_list'    => true,
+                'show_in_admin_status_list' => true,
+                'label_count'               => _n_noop( 'Cancelled <span class="count">(%s)</span>', 'Cancelled <span class="count">(%s)</span>', 'txp' )
+        ) );
+        
         register_post_status( 'awaiting_payment', array(
                 'label'                     => _x( 'Awaiting Payment', 'Order status', 'txp' ),
-                'public'                    => true,
-                'exclude_from_search'       => false,
+                'public'                    => is_admin(),
+                'exclude_from_search'       => true,
                 'show_in_admin_all_list'    => true,
                 'show_in_admin_status_list' => true,
                 'label_count'               => _n_noop( 'Awaiting Payment <span class="count">(%s)</span>', 'Awaiting Payment <span class="count">(%s)</span>', 'txp' )
         ) );
     }
 }
-
-
-
-
