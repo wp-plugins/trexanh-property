@@ -66,6 +66,10 @@ TreXanh Property is a clean, powerful and easy to use real estate solution on Wo
 
 == Changelog ==
 
+= 0.4.1 =
+
+* Fix - Add New button should use first enabled property type. Show link to property type config page if there is no enabled property types.
+
 = 0.4 =
 
 * Feature - allow to define new property type (e.g. Landing); with a property type we can add/remove/change attribute (e.g. Bath room number); Each property type can have its own template or fall back to default template

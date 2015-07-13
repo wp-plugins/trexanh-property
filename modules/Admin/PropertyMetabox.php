@@ -20,23 +20,62 @@ class PropertyMetabox {
      */
     public static function add_meta_box($post) {
         
-        $post_type = Property::get_post_type();        
+        $post_type = Property::get_post_type();
 
         $options = get_option(SettingPage::get_config_property_settings_key());
+        $property_types = $options['property_types'];
         
-        $default_property_type = 'property';
-        
+        $create_new = false;
         if ( get_post_meta( $post->ID, Property::get_input_prefix() . '_property_type' )) {
             $property_type_id = get_post_meta( $post->ID, Property::get_input_prefix() . '_property_type', true );
         } else {
-            $property_type_id = !empty( $_GET['property_type'] ) ? $_GET['property_type'] : $default_property_type;
+            $create_new = true;
+            $property_type_id = !empty( $_GET['property_type'] ) ? $_GET['property_type'] : false;
+            
+            // Find closest property type enabled
+            if ( false === $property_type_id) {
+                foreach ($property_types as $type_id => $type) {
+                    if ($type['enabled']) {
+                        $property_type_id = $type_id;
+                        break;
+                    }
+                }
+            }
         }
 
-        $property_type = $options['property_types'][$property_type_id];
-        
-        if (empty($property_type['enabled'])) {
-            wp_die( __( sprintf("The property type %s is not enabled or invalid.", $property_type['name']), "txp" ) );
+        $settings_page = add_query_arg( array(
+            'page' => 'trexanh_property_settings',
+            'tab' => 'trexanhproperty_property_type_setting',
+        ), admin_url( 'admin.php' )
+        );
+
+        // Not have property enabled.
+        if ( false === $property_type_id) {
+            wp_die( 
+                sprintf(__("There is no enabled property type. Please enable a property type on <a href='%s'>Config Property</a>", 'txp'), $settings_page)
+            );
         }
+        
+        $property_type = isset($property_types[$property_type_id]) ? $property_types[$property_type_id] : false;
+        // A property invalid.
+        if ( !$property_type) {
+            wp_die(sprintf(
+                __("The property type is invalid. You can define new property type on <a href='%s'>Config Property</a>", 'txp'),
+                $settings_page
+            ));
+        }
+        
+        // Create new property with disabled property type.
+        if ( $create_new && !$property_type['enabled']) {
+            wp_die(
+              sprintf(
+                __("The property type <b>%s</b> is not enabled or invalid. Please enable or define new property type on <a href='%s'>Config Property</a>", 'txp'),
+                $property_type['name'],
+                $settings_page
+                )
+            );
+        }
+        
         
         // Add property & wp_nonce_field
         add_meta_box(
