@@ -4,7 +4,7 @@ Donate link: http://trexanhproperty.com
 Tags:  property, real estate, property portal, real estate portal, listings, property listings, property management, realtor, wp-property, wordpress property, wp property, wp-realestate, wordpress real estate, wp real estate, submit property, paid listing, payment, paypal
 Requires at least: 4.1.0
 Tested up to: 4.2.2
-Stable tag: 0.4
+Stable tag: 0.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
