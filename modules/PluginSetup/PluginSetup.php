@@ -66,8 +66,20 @@ class PluginSetup {
             ));
         }
         
+        $current_db_version = static::get_current_db_version();
+        
+        if ( ! $current_db_version || version_compare($current_db_version , TREXANHPROPERTY_DB_VERSION, '<' ) ) {
+            static::update_db_version();
+        }
+        
+        update_option(TREXANHPROPERTY_PREFIX . 'code_version', TREXANHPROPERTY_VERSION);
+        
     }
 
+    /**
+     * 
+     * @global \wpdb $wpdb
+     */
     public static function uninstall() {
         global $wpdb;
         
@@ -96,6 +108,12 @@ class PluginSetup {
         wp_trash_post();
     }  
     
+    /**
+     * 
+     * @param string $the_page_title
+     * @param string $slug
+     * @param string $page_id_option_name
+     */
     public static function create_page($the_page_title, $slug, $page_id_option_name) {
 
         $the_page = get_page_by_title( $the_page_title, $the_page );
@@ -128,6 +146,99 @@ class PluginSetup {
         }
 
         add_option( $page_id_option_name, $the_page_id );
+    }
+    
+    /**
+     * Check current db version, update db verions if need.
+     */
+    protected static function update_db_version()
+    {
+        $current_db_version = static::get_current_db_version();
+
+        $updaters = array(
+            '0.4' => 'updates/txp-update-0.4.php',
+        );
+        
+        $manual_update = false;
+        foreach ($updaters as $version => $updater) {
+            if ( version_compare( $current_db_version, $version, '<' )) {
+                if ( ! include ( $updater ) ) {
+                    $manual_update = true;
+                    break;
+                }
+                static::update_current_db_version($version);
+            }
+        }
+        
+        if ( $manual_update ) {
+            add_action('admin_notices', array(__CLASS__, 'render_upate_notice'));
+        }
+    }
+    
+    /**
+     * Compare current db version storaged in database with db version on code.
+     * Run update if need.
+     */
+    public static function check_update()
+    {
+        $current_db_version = static::get_current_db_version();
+        if ( ! $current_db_version || version_compare($current_db_version , TREXANHPROPERTY_DB_VERSION, '<' ) ) {
+            static::update_db_version();
+        }
+    }
+    
+    public static function check_template_status()
+    {
+        // Should hide notify if current screen is overwrite templates.
+        $current_screen = get_current_screen();
+        $current_tab = isset($_GET['tab']) ? $_GET['tab'] : null;
+        if ( $current_screen->id == 'trexanh-property_page_trexanh_property_system' && $current_tab == 'system_status' ) {
+            return ;
+        }
+        
+        $outdate = false;
+        $overwrite_files = Status::get_overwrite_files();
+        foreach ($overwrite_files as $file) {
+            if (isset($file['is_outdate']) && $file['is_outdate'] == true) {
+                $outdate = true;
+                break;
+            }
+        }
+        
+        if ( $outdate ) {
+            include 'views/notice-update-template.php';
+        }
+    }
+    
+    /**
+     * Show notification to admin notice about should manual update plugin.
+     */
+    public static function render_upate_notice()
+    {
+        include TREXANHPROPERTY__PLUGIN_DIR . '/modules/Admin/views/notice-update.php';
+    }
+
+    /**
+     * Return value of db version storage on db.
+     * 
+     * @return string|null
+     */
+    protected static function get_current_db_version()
+    {
+        $db_verion_key = TREXANHPROPERTY_PREFIX . 'db_version';
+        return get_option($db_verion_key, null);
+    }
+    
+    /**
+     * Update options db_verion to new version.
+     * 
+     * @param string $version
+     * @return boolean
+     */
+    protected static function update_current_db_version( $version )
+    {
+        $db_verion_key = TREXANHPROPERTY_PREFIX . 'db_version';
+        return update_option($db_verion_key, $version);
     }
 
     public static function delete_page($page_id_option_name) {

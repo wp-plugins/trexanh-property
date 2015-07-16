@@ -20,23 +20,16 @@ global $property;
         $listing_type = $property->listing_type;
 
         if ($listing_type == 'sale') {
-            echo __( 'Sale', 'txp' );
-            echo $property->price ? " " . txp_currency( $property->price ) : "";
+            if ($property->price) {
+                echo sprintf( __('Sale %s', 'txp'), txp_currency( $property->price ) );
+            } else {
+                echo __( 'Sale', 'txp' );
+            }
         } elseif ($listing_type == 'lease') {
-            echo __( 'Rent', 'txp' );
             if ( $property->rent ) {
-                echo " " . txp_currency( $property->rent );
-                switch ($property->rent_period) {
-                    case "month":
-                        echo __( " per month", "txp" );
-                        break;
-                    case "week":
-                        echo __( " per week", "txp" );
-                        break;
-                    case "day":
-                        echo __( " per day", "txp" );
-                        break;
-                }
+                echo sprintf( __("Rent %s per %s", 'txp'), txp_currency( $property->rent ), esc_html($property->rent_period) ) ;
+            } else {
+                echo __( 'Rent', 'txp' );
             }
         }
     ?>
@@ -59,19 +52,19 @@ global $property;
     </a>
     <div class="entry-summary">
         <h1 class="entry-title">
-            <a href="<?php the_permalink(); ?>" rel="bookmark"><?php esc_html( the_title() ); ?></a>
+            <a href="<?php the_permalink(); ?>" rel="bookmark"><?php echo esc_html( the_title('','', false) ); ?></a>
         </h1>
         <div class="dashicons dashicons-location"></div>
         <?php
-            echo
-                esc_html( $property->address_postcode )  . ', '  .
-                esc_html( $property->address_street_number ) . ' ' . esc_html( $property->address_street ) . ', '  .
-                esc_html( $property->address_city ) . ', '  .
-                esc_html( $property->address_state ) . ', ' .
-                esc_html( $property->address_country );
+            $location_string = txp_get_property_location_string( $property );
+            echo $location_string ? esc_html($location_string) : "-";
         ?>
         <hr>
-        <?php echo esc_html( $property->bedrooms ); ?> <?php echo __( 'beds', 'txp' ); ?>&nbsp;
-        <?php echo esc_html( $property->bathrooms ); ?> <?php echo __( 'baths', 'txp' ); ?>
+        <?php if ($property->bedrooms) { ?>
+            <?php echo esc_html( $property->bedrooms ); ?> <?php echo __( 'beds', 'txp' ); ?>&nbsp;
+        <?php } ?>
+        <?php if ($property->bathrooms) { ?>
+            <?php echo esc_html( $property->bathrooms ); ?> <?php echo __( 'baths', 'txp' ); ?>
+        <?php } ?>
     </div>
 </article>

@@ -83,6 +83,10 @@ Credit:
 			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
 			<wp:meta_value><![CDATA[yes]]></wp:meta_value>
 		</wp:postmeta>
@@ -205,6 +209,10 @@ Credit:
 		<wp:postmeta>
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[unit]]></wp:meta_value>
+		</wp:postmeta>
+        <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
@@ -330,6 +338,10 @@ Credit:
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[unit]]></wp:meta_value>
 		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
 			<wp:meta_value><![CDATA[yes]]></wp:meta_value>
@@ -454,6 +466,10 @@ Credit:
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
 			<wp:meta_value><![CDATA[yes]]></wp:meta_value>
@@ -569,6 +585,10 @@ Credit:
 		<wp:postmeta>
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[unit]]></wp:meta_value>
+		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
@@ -692,6 +712,10 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_category</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
 			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
@@ -822,6 +846,10 @@ Credit:
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
 			<wp:meta_value><![CDATA[yes]]></wp:meta_value>
@@ -941,6 +969,10 @@ Credit:
 		<wp:postmeta>
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[unit]]></wp:meta_value>
+		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
@@ -1066,6 +1098,10 @@ Credit:
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
 			<wp:meta_value><![CDATA[yes]]></wp:meta_value>
@@ -1184,6 +1220,10 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_category</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
 			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
@@ -1306,6 +1346,10 @@ Credit:
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
 			<wp:meta_value><![CDATA[yes]]></wp:meta_value>
@@ -1422,6 +1466,10 @@ Credit:
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
 			<wp:meta_value><![CDATA[yes]]></wp:meta_value>
@@ -1533,6 +1581,10 @@ Credit:
 		<wp:postmeta>
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[unit]]></wp:meta_value>
+		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
@@ -1658,6 +1710,10 @@ Credit:
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[unit]]></wp:meta_value>
 		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
 			<wp:meta_value><![CDATA[no]]></wp:meta_value>
@@ -1773,6 +1829,10 @@ Credit:
 		<wp:postmeta>
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[unit]]></wp:meta_value>
+		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
@@ -1894,6 +1954,10 @@ Credit:
 			<wp:meta_key>txp_property_category</wp:meta_key>
 			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_featured</wp:meta_key>
 			<wp:meta_value><![CDATA[no]]></wp:meta_value>
@@ -2008,6 +2072,10 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_category</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
 			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
@@ -2132,6 +2200,10 @@ Credit:
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>txp_property_category</wp:meta_key>
+			<wp:meta_value><![CDATA[house]]></wp:meta_value>
+		</wp:postmeta>
+                <wp:postmeta>
+			<wp:meta_key>txp_property_property_type</wp:meta_key>
 			<wp:meta_value><![CDATA[house]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>

@@ -9,13 +9,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 use TreXanhProperty\Core\Directory;
 use TreXanhProperty\Core\Formatter;
 use TreXanhProperty\Core\PaymentGateway\PaymentGatewayService;
+use TreXanhProperty\Core\Property;
 
 class SettingPage
 {
     public function __construct() {
         $this->general_settings_key = TREXANHPROPERTY_PREFIX . 'general_settings';
         $this->payment_settings_key = TREXANHPROPERTY_PREFIX . 'payment_settings';
+        $this->config_property_settings_key = self::get_config_property_settings_key();
     }
+    
+    public static function get_config_property_settings_key()
+    {
+        return TREXANHPROPERTY_PREFIX . 'property_type_setting';
+    }
+    
     /**
      * Start up
      */
@@ -25,6 +33,7 @@ class SettingPage
         add_action( 'admin_menu', array( $this, 'add_plugin_pages' ) );
         add_action( 'admin_init', array( &$this, 'register_payment_settings' ) );
         add_action( 'admin_init', array( &$this, 'register_general_settings' ) );
+        add_action( 'admin_init', array( &$this, 'register_config_property_settings' ) );
         add_action( 'init', array( &$this, 'load_settings' ) );
     }
     
@@ -36,6 +45,7 @@ class SettingPage
      */
     private $general_settings_key;
     private $payment_settings_key;
+    private $config_property_settings_key;
     private $plugin_options_key = 'trexanh_property_settings';
     private $plugin_settings_tabs = array();
 
@@ -52,11 +62,13 @@ class SettingPage
     public function load_settings() {
         $this->general_settings = (array) get_option( $this->general_settings_key );
         $this->payment_settings = (array) get_option( $this->payment_settings_key );
+        $this->config_property_settings = (array) get_option( $this->config_property_settings_key );
     }
 
     public function delete_settings() {
         delete_option( $this->general_settings_key );
         delete_option( $this->payment_settings_key );
+        delete_option( $this->config_property_settings_key );
     }
     
     /*
@@ -276,6 +288,476 @@ class SettingPage
         }
     }
     
+    public function register_config_property_settings()
+    {
+        register_setting($this->config_property_settings_key, $this->config_property_settings_key);
+        add_settings_section(
+            'property_config',
+            sprintf( __( '', 'txp' ) ),
+            array( $this, 'print_config_property_section_info'),
+            $this->config_property_settings_key
+        );
+        add_settings_field(
+            'configurations',
+            '',
+            array( $this, 'property_config_callback_function'),
+            $this->config_property_settings_key,
+            'property_config'
+        );
+    }
+
+    public function property_config_callback_function()
+    {
+        $options = get_option($this->config_property_settings_key);
+        if (empty($options)) {
+            $options = txp_get_default_property_type_config();
+            update_option($this->config_property_settings_key, $options);
+        }
+        if ( empty ( $options['custom_attributes'] ) ) {
+            $options['custom_attributes'] = array(
+                array(
+                    'id' => '',
+                    'title' => '',
+                    'type' => '',
+                    'input' => '',
+                )
+            );
+        }
+
+        $property_types = array();
+        foreach ($options['property_types'] as $type => $value) {
+            $property_types[] = array(
+                'id' => $value['id'],
+                'name' => $value['name'],
+            );
+        }
+        
+        $all_available_attributes = array();
+
+        foreach ($options['custom_attributes'] as $attribute) {
+            $attr_id = str_replace("txp_property_", "", $attribute['id']);
+            $all_available_attributes[$attr_id] = array(
+                'id' => $attr_id,
+                'name' => $attribute['title'],
+            );
+        }
+        $form_attributes = \TreXanhProperty\Core\PropertyForm::get_fields_input();
+        $core_attributes = array();
+        foreach ($form_attributes as $id => $attribute) {
+            if (array_key_exists('is_core_attribute', $attribute) && $attribute['is_core_attribute']) {
+                $attr_id = str_replace("txp_property_", "", $id);
+                $attribute = array(
+                    'id' => $attr_id,
+                    'name' => $attribute['options']['label'],
+                );
+                $all_available_attributes[$attr_id] = $attribute;
+                $core_attributes[] = $attribute;
+            }
+        }
+
+        $action = 'edit_property_type';
+        $property_type = (isset($_GET['property_type']) ? $_GET['property_type'] : "");
+        if (array_key_exists('action', $_GET)) {
+            $action = $_GET['action'];
+            switch( $action) {
+                case "clone_property_type":
+                    $cloned_property_type = $options['property_types'][$property_type];
+                    $cloned_property_type['name'] = "Clone of " . $cloned_property_type['name'];
+                    $cloned_property_type['id'] = "clone_of_" . $cloned_property_type['id'];
+                    $options['property_types'] = array(
+                        $cloned_property_type['id'] => $cloned_property_type,
+                    );
+                    $property_type = $cloned_property_type['id'];
+                    break;
+                case "new_property_type":
+                    $new_property_type_id = 'new_property_type';
+                    $options['property_types'] = array(
+                        'new_property_type' => array(
+                            'id' => $new_property_type_id,
+                            'name' => 'New Property Type',
+                            'attributes' => array(),
+                            'enabled' => true,
+                            'groups' => array()
+                        )
+                    );
+                    $property_type = $new_property_type_id;
+                    break;
+            }
+        }
+        $new_url = add_query_arg( array( 'action' => 'new_property_type', 'section' => 'property_types' ) );
+        if (isset($_GET['property_type'])) {
+            $new_url = remove_query_arg( array('property_type'), $new_url );
+        }
+        $clone_url = add_query_arg( array( 'action' => 'clone_property_type', 'section' => 'property_types' ) );
+        if (!isset($_GET['property_type'])) {
+            $property_type = "";
+            foreach ($options['property_types'] as $type => $value) {
+                $clone_url = add_query_arg( array('property_type' => $type), $clone_url );
+                break;
+            }
+        }
+        $attribute_input_types = array(
+            array(
+                'id' => 'text',
+                'name' => __( "Text", "txp" ),
+            ),
+            array(
+                'id' => 'textarea',
+                'name' => __( "Textarea", "txp" ),
+            ),
+            array(
+                'id' => 'checkbox',
+                'name' => __( "Checkbox", "txp" ),
+            ),
+            array(
+                'id' => 'number',
+                'name' => __( "Number", "txp" ),
+            ),
+            array(
+                'id' => 'select',
+                'name' => __( "Select", "txp" ),
+            ),
+            array(
+                'id' => 'currency',
+                'name' => __( "Currency", "txp" ),
+            ),
+        );
+        $selected_tab = (isset($_GET['section']) ? $_GET['section'] : "property_types");
+        ?>
+            <div class="tabs property-types-config-container">
+                <ul class="tab-links">
+                    <li ng-class="{'active' : selectedTab == 'property_types' }">
+                        <a href="" ng-click="selectedTab = 'property_types'">
+                            <?php echo __( "Property Types", "txp" ); ?>
+                        </a>
+                    </li>
+                    <li ng-class="{'active' : selectedTab == 'config_attributes' }">
+                        <a href="" ng-click="selectedTab = 'config_attributes'">
+                            <?php echo __( "Config Attributes", "txp" ); ?>
+                        </a>
+                    </li>
+                </ul>
+                <input type="hidden" name="selected_tab" ng-value="selectedTab"/>
+                <div class="tab-content">
+                    <div id="property-types" class="tab" ng-class="{'active' : selectedTab == 'property_types' }">
+                        <?php if ('edit_property_type' == $action) { ?>
+                            <h3 style="margin-top:0;">
+                                <?php echo __( "Update property type", "txp" ); ?>
+                            </h3>
+                            <?php echo __( "Property type", "txp" ); ?>
+                            <select class="property-type-picker" ng-model="selectedPropertyTypeId" ng-options="type.id as type.name for type in propertyTypes" ng-change="changePropertyType()">
+                            </select>
+                            <div class="property-type-actions">
+                                <a class="add-new-h2" href="<?php echo $clone_url; ?>">
+                                    <?php echo __( "Clone this type", "txp" ); ?>
+                                </a>
+                                <a class="add-new-h2" href="<?php echo $new_url; ?>">
+                                    <?php echo __( "Add new type", "txp" ); ?>
+                                </a>
+                            </div>
+                        <?php } ?>
+                        <?php if ('clone_property_type' == $action) { ?>
+                            <h3>
+                                <?php echo __( "Clone property type", "txp" ); ?>
+                            </h3>
+                        <?php } ?>
+                        <?php if ('new_property_type' == $action) { ?>
+                            <h3>
+                                <?php echo __( "New property type", "txp" ); ?>
+                            </h3>
+                        <?php } ?>
+                        <div class="property-types-container">
+                            <div class="property-type-container">
+                                <div class="inline-edit-container">
+                                    <span class="edit-label"><?php echo __( "Name", "txp" ); ?>:</span>
+                                    <span class="edit-view" ng-hide="showUpdateTypeNameEditor">
+                                        <strong>{{selectedPropertyType.name}}</strong>&nbsp;
+                                        <a href="" ng-click="showUpdatePropertyTypeNameEditor()"><span class="dashicons-before dashicons-edit"></span></a>
+                                    </span>
+                                    <span class="edit-editor" ng-show="showUpdateTypeNameEditor">
+                                        <input type="text" ng-model="tempPropertyTypeName" focus="showUpdateTypeNameEditor" ng-keydown="propertyTypeNameInputChanged($event)">&nbsp;
+                                        <a href="" ng-click="updatePropertyTypeName()"><span class="dashicons-before dashicons-yes"></span></a>
+                                        <a href="" ng-click="hideUpdatePropertyTypeNameEditor()"><span class="dashicons-before dashicons-no"></span></a>
+                                    </span>
+                                </div><br>
+                                <div>
+                                    <span><?php echo __( "Enable", "txp" ); ?>:</span>&nbsp;
+                                    <input type="checkbox" ng-model="selectedPropertyType.enabled" /> <i ng-show="!selectedPropertyType.enabled">(If you do not enable then you will not able to create new property of this type)</i>
+                                </div>
+                                <h4>
+                                    <?php echo __( "Config attributes", "txp" ); ?>
+                                </h4>
+                                <div class="property-type-groups-container">
+                                    <div class="property-type-group-container" ng-repeat="groupConfig in selectedPropertyType.groups track by groupConfig.id" id="{{groupConfig.id}}">
+                                        <div class="inline-edit-container">
+                                            <span class="edit-view" ng-hide="updateGroupNameEditorShown[groupConfig.id]">
+                                                <strong>{{groupConfig.name}}</strong>&nbsp;
+                                                <a href="" ng-click="showUpdateGroupNameEditor(groupConfig.id)" ng-if="groupConfig.id != ungroupedAttributesGroupId"><span class="dashicons-before dashicons-edit"></span></a>
+                                            </span>
+                                            <span class="edit-editor" ng-show="updateGroupNameEditorShown[groupConfig.id]">
+                                                <input
+                                                    type="text"
+                                                    value="{{groupConfig.name}}"
+                                                    ng-model="tempGroupName[groupConfig.id]"
+                                                    focus="updateGroupNameEditorShown[groupConfig.id]"
+                                                    ng-keydown="groupNameInputChanged($event, groupConfig.id)"
+                                                />&nbsp;
+                                                <a href="" ng-click="updateGroupName(groupConfig.id)"><span class="dashicons-before dashicons-yes"></span></a>
+                                                <a href="" ng-click="hideUpdateGroupNameEditor(groupConfig.id)"><span class="dashicons-before dashicons-no"></span></a>
+                                            </span>
+                                        </div>
+                                        <div class="property-type-group-attributes-container attributes-list" data-group-id="{{groupConfig.id}}">
+                                            <div
+                                                class="attribute-item"
+                                                ng-repeat="attributeId in groupConfig.attributes"
+                                                data-attribute-id="{{attributeId}}"
+                                                title="<?php echo __( "Drag and drop into other group to change group", "txp" ); ?>"
+                                            >
+                                                <span class="draggable-icon"></span> {{attributeName(attributeId)}} <a href="" class="remove-attribute" ng-click="removeAttribute(attributeId, groupConfig.id)"><span class="dashicons-before dashicons-no"></span></a>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="" ng-click="showAddAttributesForm(groupConfig.id)" ng-hide="addFormsShown[groupConfig.id]">
+                                                <?php echo __( "Add attributes", "txp" ); ?>
+                                            </a>
+                                        </div>
+                                        <div class="add-attributes-form" ng-show="addFormsShown[groupConfig.id]">
+                                            <h4>
+                                                <?php echo __( "Click on attributes to add", "txp" ); ?>
+                                            </h4>
+                                            <ul class="attributes-list">
+                                                <li class="attribute-item" ng-repeat="attr in availableAttributes track by attr.id">
+                                                    <label ng-click="addAttributeToGroup(attr.id, groupConfig.id)">{{attr.name}}</label>
+                                                </li>
+                                            </ul>
+                                            <div class="buttons">
+                                                <a href="" ng-click="hideAddAttributesForm(groupConfig.id)">
+                                                    <?php echo __( "Finish", "txp" ); ?>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="dashicons-before dashicons-no actions-menu-trigger"
+                                            ng-if="groupConfig.id != ungroupedAttributesGroupId"
+                                            ng-class="{'open' : actions_menu_shown[groupConfig.id]}"
+                                            ng-click="confirmRemoveGroup(groupConfig.id)"
+                                        ></div>
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <button type="button" class="button button-default" ng-click="addNewGroup()"><?php echo __( "New group", "txp" ); ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="property-attributes" class="tab custom-attributes-container" ng-controller="CustomAttributeConfigCtrl" ng-class="{'active' : selectedTab == 'config_attributes' }">
+                        <h3 style="margin-top:0;">
+                            <?php echo __( "Core Attributes", "txp" ); ?>
+                            <small><small>(You can not edit or delete these attributes)</small></small>
+                        </h3>
+                        <ul class="attributes-list">
+                            <li ng-repeat="attr in coreAttributes" class="attribute-item">{{attr.name}}&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        </ul>
+                        <hr>
+                        <h3>
+                            <?php echo __( "Custom Attributes", "txp" ); ?>
+                        </h3>
+                        <table>
+                            <tr>
+                                <th>
+                                    <?php echo __( "Attribute name", "txp" ); ?>
+                                </th>
+                                <th>
+                                    <?php echo __( "Input type", "txp" ); ?>
+                                </th>
+                                <th>
+                                    <?php echo __( "Attribute options", "txp" ); ?>
+                                </th>
+                                <th>
+                                    <?php echo __( "Action", "txp" ); ?>
+                                </th>
+                            </tr>
+                            <tr ng-repeat="customAttributeConfig in customAttributesConfig track by customAttributeConfig.id">
+                                <td style="border-bottom:1px solid #ddd;width:1%;" data-th="<?php echo __( "Attribute name", "txp" ); ?>">
+                                    <input
+                                        type="text"
+                                        ng-init="customAttributeConfig.new_title = customAttributeConfig.title"
+                                        ng-model="customAttributeConfig.new_title"
+                                        ng-blur="customAttributeTitleChanged(customAttributeConfig)"
+                                        ng-keydown="attributeNameInputKepressed($event, customAttributeConfig)"
+                                    />
+                                </td>
+                                <td style="border-bottom:1px solid #ddd;width:1%;" data-th="<?php echo __( "Input type", "txp" ); ?>">
+                                    <select ng-model="customAttributeConfig.input" ng-change="customAttributeInputTypeChanged(customAttributeConfig)">
+                                        <option value="" ng-selected="!customAttributeConfig.input"> - </option>
+                                        <option
+                                            ng-repeat="inputType in attributeInputTypes track by inputType.id"
+                                            ng-value="inputType.id"
+                                            ng-selected="inputType.id == customAttributeConfig.input"
+                                        >
+                                            {{inputType.name}}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td style="border-bottom:1px solid #ddd;" data-th="<?php echo __( "Attribute options", "txp" ); ?>">
+                                    <div ng-show="customAttributeConfig.input == 'select'" class="attribute-option-values-container">
+                                        <span class="value-tag" ng-repeat="option in customAttributeConfig.options" >
+                                            {{option}}
+                                            <span
+                                                class="dashicons-before dashicons-no remove-icon"
+                                                ng-click="removeAttributeOption(customAttributeConfig, $index)"
+                                            ></span>
+                                        </span>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter or comma to add"
+                                            ng-model="customAttributeConfig.new_option"
+                                            ng-keydown="attributeOptionInputKepressed($event, customAttributeConfig)"
+                                            focus="customAttributeConfig.input == 'select'"
+                                        />
+                                    </div>
+                                </td>
+                                <td style="border-bottom:1px solid #ddd;width:1%;text-align:center;" data-th="<?php echo __( "Action", "txp" ); ?>">
+                                    <a href="" ng-click="removeAttributeConfig(customAttributeConfig)" class="delete-icon">
+                                        <span class="dashicons-before dashicons-no"></span>
+                                    </a>
+                                    <a href="" ng-click="removeAttributeConfig(customAttributeConfig)" class="delete-link">
+                                        <?php echo __( "Delete", "txp" ); ?>
+                                    </a>
+                                    <hr class="mobile-divider">
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <a href="" class="button button-default" ng-click="addCustomAttribute()">
+                            <?php echo __( "Add attribute", "txp" ); ?>
+                        </a>
+                    </div>
+                    <script>
+                        if (window.TrexanhProperty === undefined) {
+                            window.TrexanhProperty = {};
+                        }
+                        window.TrexanhProperty.propertyConfigPageUrl = '<?php echo remove_query_arg( array( 'action', 'property_type', 'section') ) ?>';
+                        window.TrexanhProperty.propertyConfigAction = '<?php echo $action; ?>';
+                        window.TrexanhProperty.propertyTypesConfig = JSON.parse('<?php echo json_encode($options['property_types']); ?>');
+                        window.TrexanhProperty.propertyTypes = JSON.parse('<?php echo json_encode($property_types); ?>');
+                        window.TrexanhProperty.selectedTab = '<?php echo $selected_tab; ?>';
+                        window.TrexanhProperty.customAttributesConfig = JSON.parse('<?php echo json_encode($options['custom_attributes']); ?>');
+                        window.TrexanhProperty.selectedPropertyType = '<?php echo $property_type; ?>';
+                        window.TrexanhProperty.allAvailableAttributes = JSON.parse('<?php echo json_encode($all_available_attributes); ?>');
+                        window.TrexanhProperty.coreAttributes = JSON.parse('<?php echo json_encode($core_attributes); ?>');
+                        window.TrexanhProperty.attributeInputTypes = JSON.parse('<?php echo json_encode($attribute_input_types); ?>');
+                        window.TrexanhProperty.TxlDialog = new window.Txl.Dialog();
+                        window.TrexanhProperty.showAlertDialog = function(message, title) {
+                            var dialog = window.TrexanhProperty.TxlDialog;
+                            dialog.setMode("alert");
+                            if (!title) {
+                                title = "Warning";
+                            }
+                            dialog.setTitle(title);
+                            dialog.setMessage(message);
+                            dialog.open();
+                        };
+                        window.TrexanhProperty.showConfirmDialog = function(message, title, okCallback, cancelCallback) {
+                            var dialog = window.TrexanhProperty.TxlDialog;
+                            dialog.setMode("confirm");
+                            if (!title) {
+                                title = "Confirm";
+                            }
+                            dialog.setTitle(title);
+                            dialog.setMessage(message);
+                            if (okCallback) {
+                                dialog.setOkCallback(okCallback);
+                            }
+                            if (cancelCallback) {
+                                dialog.setCancelCallback(cancelCallback);
+                            }
+                            dialog.open();
+                        };
+                        jQuery(document).ready(function($) {
+                            // remove empty left column
+                            $(".form-table th[scope='row']").remove();
+                            var action = window.TrexanhProperty.propertyConfigAction;
+                            var util = window.TrexanhProperty.helperFunctions;
+                            if ('new_property_type' == action || 'clone_property_type' == action) {
+                                // add button to allow to cancel add new or clone property type action
+                                var backUrl = window.TrexanhProperty.propertyConfigPageUrl;
+                                var propertyType = util.getUrlParameter('property_type');
+                                if (propertyType) {
+                                    backUrl += "&property_type=" + propertyType;
+                                }
+                                var cancelButtonLink = "<a href='" + backUrl + "' class='button button-default' style='margin-left:10px;'>Cancel</a>";
+                                $(".submit").append(cancelButtonLink);
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        <?php
+    }
+
+    public function plugin_settings_save()
+    {
+        # Our new data
+        $data = $_POST;
+        if ( empty( $data ) ) {
+            return;
+        }
+        $key = $data['option_page'];
+        if ( $this->config_property_settings_key == $key ) {
+            // attributes config
+            $config = array(
+                'property_types_config' => json_decode(stripslashes($data['property_types_config']), true),
+                'custom_attributes_config' => json_decode(stripslashes($data['custom_attributes_config']), true),
+            );
+            
+            $custom_attributes = $config['custom_attributes_config'];
+
+            // save property types config
+            $property_types_config = $config['property_types_config'];
+            $action = "edit_property_type";
+            if (array_key_exists('action', $_GET) && in_array($_GET['action'], array('new_property_type', 'clone_property_type'))) {
+                $action = $_GET['action'];
+            }
+            // redirect user to page with manipulating property type selected
+            $redirect = remove_query_arg( array( 'action', 'property_type' ) );
+            $redirect = add_query_arg( array( 'property_type' => $data['working_property_type_id'] ), $redirect );
+            if (in_array($action, array('new_property_type', 'clone_property_type'))) {
+                $option = get_option( $key );
+                $property_types_config = array_merge($property_types_config, $option['property_types']);
+            }
+            update_option( $key, array(
+                'custom_attributes' => $custom_attributes,
+                'property_types' => $property_types_config,
+            ) );
+            // delete in-use attributes - remove all post meta with that key
+            if (array_key_exists('deleted_in_use_attributes', $data) && $data['deleted_in_use_attributes']) {
+                $deleted_in_use_attributes = explode(",", $data['deleted_in_use_attributes']);
+                foreach ($deleted_in_use_attributes as $attribute_id) {
+                    delete_post_meta_by_key(Property::get_input_prefix() . "_" . $attribute_id);
+                }
+            }
+            
+            // update in-use attributes - remove all post meta with that key
+            if (array_key_exists('updated_in_use_attributes', $data) && $data['updated_in_use_attributes']) {
+                $updated_in_use_attributes = json_decode(stripslashes($data['updated_in_use_attributes']), true);
+                global $wpdb;
+                foreach ($updated_in_use_attributes as $attribute) {
+                    $old_key = Property::get_input_prefix() . "_" . $attribute['old_id'];
+                    $new_key = Property::get_input_prefix() . "_" . $attribute['new_id'];
+                    $wpdb->query("UPDATE $wpdb->postmeta SET `meta_key` = '$new_key' WHERE `meta_key` LIKE '$old_key'");
+                }
+            }
+            if (array_key_exists('selected_tab', $data)) {
+                $redirect = add_query_arg( array( 'section' => $data['selected_tab'] ), $redirect );
+            }
+            wp_redirect( $redirect );
+        } else {
+            update_option( $key, $data[$key] );
+            wp_redirect( $_SERVER['REQUEST_URI'] );
+        }
+    }
+
     protected function register_payment_fields($fields, $section = '')
     {
         foreach ($fields as $id => $field) {
@@ -321,7 +803,7 @@ class SettingPage
                 }
                 ?>
         <?php $this->plugin_options_tabs(); ?>
-                    <form method="post" action="options.php">
+                    <form method="post" action="" ng-app="App" ng-controller="PropertyConfigCtrl" ng-submit="submit($event)" ng-cloak>
         <?php wp_nonce_field( 'update-options' ); ?>
         <?php settings_fields( $tab ); ?>
         <?php do_settings_sections( $tab ); ?>  
@@ -359,9 +841,10 @@ class SettingPage
     {
         $this->plugin_settings_tabs[$this->general_settings_key] = __( 'General', 'txp' );
         $this->plugin_settings_tabs[$this->payment_settings_key] = __( 'Payment', 'txp' );
+        $this->plugin_settings_tabs[$this->config_property_settings_key] = __( 'Config property', 'txp' );
         
         // setting page
-        add_submenu_page(
+        $hook = add_submenu_page(
             'trexanh_property_homepage',
             'TreXanh Property Settings',
             __( 'Settings', 'txp' ),
@@ -371,6 +854,8 @@ class SettingPage
             '',
             '25.1'
         );
+
+        add_action('load-'.$hook, array( $this, 'plugin_settings_save' ));
     }
     
     /**
@@ -427,5 +912,10 @@ class SettingPage
     public function print_section_info()
     {
         print '';
+    }
+    
+    public function print_config_property_section_info()
+    {
+        echo "<br><br>" . __( "Setup custom attributes for properties and different property types. Specify which custom attributes will be associated with which property type.", "txp" );
     }
 }
