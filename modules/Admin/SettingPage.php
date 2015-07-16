@@ -531,9 +531,9 @@ class SettingPage
                                                 </li>
                                             </ul>
                                             <div class="buttons">
-                                                <button type="button" class="button button-primary" ng-click="hideAddAttributesForm(groupConfig.id)">
-                                                    <?php echo __( "OK", "txp" ); ?>
-                                                </button>
+                                                <a href="" ng-click="hideAddAttributesForm(groupConfig.id)">
+                                                    <?php echo __( "Finish", "txp" ); ?>
+                                                </a>
                                             </div>
                                         </div>
                                         <div

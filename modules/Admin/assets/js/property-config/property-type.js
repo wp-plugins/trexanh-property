@@ -40,9 +40,11 @@ angular.module('App', ['Directives']).controller('PropertyConfigCtrl', ['$scope'
         groupedAttributes.push($scope.selectedPropertyType.groups[groupId].attributes);
     }
     // flatten array of arrays
-    var groupedAttributes = groupedAttributes.reduce(function(a, b) {
-        return a.concat(b);
-    });
+    if (groupedAttributes.length > 0) {
+        groupedAttributes = groupedAttributes.reduce(function(a, b) {
+            return a.concat(b);
+        });        
+    }
     var ungroupedAttributes = $scope.selectedPropertyType.attributes.filter(function(attrId) {
         return groupedAttributes.indexOf(attrId) === -1;
     });

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 Plugin Name: TreXanh Property
 Plugin URI: http://trexanhlab.com/wp/trexanh-property
 Description: A clean, powerful and easy to use real estate solution on Wordpress.
-Version: 0.4.1
+Version: 0.4.2
 Author: trexanhlab
 Author URI: http://trexanhlab.com
 License: GPLv2 or later
