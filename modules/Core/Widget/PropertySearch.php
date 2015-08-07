@@ -16,8 +16,8 @@ class PropertySearch extends WP_Widget
      */
     public function __construct()
     {
-        $this->widget_id = 'txp_widget_property_search_form';
-        $this->widget_cssclass = 'widget_property_search';
+        $this->widget_id = 'trexanhproperty_widget_property_search_form';
+        $this->widget_cssclass = 'trexanhproperty widget_property_search';
         $this->widget_description = __( 'A Search box for properties only.', 'txp' );
         $this->settings = array(
             'title' => array(
@@ -72,7 +72,7 @@ class PropertySearch extends WP_Widget
             'description' => $this->widget_description
         );
 
-        $this->WP_Widget( $this->widget_id, __( 'TreXanh Property Search', 'txp' ), $widget_ops );
+        $this->WP_Widget( $this->widget_id, __( 'TXP Property Search', 'txp' ), $widget_ops );
 
         add_action( 'save_post', array( $this, 'clean_widget_cache' ) );
         add_action( 'deleted_post', array( $this, 'clean_widget_cache' ) );

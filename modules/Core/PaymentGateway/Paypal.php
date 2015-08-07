@@ -113,12 +113,10 @@ class Paypal extends AbstractPaymentGateway
         
         $gateway = $this->get_gateway();
         
-        $property_id = $order->property_id;
-        
         $response = $gateway->purchase( array(
             'amount' => floatval($order->amount),
-            'returnUrl' => get_permalink(get_page_by_path('submit-property-payment-status')) . '?action=success&txp_property=' . $property_id,
-            'cancelUrl' => get_permalink(get_page_by_path('submit-property-payment-status')) . '?action=cancel&txp_property=' . $property_id,
+            'returnUrl' => get_permalink(get_page_by_path('submit-property-payment-status')) . '?action=success&txp_order=' . $order->id,
+            'cancelUrl' => get_permalink(get_page_by_path('submit-property-payment-status')) . '?action=cancel&txp_order=' . $order->id,
         ))->send();
         
         return $this->build_result( $response );

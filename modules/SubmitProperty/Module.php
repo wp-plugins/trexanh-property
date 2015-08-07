@@ -81,7 +81,7 @@ class Module {
             
             $app->get('/submit-property-payment-status/', function () {
                 global $slim_response;
-                $slim_response = SubmitPropertyController::payment_success();
+                $slim_response = SubmitPropertyController::payment_status();
             });
             $app->run();
         }

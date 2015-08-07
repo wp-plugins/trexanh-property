@@ -1,4 +1,6 @@
 @import "photo-gallery.less";
+@import "common.less";
+@import "tab.less";
 .photo-gallery-thumbnail .remove-image {
     font-size:11px;
 }
@@ -70,6 +72,16 @@
         box-shadow: none;
         -webkit-box-shadow: none;
     }
+    .display-mode-container {
+        text-align:right;
+        .dashicons {
+            position:relative;
+            top:5px;
+        }
+        a.selected {
+            color:red;
+        }
+    }
 }
 .property-items-container {
     display: -webkit-flex;
@@ -135,6 +147,10 @@
     }
     #bx-pager {
         text-align:center;
+        top: -100px;
+        z-index: 1;
+        position: relative;
+        margin-bottom: -80px;
         a {
             display:inline-block;
             border-bottom:none;
@@ -168,50 +184,6 @@
         top: 5px;
         position: relative;
     }
-    .price-tag {
-        display: inline-block;
-        width: auto;
-        height: 38px;
-        background-color: #979797;
-        -webkit-border-radius: 3px 4px 4px 3px;
-        -moz-border-radius: 3px 4px 4px 3px;
-        border-radius: 3px 4px 4px 3px;
-        border-left: 1px solid #979797;
-        /* This makes room for the triangle */
-        margin-left: 19px;
-        position: relative;
-        color: white;
-        font-weight: 300;
-        font-family: 'Source Sans Pro', sans-serif;
-        font-size: 22px;
-        line-height: 38px;
-        padding: 0 10px 0 10px;
-        /* Makes the triangle */
-        &:before {
-            content: "";
-            position: absolute;
-            display: block;
-            left: -19px;
-            width: 0;
-            height: 0;
-            border-top: 19px solid transparent;
-            border-bottom: 19px solid transparent;
-            border-right: 19px solid #979797;
-        }
-
-        /* Makes the circle */
-        &:after {
-            content: "";
-            background-color: white;
-            border-radius: 50%;
-            width: 4px;
-            height: 4px;
-            display: block;
-            position: absolute;
-            left: -9px;
-            top: 17px;
-        }
-    }
     #map-canvas {
         width:100%;
         height:300px;
@@ -228,9 +200,6 @@
     .single-property {
         #bx-pager {
             display:none;
-        }
-        .price-tag {
-            font-size:14px;
         }
     }
 }
@@ -280,4 +249,55 @@
 
 #payment_method_box {
     margin: 10px 0;
+}
+
+.map-info-box {
+    border-top:0;
+    width:auto;
+    background: #fff;
+    min-width:400px;
+    td {
+        border:none;
+        vertical-align: top;
+        padding:10px;
+        h3 {
+            margin:0;
+        }
+    }
+    .label {
+        display: inline;
+        padding: .2em .6em .3em;
+        font-size: 75%;
+        font-weight: bold;
+        line-height: 1;
+        color: #ffffff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25em;
+        &.label-warning {
+            background-color: #f0ad4e;
+        }
+    }
+    .control-label {
+        position: absolute;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #ffffff;
+        padding: 7px 7px;
+        line-height: 1;
+        top: 15px;
+        left: 0;
+        z-index: 1000;
+        -webkit-transition: all 0.2s ease;
+        -moz-transition: all 0.2s ease;
+        -o-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+        &.sale {
+            background-color: #a2bf52;
+        }
+        &.new {
+            background-color: #60a7d4;
+        }
+    }
 }
