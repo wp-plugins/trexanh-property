@@ -36,6 +36,8 @@ class Frontend
     public static function init_hooks()
     {
         self::$initiated = true;
+        
+        static::includes();
         add_action('after_setup_theme', array(__CLASS__, 'include_template_functions'));
         add_action('pre_get_posts', array(__CLASS__, 'pre_get_posts'));
         // register shortcodes
@@ -53,6 +55,10 @@ class Frontend
     public static function is_frontend()
     {
         return (!is_admin() || defined('DOING_AJAX')) && !defined('DOING_CRON');
+    }
+    
+    public static function includes() {
+        include_once( 'includes/txp-template-hooks.php' );
     }
 
     public static function include_template_functions()

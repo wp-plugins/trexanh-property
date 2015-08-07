@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 Plugin Name: TreXanh Property
 Plugin URI: http://trexanhlab.com/wp/trexanh-property
 Description: A clean, powerful and easy to use real estate solution on Wordpress.
-Version: 0.4.2
+Version: 0.5
 Author: trexanhlab
 Author URI: http://trexanhlab.com
 License: GPLv2 or later
@@ -15,7 +15,7 @@ Text Domain: txp
 */
 
 define( 'TREXANHPROPERTY_DB_VERSION', '0.4' );
-define( 'TREXANHPROPERTY_VERSION', '0.4' );
+define( 'TREXANHPROPERTY_VERSION', '0.5' );
 define( 'TREXANHPROPERTY__MINIMUM_WP_VERSION', '4.1.0' );
 define( 'TREXANHPROPERTY__PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'TREXANHPROPERTY__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );

@@ -55,33 +55,35 @@ class Properties
     }
 
     public static function map_properties( $atts = array() )
-    {
+    {        
         // One page can have multiple shortcodes so we need generate unique id for each dom which will be converted into map
         $dom_id = mt_rand(1, 1000);
+        
+        do_action("trexanhproperty_property_map_listing_before", $dom_id);
+        
         // default height of the map
         $height = 350;
-        if ( is_array( $atts ) && array_key_exists( "height", $atts ) ) {
-            $height = intval( $atts['height'] );
+        if ( is_array( $atts ) && array_key_exists( "height", $atts ) && !empty($atts['height']) ) {
+            if (intval( $atts['height'] ) > 0) {
+                $height = intval( $atts['height'] );
+            }            
         }
-        echo "<style>#map-container-$dom_id #map-$dom_id { height: $height" . "px; }</style>";
         ob_start();
+        echo "<style>#map-container-$dom_id #map-$dom_id { height: $height" . "px; }</style>";
         
         $properties = self::build_query( $atts );
         if ( $properties->have_posts() ) {
             $data = array();
         ?>
-            <div id="map-container-<?php echo $dom_id; ?>">
+            <div id="map-container-<?php echo $dom_id; ?>" class="txp_map_container">
                 <div id="map-<?php echo $dom_id; ?>"></div>
             </div>
             <?php
                 while ( $properties->have_posts() ) {
                     $properties->the_post();
                     global $property;
-                    $attachments = get_posts( array(
-                        'post_type' => 'attachment',
-                        'post_parent' => $property->id,
-                        'numberposts' => 1,
-                    ));
+                    
+                    $attachment = get_post_thumbnail_id();
                     $location_string = txp_get_property_location_string( $property );
                     $coordinates = array( null, null );
                     if ($property->address_coordinates) {
@@ -90,7 +92,7 @@ class Properties
                     $data[] = array(
                         "title" => esc_html( $property->post->post_title ),
                         "url" => get_permalink(),
-                        "image_url" => wp_get_attachment_thumb_url( $attachments[0]->ID ),
+                        "image_url" => wp_get_attachment_thumb_url( $attachment ),
                         "type" => $property->listing_type,
                         "price" => $property->price,
                         "price_string" => txp_currency( $property->price ),
@@ -121,6 +123,8 @@ class Properties
                 } )();
             </script>
         <?php }
+        
+        do_action("trexanhproperty_property_map_listing_after", $dom_id);
         
         return ob_get_clean();
     }

@@ -32,9 +32,13 @@
         div.style.display = 'block';
 
         this.inner_.innerHTML = this.html;
-        var marker_height = 58;
-        var offset = 15;
-        var box_height = jQuery(this.inner_).height();
+        
+        // set marker_height based on marker icon
+        var marker_height = this.marker.getIcon().size.height; 
+        var offset = 10;
+        
+        //change method to get info box's height
+        var box_height = jQuery(this.inner_).height() ? jQuery(this.inner_).height() : jQuery(this.div_).prop("scrollHeight");
         var box_width = jQuery(this.inner_).width();
         div.style.top = ( position.y - ( box_height + marker_height + offset ) ) + 'px';
         div.style.left = ( position.x - box_width / 2 ) + 'px';
@@ -77,23 +81,16 @@
                     overlay.setValues({
                         map: map,
                         position: position,
-                        html: content
+                        html: content,
+                        marker: marker //pass marker to Overlay.prototype.draw function to get marker's size
                     });
                 };
             } )( map, marker, property ) );
             markers.push( marker );
         }
-        var styles = [];
-        var marker_group_icon = window.map_helper_functions.get_property_marker_url( 'group' );
-        if ( marker_group_icon ) {
-            styles = [{
-                url: marker_group_icon,
-                height: 58,
-                width: 58,
-                textColor: '#fff',
-                textSize: 17
-            }];
-        }
+        
+        // get styles for marker clusterer
+        var styles = window.map_helper_functions.get_property_marker_url( 'group' );
         var markerClusterer = new MarkerClusterer( map, markers, {
             styles : styles
         } );

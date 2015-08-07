@@ -10,6 +10,7 @@ use TreXanhProperty\Core\Directory;
 use TreXanhProperty\Core\Formatter;
 use TreXanhProperty\Core\PaymentGateway\PaymentGatewayService;
 use TreXanhProperty\Core\Property;
+use TreXanhProperty\Core\PropertyType;
 
 class SettingPage
 {
@@ -290,6 +291,10 @@ class SettingPage
     
     public function register_config_property_settings()
     {
+        if (!PropertyType::enable_property_type_feature()) {
+            return ;
+        }
+        
         register_setting($this->config_property_settings_key, $this->config_property_settings_key);
         add_settings_section(
             'property_config',
@@ -841,7 +846,10 @@ class SettingPage
     {
         $this->plugin_settings_tabs[$this->general_settings_key] = __( 'General', 'txp' );
         $this->plugin_settings_tabs[$this->payment_settings_key] = __( 'Payment', 'txp' );
-        $this->plugin_settings_tabs[$this->config_property_settings_key] = __( 'Config property', 'txp' );
+        
+        if (PropertyType::enable_property_type_feature()) {
+            $this->plugin_settings_tabs[$this->config_property_settings_key] = __( 'Config property', 'txp' );
+        }        
         
         // setting page
         $hook = add_submenu_page(

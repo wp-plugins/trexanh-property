@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use TreXanhProperty\Core\PropertyForm;
 use TreXanhProperty\Core\Property;
+use TreXanhProperty\Core\PropertyType;
 
 /* 
  * Wordpress show custom post attribute in metabox.
@@ -19,6 +20,9 @@ class PropertyMetabox {
      * Adds a box to the main column on the Property edit screens.
      */
     public static function add_meta_box($post) {
+        if (!PropertyType::enable_property_type_feature()) {
+            return ;
+        }
         
         $post_type = Property::get_post_type();
 
@@ -152,8 +156,11 @@ class PropertyMetabox {
     * @param bool $update Whether this is an existing post being updated or not.
     */
     public static function save_meta_box_data( $post_id, $post, $update) {
+        if (!PropertyType::enable_property_type_feature()) {
+            return ;
+        }
         
-       $post_type = Property::get_post_type();
+        $post_type = Property::get_post_type();
        
         if ( $post_type != $post->post_type ) {
             return;

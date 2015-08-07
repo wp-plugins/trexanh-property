@@ -33,17 +33,18 @@ class Module
         
         add_action( 'admin_menu', array( 'TreXanhProperty\Admin\Module', 'add_sub_menu' ), 1 );
 
-        //Admin : list
-        add_filter( 'manage_edit-property_columns', array( 'TreXanhProperty\Admin\PropertyList', 'set_custom_edit_property_columns' ) );
-        add_action( 'manage_property_posts_custom_column' , array( 'TreXanhProperty\Admin\PropertyList', 'custom_property_column' ) , 10, 2 );
-        
-        add_filter( 'manage_edit-' . Order::POST_TYPE . '_columns', array( 'TreXanhProperty\Admin\OrderList', 'set_custom_edit_order_columns' ) );
-        add_action( 'manage_' . Order::POST_TYPE .'_posts_custom_column' , array( 'TreXanhProperty\Admin\OrderList', 'custom_order_column' ) , 10, 2 );      
-
-        //Admin : New form, edit form
+        //Property - Property Type
+        add_filter( 'manage_edit-' . Property::get_post_type() . '_columns', array( 'TreXanhProperty\Admin\PropertyList', 'set_custom_edit_property_columns' ) );
+        add_action( 'manage_' . Property::get_post_type() . '_posts_custom_column' , array( 'TreXanhProperty\Admin\PropertyList', 'custom_property_column' ) , 10, 2 );
+            //Admin : New form, edit form
         add_action( 'add_meta_boxes_' . Property::get_post_type(), array('TreXanhProperty\Admin\PropertyMetabox', 'add_meta_box') );
-        add_action( 'save_post', array('TreXanhProperty\Admin\PropertyMetabox','save_meta_box_data'), 10, 3);
-        add_action( 'add_meta_boxes_' . Order::POST_TYPE, array( 'TreXanhProperty\Admin\OrderMetabox', 'add_meta_box' ) );
+        add_action( 'save_post', array('TreXanhProperty\Admin\PropertyMetabox','save_meta_box_data'), 10, 3);                 
+
+        //Order
+            //Admin : list        
+        add_filter( 'manage_edit-' . Order::POST_TYPE . '_columns', array( 'TreXanhProperty\Admin\OrderList', 'set_custom_edit_order_columns' ) );
+        add_action( 'manage_' . Order::POST_TYPE .'_posts_custom_column' , array( 'TreXanhProperty\Admin\OrderList', 'custom_order_column' ) , 10, 2 );              
+        add_action( 'add_meta_boxes_' . Order::POST_TYPE, array( 'TreXanhProperty\Admin\OrderMetabox', 'add_meta_box' ) );       
         add_action( 'save_post', array('TreXanhProperty\Admin\OrderMetabox','save_order'), 10, 3);
         
         //Admin : css, js
@@ -134,6 +135,9 @@ class Module
             array( __CLASS__, 'create_homepage' )
         );
         
+        if (!PropertyType::enable_property_type_feature()) {
+            return;
+        }
         //add new property menu (for all available property types)
         if ( !current_user_can( 'edit_posts')) {
             return ;

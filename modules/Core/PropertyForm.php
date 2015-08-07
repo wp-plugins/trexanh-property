@@ -522,7 +522,11 @@ class PropertyForm {
                 if ( isset( $_REQUEST[$attribute['id']] ) ) {
                     update_post_meta( $post_id, $attribute['id'], sanitize_text_field( $_REQUEST[$attribute['id']] ) );
                 } else {
-                    delete_post_meta( $post_id, $attribute['id'] );
+                    //@note: should note delete meta, 
+                    //we may delete other plugin post's data
+                    //(find during enhance sweethome theme)
+//                  delete_post_meta( $post_id, $attribute['id'] );
+                    
                 }
             }            
         }

@@ -7,8 +7,9 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 use WP_Widget;
+use TreXanhProperty\Frontend\Shortcode\Properties;
 
-class PropertySearch extends WP_Widget
+class PropertyMapListing extends WP_Widget
 {
 
     /**
@@ -16,55 +17,25 @@ class PropertySearch extends WP_Widget
      */
     public function __construct()
     {
-        $this->widget_id = 'trexanhproperty_widget_property_search_form';
-        $this->widget_cssclass = 'trexanhproperty widget_property_search';
-        $this->widget_description = __( 'A Search box for properties only.', 'txp' );
+        $this->widget_id = 'trexanhproperty_widget_property_map_listing';
+        $this->widget_cssclass = 'trexanhproperty widget_property_map_listing';
+        $this->widget_description = __( 'Display properties in a map.', 'txp' );
         $this->settings = array(
-            'title' => array(
+            'height' => array(
                 'type' => 'text',
                 'default' => '',
-                'label' => __( 'Title', 'txp' )
+                'label' => __( 'Map height (px), leave blank to use default', 'txp' )
             ),
-            'search_by_area' => array(
-                'type' => 'checkbox',
-                'default' => 'yes',
-                'label' => __( 'Area', 'txp' ),
-            ),
-            'search_by_price' => array(
-                'type' => 'checkbox',
-                'default' => 'yes',
-                'label' => __( 'Price', 'txp' ),
-            ),
-            'search_by_category' => array(
-                'type' => 'checkbox',
-                'default' => 'yes',
-                'label' => __( 'Cagetory', 'txp' ),
-            ),
-            'search_by_listing_type' => array(
-                'type' => 'checkbox',
-                'default' => 'yes',
-                'label' => __( 'Listing type', 'txp' ),
-            ),
-            'search_by_bathroom' => array(
-                'type' => 'checkbox',
-                'default' => 'yes',
-                'label' => __( 'Bathroom', 'txp' ),
-            ),
-            'search_by_bedroom' => array(
-                'type' => 'checkbox',
-                'default' => 'yes',
-                'label' => __( 'Bedroom', 'txp' ),
-            ),
-            'search_by_garage' => array(
-                'type' => 'checkbox',
-                'default' => 'yes',
-                'label' => __( 'Garage', 'txp' ),
-            ),
-            'submit_label' => array(
+            'ids' => array(
                 'type' => 'text',
-                'default' => __( 'Search', 'txp' ) ,
-                'label' => __( 'Search button label', 'txp' )
+                'default' => '',
+                'label' => __( 'Only display property with these ids', 'txp' )
             ),
+            'featured' => array(
+                'type' => 'checkbox',
+                'default' => 'no',
+                'label' => __( 'Show featured properties', 'txp' ),
+            )
         );
 
         $widget_ops = array(
@@ -72,7 +43,7 @@ class PropertySearch extends WP_Widget
             'description' => $this->widget_description
         );
 
-        $this->WP_Widget( $this->widget_id, __( 'TXP Property Search', 'txp' ), $widget_ops );
+        $this->WP_Widget( $this->widget_id, __( 'TXP Property Map Listing', 'txp' ), $widget_ops );
 
         add_action( 'save_post', array( $this, 'clean_widget_cache' ) );
         add_action( 'deleted_post', array( $this, 'clean_widget_cache' ) );
@@ -126,10 +97,7 @@ class PropertySearch extends WP_Widget
             echo $args['before_title'] . $widget_title . $args['after_title'];
         }
 
-        ob_start();
-        txp_get_template_part( 'property-search-form.php', $instance );
-
-        echo apply_filters( 'get_property_form_search', ob_get_clean() );
+        echo Properties::map_properties($instance);
 
         echo $args['after_widget'];
     }

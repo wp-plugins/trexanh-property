@@ -3,8 +3,8 @@ Contributors: trexanhlab
 Donate link: http://trexanhproperty.com
 Tags:  property, real estate, property portal, real estate portal, listings, property listings, property management, realtor, wp-property, wordpress property, wp property, wp-realestate, wordpress real estate, wp real estate, submit property, paid listing, payment, paypal
 Requires at least: 4.1.0
-Tested up to: 4.2.2
-Stable tag: 0.4.2
+Tested up to: 4.2.4
+Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,12 @@ TreXanh Property is a clean, powerful and easy to use real estate solution on Wo
 9. **Backend** > Paypal, Stripe setting
 
 == Changelog ==
+
+= 0.5 =
+
+* Improvement: add more hook to core so plugin can be used with other real estate theme
+* Improvement: use map listing as widget
+* Improvement: add hook during rendering map listing so we can work with other theme which also use google map js.
 
 = 0.4.2 =
 

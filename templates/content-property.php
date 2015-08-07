@@ -4,67 +4,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * The default template for displaying content
+ * The default template for displaying property
  *
  */
 global $property;
 ?>
 
 <article id="post-<?php the_ID(); ?>" class="property-item">
-    <div class="property-meta right">
-        <?php echo esc_html( $property->category ); ?>
-    </div>
-    
-    <div class="property-meta">
-    <?php
-        $listing_type = $property->listing_type;
+    <?php do_action( 'trexanhproperty_before_listing_loop_item' ); ?>
+	<a href="<?php the_permalink(); ?>">
 
-        if ($listing_type == 'sale') {
-            if ($property->price) {
-                echo sprintf( __('Sale %s', 'txp'), txp_currency( $property->price ) );
-            } else {
-                echo __( 'Sale', 'txp' );
-            }
-        } elseif ($listing_type == 'lease') {
-            if ( $property->rent ) {
-                echo sprintf( __("Rent %s per %s", 'txp'), txp_currency( $property->rent ), esc_html($property->rent_period) ) ;
-            } else {
-                echo __( 'Rent', 'txp' );
-            }
-        }
-    ?>
-    </div>
-    <?php
-        $attachments = get_posts( array(
-            'post_type' => 'attachment',
-            'post_parent' => $property->id,
-            'numberposts' => 1,
-        ));
-    ?>
-    <a href="<?php echo the_permalink(); ?>">
-        <?php
-            if ( count( $attachments ) ) {
-                echo wp_get_attachment_image( $attachments[0]->ID, 'large' );
-            } else { ?>
-                <img src="<?php echo TREXANHPROPERTY__PLUGIN_URL; ?>assets/images/property-placeholder.gif" />
-            <?php }
-        ?>
-    </a>
-    <div class="entry-summary">
-        <h1 class="entry-title">
-            <a href="<?php the_permalink(); ?>" rel="bookmark"><?php echo esc_html( the_title('','', false) ); ?></a>
-        </h1>
-        <div class="dashicons dashicons-location"></div>
-        <?php
-            $location_string = txp_get_property_location_string( $property );
-            echo $location_string ? esc_html($location_string) : "-";
-        ?>
-        <hr>
-        <?php if ($property->bedrooms) { ?>
-            <?php echo esc_html( $property->bedrooms ); ?> <?php echo __( 'beds', 'txp' ); ?>&nbsp;
-        <?php } ?>
-        <?php if ($property->bathrooms) { ?>
-            <?php echo esc_html( $property->bathrooms ); ?> <?php echo __( 'baths', 'txp' ); ?>
-        <?php } ?>
-    </div>
+		<?php
+			/**
+			 * trexanhproperty_before_listing_loop_item_title hook
+			 *
+			 * @hooked trexanhproperty_template_loop_listing_thumbnail - 10
+			 */
+			do_action( 'trexanhproperty_before_listing_loop_item_title' );
+		?>
+
+		<h3><?php the_title(); ?></h3>
+
+		<?php
+			/**
+			 * trexanhproperty_after_shop_loop_item_title hook
+			 *
+			 * @hooked trexanhproperty_template_loop_save_property - 5
+			 * @hooked trexanhproperty_template_loop_summary - 10
+			 */
+			do_action( 'trexanhproperty_after_listing_loop_item_title' );
+		?>
+
+	</a>
+
+	<?php
+
+		/**
+		 * trexanhproperty_after_shop_loop_item hook
+		 *
+		 */
+		do_action( 'trexanhproperty_after_listing_loop_item' );
+
+	?>                
 </article>

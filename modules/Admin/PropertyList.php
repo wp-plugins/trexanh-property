@@ -18,6 +18,10 @@ use TreXanhProperty\Core\PropertyType;
 
 class PropertyList {
     public static function set_custom_edit_property_columns($columns) {
+        if (!PropertyType::enable_property_type_feature()) {
+            return $columns;
+        }
+        
         $columns['price'] = __( 'Price', 'txp' );
         $columns['property_type'] = __( 'Type', 'txp' );
         $columns['address'] = __( 'Address', 'txp' );
@@ -28,6 +32,10 @@ class PropertyList {
     }
 
     public static function custom_property_column( $column, $post_id ) {
+        if (!PropertyType::enable_property_type_feature()) {
+            return ;
+        }
+        
         switch ( $column ) {
             case 'property_type':
                 $type_id = Txp::get( $post_id, 'property_type' );

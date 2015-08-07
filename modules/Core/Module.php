@@ -16,7 +16,8 @@ class Module
     private static $initiated = false;
 
     public static function init() {
-     if ( ! self::$initiated ) {
+        if ( ! self::$initiated ) {
+            static::includes();
             self::init_hooks();
         }
     }
@@ -24,6 +25,7 @@ class Module
     public static function register_widgets()
     {
         register_widget( 'TreXanhProperty\Core\Widget\PropertySearch' );
+        register_widget( 'TreXanhProperty\Core\Widget\PropertyMapListing' );
     }
 
     public static function init_hooks() {
@@ -37,6 +39,10 @@ class Module
         add_action( 'widgets_init', array(__CLASS__, 'register_widgets') );
         
         add_action( 'save_post', array( '\TreXanhProperty\Core\PropertyGallery', 'update_gallery' ), 1, 2);
+    }
+    
+    public static function includes() {
+        include TREXANHPROPERTY__PLUGIN_DIR . DIRECTORY_SEPARATOR . 'modules/Core/includes/txp-core-functions.php';
     }
     
     /**

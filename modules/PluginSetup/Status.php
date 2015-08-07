@@ -57,12 +57,8 @@ class Status
         $outdated_templates = false;
         
         foreach ( $scanned_files as $file ) {
-            if ( file_exists( get_stylesheet_directory() . '/' . $file ) ) {
-                $theme_file = get_stylesheet_directory() . '/' . $file;
-            } elseif ( file_exists( get_stylesheet_directory() . '/trexanh-property/' . $file ) ) {
+            if ( file_exists( get_stylesheet_directory() . '/trexanh-property/' . $file ) ) {
                 $theme_file = get_stylesheet_directory() . '/trexanh-property/' . $file;
-            } elseif ( file_exists( get_template_directory() . '/' . $file ) ) {
-                $theme_file = get_template_directory() . '/' . $file;
             } elseif ( file_exists( get_template_directory() . '/trexanh-property/' . $file ) ) {
                 $theme_file = get_template_directory() . '/trexanh-property/' . $file;
             } else {
