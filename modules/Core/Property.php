@@ -128,6 +128,9 @@ class Property {
         // Need payment AND payment completed.
         if ( $this->order_id ) {
             $order = $this->get_order();
+            if ( !$order->post) {
+                return ( $this->post->post_status == TREXANHPROPERTY_STATUS_PENDING );
+            }
             return ( $order->post->post_status == Order::STATUS_COMPLETED );
         }
         

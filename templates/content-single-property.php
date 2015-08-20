@@ -1,11 +1,62 @@
 <?php
+/**
+ * 
+ * @version 0.4
+ * 
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
 /* @var $property Txp_Property */
 global $property;
+$config = txp_get_property_type_config( $property->property_type );
+if (!$config) {
+    die("Invalid property type.");
+}
+$has_gallery = false;
+if (in_array('photo_gallery', $config['attributes'])) {
+    $has_gallery = true;
+}
+$ungrouped_attributes = $config['attributes'];
+foreach ($config['groups'] as $group) {
+    $ungrouped_attributes = array_diff($ungrouped_attributes, $group['attributes']);
+}
+if (!empty($ungrouped_attributes)) {
+    $config['groups']['ungrouped_attributes'] = array(
+        'id' => 'ungrouped_attributes',
+        'name' => 'Other attributes',
+        'attributes' => $ungrouped_attributes,
+    );
+}
+$manually_rendered_attributes = array(
+    "address_postcode",
+    "address_coordinates",
+    "address_street_number",
+    "address_street",
+    "address_city",
+    "address_state",
+    "address_country",
+    "floorplan",
+    "video_url",
+    "photo_gallery",
+);
+foreach ($config['groups'] as $g_index => $group) {
+    foreach ($group['attributes'] as $a_index => $attribute) {
+        if (in_array($attribute, $manually_rendered_attributes)) {
+            unset($config['groups'][$g_index]['attributes'][$a_index]);
+            if (empty($config['groups'][$g_index]['attributes'])) {
+                unset($config['groups'][$g_index]);
+            }
+        }
+    }
+}
 ?>
 <div id="property-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="summary entry-summary">
-        <h1 itemprop="name" class="product_title entry-title"><?php esc_html(the_title()); ?></h1>
-        <?php
+        <h1 itemprop="name" class="product_title entry-title"><?php echo esc_html( get_the_title() ); ?></h1>
+        <?php if ($has_gallery) {
             $attachments = get_posts(array(
                 'post_type' => 'attachment',
                 'posts_per_page' => -1,
@@ -47,125 +98,57 @@ global $property;
                     <img src="<?php echo TREXANHPROPERTY__PLUGIN_URL; ?>assets/images/property-placeholder.gif" />
                 </p>
             <?php }
+            }
         ?>
         <p>
-            <strong><?php echo __( "OVERVIEW", "txp" ); ?></strong>
+            <strong><?php echo __( "PROPERTY TYPE", "txp" ); ?></strong>
+            <div><?php echo $config['name']; ?></div>
         </p>
-        <table>
-            <tr>
-                <th><?php echo __( "Price", "txp" ); ?></th>
-                <td>
-                    <?php if ( ! $property->price ) { ?>
-                        -
-                    <?php } else { ?>
-                        <span class="price-tag">
-                            <?php echo txp_currency( $property->price ); ?>
-                        </span>
-                    <?php } ?>
-                </td>
-            </tr>
-            <tr>
-                <th><?php echo __( "Property type", "txp" ); ?></th>
-                <td><?php echo ucwords( $property->category ); ?></td>
-            </tr>
-            <tr>
-                <th><?php echo __( "Contract type", "txp" ); ?></th>
-                <td>
-                    <?php switch( $property->listing_type ) {
-                        case "sale":
-                            echo __( "For Sale", "txp" );
-                            break;
-                        case "lease":
-                            $for_rent = true;
-                            echo __( "For Rent", "txp" );
-                            break;
-                        case "both":
-                            echo __( "Sale / Rent", "txp" );
-                            break;
-                    } ?>
-                </td>
-            </tr>
-            <?php if ( ! empty( $for_rent ) ) { ?>
-            <tr>
-                <th><?php echo __( "Rent Period", "txp" ); ?></th>
-                <td><?php echo ucwords( $property->rent_period ); ?></td>
-            </tr>
-            <?php } ?>
-            <tr>
-                <th><?php echo __( "Status", "txp" ); ?></th>
-                <td><?php echo ucwords( $property->status ); ?></td>
-            </tr>
-            <tr>
-                <th><?php echo __( "Beds", "txp" ); ?></th>
-                <td><?php echo esc_html( $property->bedrooms ); ?></td>
-            </tr>
-            <tr>
-                <th><?php echo __( "Baths", "txp" ); ?></th>
-                <td><?php echo esc_html( $property->bathrooms ); ?></td>
-            </tr>
-            <tr>
-                <th><?php echo __( "Garages", "txp" ); ?></th>
-                <td><?php echo esc_html( $property->garage ); ?></td>
-            </tr>
-            <tr>
-                <th><?php echo __( "Toilets", "txp" ); ?></th>
-                <td><?php echo esc_html( $property->toilet ); ?></td>
-            </tr>
-            <tr>
-                <th><?php echo __( "Featured", "txp" ); ?></th>
-                <td><?php echo ucwords( $property->featured ); ?></td>
-            </tr>
-        </table>
         <p>
             <strong><?php echo __( "DESCRIPTION", "txp" ); ?></strong>
             <?php echo the_content(); ?>
         </p>
+        <?php foreach ($config['groups'] as $group) { ?>
+            <p>
+                <strong><?php echo strtoupper( $group['name'] ) ?></strong>
+            </p>
+            <table>
+                <?php foreach ($group['attributes'] as $index => $attribute_id) {
+                    $attribute = $config['attributes_data'][$attribute_id];
+                    if (!$property->{$attribute['id']}) {
+                        continue;
+                    }
+                ?>
+                <tr>
+                    <th><?php echo $attribute['label']; ?></th>
+                    <?php if ($attribute['type'] == 'checkbox' || $attribute['type'] == 'radio') { ?>
+                        <td><?php echo ( $property->{$attribute['id']} ? __("Yes", "txp") : __("No", "txp") ); ?></td>
+                    <?php } elseif ($attribute['type'] == 'currency') { ?>
+                        <td><?php echo ( $property->{$attribute['id']} ? txp_currency($property->{$attribute['id']}) : "-" ); ?></td>
+                    <?php } elseif ($attribute['type'] == 'multiselect') { ?>
+                        <td><?php echo ( is_array($property->{$attribute['id']}) && !empty($property->{$attribute['id']}) ? implode(', ', $property->{$attribute['id']}) : "-" ); ?></td>                        
+                    <?php } else { ?>
+                        <td><?php echo ( $property->{$attribute['id']} ? ucwords( $property->{$attribute['id']} ) : "-" ); ?></td>
+                    <?php } ?>
+                </tr>
+                <?php } ?>
+            </table>
+        <?php }?>
+        
         <p>
-            <strong><?php echo __( "AMENITIES", "txp" ); ?></strong>
-        </p>
-        <table>
-            <tr>
-                <td>
-                    <span class="amentity<?php echo ($property->new_construction == "no") ? " dashicons-before dashicons-no-alt unavailable" : " dashicons-before dashicons-yes" ?>">
-                        <?php echo __( "New construction", "txp" ); ?>
-                    </span>
-                </td>
-                <td>
-                    <span class="amentity<?php echo ($property->pool == "no") ? " dashicons-before dashicons-no-alt unavailable" : " dashicons-before dashicons-yes" ?>">
-                        <?php echo __( "Pool", "txp" ); ?>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="amentity<?php echo ($property->air_conditioning == "no") ? " dashicons-before dashicons-no-alt unavailable" : " dashicons-before dashicons-yes" ?>">
-                        <?php echo __( "Air conditioning", "txp" ); ?>
-                    </span>
-                </td>
-                <td>
-                    <span class="amentity<?php echo ($property->security_system == "no") ? " dashicons-before dashicons-no-alt unavailable" : " dashicons-before dashicons-yes" ?>">
-                        <?php echo __( "Security system", "txp" ); ?>
-                    </span>
-                </td>
-            </tr>
-        </table>
-        <p>
-            <strong><?php echo __( "LOCATION", "txp" ); ?></strong>
+            <strong><?php echo __( "MAP", "txp" ); ?></strong>
         </p>
         <span class="dashicons-before dashicons-location">
         <?php
-            echo
-            esc_html( $property->address_postcode ) . ', '  .
-                esc_html( $property->address_street_number ) . ' ' . esc_html( $property->address_street ) . ', '  .
-                esc_html( $property->address_city ) . ', '  .
-                esc_html( $property->address_state ) . ', '  .
-                esc_html( $property->address_country );
+            $location_string = txp_get_property_location_string( $property );
+            echo $location_string ? $location_string : "-";
         ?>
         </span>
         <div id="map-canvas"></div>
         <script>
             (function() {
-                <?php // show slider ?>
+                
+                <?php if ($has_gallery) { ?>
                 (function ($) {
                     $( document ).ready( function () {
                         if ($( ".slider-wrapper" ).length) {
@@ -184,15 +167,24 @@ global $property;
                         slideshow : 5000
                     } );
                 } )( jQuery );
-                <?php // show map ?>
-                var location = {
-                    street_number : '<?php echo $property->address_street_number; ?>',
-                    street : '<?php echo $property->address_street; ?>',
-                    city : '<?php echo $property->address_city; ?>',
-                    state : '<?php echo $property->address_state; ?>',
-                    country : '<?php echo $property->address_country; ?>'
-                };
-                window.txl_map.ajax_gen_map( 'map-canvas', location );
+                <?php } ?>
+                <?php if ( $property->address_coordinates ) {
+                    $coordinates = explode( ",", $property->address_coordinates ); ?>
+                    window.txl_map.show_map_at_coordinates(
+                        'map-canvas',
+                        '<?php echo trim( $coordinates[0] ); ?>',
+                        '<?php echo trim( $coordinates[1] ); ?>'
+                    );
+                <?php } else { ?>
+                    var location = {
+                        street_number : '<?php echo $property->address_street_number; ?>',
+                        street : '<?php echo $property->address_street; ?>',
+                        city : '<?php echo $property->address_city; ?>',
+                        state : '<?php echo $property->address_state; ?>',
+                        country : '<?php echo $property->address_country; ?>'
+                    };
+                    window.txl_map.ajax_gen_map( 'map-canvas', location);
+                <?php } ?>
             })();
         </script>
         <?php if ( $property->floorplan ) { ?>

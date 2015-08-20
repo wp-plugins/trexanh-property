@@ -1,4 +1,9 @@
 <?php
+/**
+ * 
+ * @version 0.4
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
@@ -15,6 +20,12 @@ if ( !$is_user_logged_in ) { ?>
 <?php } ?>
 
 <form method="POST" enctype="multipart/form-data" encoding="multipart/form-data" class="submit-property-form">
+    <input type="hidden" name="txp_property_property_type" value="house" />
+    <fieldset>
+        <legend><?php _e('PROPERTY TYPE', 'txp') ?></legend>
+        <input type="text" value="<?php _e('House', 'txp') ?>" readonly="readonly" disabled="disabled" />
+    </fieldset>
+    <br>
     <fieldset>
         <legend><?php _e('Title', 'txp') ?></legend>
         <input type="text" name="post_title" id="post_title" class="required" required="required" />
@@ -63,14 +74,6 @@ if ( !$is_user_logged_in ) { ?>
                     </label>
                 </th>
                 <td><?php txp_render_property_form_element( 'status' );?></td>
-            </tr>
-            <tr>
-                <th scope="row">
-                    <label>
-                        <?php echo __( "Property Category", "txp" ); ?>
-                    </label>
-                </th>
-                <td><?php txp_render_property_form_element( 'category' );?></td>
             </tr>
             <tr>
                 <th scope="row">

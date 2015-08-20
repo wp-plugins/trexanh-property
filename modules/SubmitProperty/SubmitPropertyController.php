@@ -243,18 +243,29 @@ class SubmitPropertyController {
         return ob_get_clean();
     }
     
-    public static function payment_success() {
+    public static function payment_status() {
         
         self::check_enable_submission_status();
         
-        $property_id = isset($_GET['txp_property']) ? $_GET['txp_property'] : 0;
-        $the_post = get_post($property_id);
-        if (!$the_post) {
-            return __('Not found property', 'txp');
+        $order_id = isset($_GET['txp_order']) ? $_GET['txp_order'] : 0;
+        $the_post = get_post($order_id);
+        if ( !$the_post ) {
+            return __('No order found.', 'txp');
         }
-        $property = new Property($the_post);
         
-        $order = $property->get_order();
+        $order = txp_get_order( $the_post );
+        $property = txp_get_property( $order->property_id );
+        
+        if (isset($_GET['action']) && $_GET['action'] == 'cancel') {
+            txp_get_template_part( 
+                'submit-property/select-payment-method.php', 
+                array( 
+                    'property'  => $property,
+                    'order'     => $order,
+                )
+            );
+            return ob_get_clean();
+        }
         
         $gateway = self::get_payment_gateway($order->payment_method);
         

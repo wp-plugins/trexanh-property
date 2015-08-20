@@ -175,7 +175,7 @@ class OrderMetabox
                             <?php echo __( 'Completed', 'txp' ); ?>
                         </option>
                         <option value="<?php echo Order::STATUS_CANCELLED ?>" <?php selected($order->get_status(), Order::STATUS_CANCELLED ); ?>>
-                            <?php echo __( 'Cancel', 'txp' ); ?>
+                            <?php echo __( 'Cancelled', 'txp' ); ?>
                         </option>
                     </select>
                 </td>

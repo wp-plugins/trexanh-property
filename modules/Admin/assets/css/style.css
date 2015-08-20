@@ -32,6 +32,52 @@ table.form-table td label {
   font-size: 14px;
   font-family: arial;
 }
+/*----- Tabs -----*/
+.tabs {
+  width: 100%;
+  display: inline-block;
+}
+/*----- Tab Links -----*/
+.tab-links {
+  margin-bottom: 0;
+  padding: 0;
+}
+/* Clearfix */
+.tab-links:after {
+  display: block;
+  clear: both;
+  content: '';
+}
+.tab-links li {
+  margin: 0px 5px;
+  float: left;
+  list-style: none;
+}
+.tab-links a {
+  padding: 9px 15px;
+  display: inline-block;
+  font-size: 16px;
+  transition: all linear 0.15s;
+  outline: none !important;
+  border-bottom: 0 !important;
+  color: #ccc;
+  text-decoration: none;
+}
+li.active a,
+li.active a:hover {
+  color: #4c4c4c;
+  border-bottom: 2px solid !important;
+}
+/*----- Content of Tabs -----*/
+.tab-content {
+  padding: 25px;
+}
+.tab {
+  display: none;
+}
+.tab.active {
+  display: block;
+}
 .custom-upload-button,
 .remove-current-image {
   display: none;
@@ -42,11 +88,185 @@ table.form-table td label {
   position: relative;
   top: 5px;
 }
-#txp_metabox_media input {
-  width: 60%;
+#txp_metabox_media input:not([type=checkbox]) {
+  width: 80%;
 }
 @media (max-width: 755px) {
   #txp_metabox_media input {
     width: 100%;
+  }
+}
+.property-types-config-container .property-type-actions {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+.property-types-config-container .property-type-actions .add-new-h2 {
+  top: 0;
+  display: inline-block;
+}
+.property-types-config-container .property-types-container {
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #FFF;
+}
+.property-types-config-container .property-types-container a {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.property-types-config-container .property-types-container .actions button {
+  margin-right: 10px;
+}
+.property-types-config-container .property-types-container .property-type-container {
+  -webkit-transition: opacity 0.3s ease-in;
+  transition: opacity 0.3s ease-in;
+}
+.property-types-config-container .property-types-container .property-type-container.off-screen {
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -99999px;
+  top: -9999px;
+  opacity: 0;
+}
+.property-types-config-container .property-types-container .property-type-container .property-type-group-container {
+  padding: 10px;
+  background-color: #FFF;
+  margin-bottom: 10px;
+  position: relative;
+  border: 1px solid #ccc;
+}
+.property-types-config-container .property-types-container .property-type-container .property-type-group-container#ungrouped_attributes {
+  border-style: dashed;
+  border-width: 1px;
+}
+.property-types-config-container .property-types-container .property-type-container .property-type-group-container .actions-menu-trigger {
+  position: absolute;
+  color: #999;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+.property-types-config-container .property-types-container .property-type-container .property-type-group-container .actions-menu-trigger:hover,
+.property-types-config-container .property-types-container .property-type-container .property-type-group-container .actions-menu-trigger.open {
+  background: #ddd;
+}
+.property-types-config-container .property-types-container .property-type-container .property-type-group-container .add-attributes-form {
+  border-top: 1px solid #ddd;
+}
+.property-types-config-container .property-types-container .property-type-container .property-type-group-container .add-attributes-to-group {
+  display: block;
+}
+.property-types-config-container .property-types-container .property-type-container .property-type-group-container.editting .add-attributes-to-group {
+  display: none;
+}
+.property-types-config-container .property-types-container .property-type-container .property-type-group-container .property-type-group-attributes-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  min-height: 20px;
+}
+.property-types-config-container .property-types-container .property-type-container .property-type-group-container .attributes-list .attribute-item {
+  cursor: move;
+}
+.property-types-config-container .attributes-list .attribute-item {
+  min-width: 180px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.property-types-config-container .dashicons-before {
+  color: #999;
+}
+.property-types-config-container .dashicons-before:hover {
+  color: #0074a2;
+}
+.property-types-config-container .dashicons-before:before {
+  font-size: 18px;
+}
+.property-types-config-container .inline-edit-container .edit-editor .dashicons-before {
+  position: relative;
+  top: 6px;
+}
+.property-types-config-container .draggable-icon {
+  color: #ccc;
+}
+.property-types-config-container .draggable-icon:hover {
+  color: #ccc;
+}
+.property-types-config-container .draggable-icon:before {
+  content: "||";
+  letter-spacing: -4px;
+  top: -1px;
+  position: relative;
+  margin-right: 4px;
+}
+.custom-attributes-container table {
+  width: 100%;
+}
+.custom-attributes-container table th {
+  text-align: center;
+}
+.custom-attributes-container .delete-link {
+  display: none;
+}
+.custom-attributes-container .mobile-divider {
+  display: none;
+}
+.custom-attributes-container .attribute-option-values-container {
+  display: inline-block;
+}
+.custom-attributes-container .attribute-option-values-container .value-tag {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 2px 8px;
+  margin-bottom: 5px;
+  background: #aaa;
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  display: inline-block;
+}
+.custom-attributes-container .attribute-option-values-container .value-tag .remove-icon {
+  color: white;
+  cursor: pointer;
+}
+@media (max-width: 780px) {
+  .property-types-config-container .property-type-actions {
+    margin-top: 20px;
+  }
+  .custom-attributes-container .mobile-divider {
+    display: block;
+  }
+  .custom-attributes-container table th {
+    display: none;
+  }
+  .custom-attributes-container table tr {
+    border-bottom: 1px solid #ddd;
+  }
+  .custom-attributes-container table td {
+    width: 100% !important;
+    text-align: left !important;
+    border: none !important;
+    padding: 0;
+  }
+  .custom-attributes-container table td:before {
+    content: attr(data-th) ": ";
+    display: inline-block;
+    min-width: 125px;
+  }
+  .custom-attributes-container table td input,
+  .custom-attributes-container table td select {
+    width: auto !important;
+    display: inline-block !important;
+    padding: 2px 4px !important;
+    font-size: 14px !important;
+    height: 30px !important;
+  }
+  .custom-attributes-container table td:last-child {
+    border-bottom: 1px solid #ddd;
+  }
+  .custom-attributes-container .delete-link {
+    display: inline-block;
+  }
+  .custom-attributes-container .delete-icon {
+    display: none;
   }
 }

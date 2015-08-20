@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+use TreXanhProperty\PluginSetup\Status;
+
 class SystemPage
 {
     private $settings_key;
@@ -32,6 +34,7 @@ class SystemPage
     public function add_plugin_pages()
     {
         $this->plugin_settings_tabs[$this->settings_key] = 'General';
+        $this->plugin_settings_tabs['system_status'] = 'Status';
         
         // setting page
         add_submenu_page(
@@ -61,7 +64,7 @@ class SystemPage
         echo '<h2 class="nav-tab-wrapper">';
         foreach ( $this->plugin_settings_tabs as $tab_key => $tab_caption ) {
             $active = $current_tab == $tab_key ? 'nav-tab-active' : '';
-            echo '<a class="nav-tab ' . $active . '" href="?page=' . $this->settings_key . '&tab=' . $tab_key . '">' . $tab_caption . '</a>';
+            echo '<a class="nav-tab ' . $active . '" href="?page=trexanh_property_system&tab=' . $tab_key . '">' . $tab_caption . '</a>';
         }
         echo '</h2>';
     }
@@ -127,12 +130,18 @@ class SystemPage
         ?>
     <div class="wrap">
     <?php $this->plugin_options_tabs(); ?>
+        <?php 
+        if ($tab == 'system_status') {
+            Status::view_system_status();
+        } else {
+        ?>
             <form method="post" action="options.php">
         <?php wp_nonce_field( 'update-options' ); ?>
         <?php settings_fields( $tab ); ?>
         <?php do_settings_sections( $tab ); ?>  
         <?php submit_button(); ?>
             </form>
+        <?php } ?>
         </div>
     <?php
     }
