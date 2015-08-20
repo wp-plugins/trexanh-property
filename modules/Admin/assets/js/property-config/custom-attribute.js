@@ -189,7 +189,7 @@ angular.module('App').controller('CustomAttributeConfigCtrl', ['$scope', functio
         customAttributeConfig.options.splice($index, 1);
     };
     $scope.customAttributeInputTypeChanged = function(customAttributeConfig) {
-        if (customAttributeConfig.input != 'select') {
+        if (customAttributeConfig.input != 'select' && customAttributeConfig.input != 'multiselect') {
             if (customAttributeConfig.options !== undefined) {
                 delete customAttributeConfig.options;
             }

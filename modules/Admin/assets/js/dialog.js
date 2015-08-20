@@ -1,9 +1,6 @@
 /* dialog */
 (function($) {
-    if (!window.Txl) {
-        window.Txl = {};
-    }
-    window.Txl.Dialog = function(title, message, buttons) {
+    var Dialog = function(title, message, buttons) {
         var me = this;
         this.mode = 'confirm';
         this.dlg = $("<div />").appendTo("body");
@@ -48,22 +45,22 @@
             this.setButtons(buttons);
         }
     };
-    window.Txl.Dialog.prototype.open = function() {
+    Dialog.prototype.open = function() {
         this.dlg.dialog('open');
     };
-    window.Txl.Dialog.prototype.close = function() {
+    Dialog.prototype.close = function() {
         this.dlg.dialog('close');
     };
-    window.Txl.Dialog.prototype.setTitle = function(title) {
+    Dialog.prototype.setTitle = function(title) {
         this.dlg.dialog( "option", "title", title);
     };
-    window.Txl.Dialog.prototype.setMessage = function(message) {
+    Dialog.prototype.setMessage = function(message) {
         this.dlg.html( message );
     };
-    window.Txl.Dialog.prototype.setOkCallback = function(callback) {
+    Dialog.prototype.setOkCallback = function(callback) {
         this.okCallback = callback;
     };
-    window.Txl.Dialog.prototype.setCancelCallback = function(callback) {
+    Dialog.prototype.setCancelCallback = function(callback) {
         this.cancelCallback = callback;
     };
     /**
@@ -71,7 +68,7 @@
      * mode: confirm --> 2 buttons OK, Cancel with callbacks
      * @param string mode
      */
-    window.Txl.Dialog.prototype.setMode = function(mode) {
+    Dialog.prototype.setMode = function(mode) {
         if (mode !== 'alert' && mode !== 'confirm') {
             mode = 'confirm';
         }
@@ -85,4 +82,9 @@
         }
         this.dlg.dialog( "option", "buttons", buttons );
     };
+            
+    if (!window.Txl) {
+        window.Txl = {};
+    }
+    window.Txl.Dialog = Dialog;
 })(jQuery);

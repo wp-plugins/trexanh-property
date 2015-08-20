@@ -124,6 +124,8 @@ foreach ($config['groups'] as $g_index => $group) {
                         <td><?php echo ( $property->{$attribute['id']} ? __("Yes", "txp") : __("No", "txp") ); ?></td>
                     <?php } elseif ($attribute['type'] == 'currency' || $attribute_id == 'price' || $attribute_id == 'rent') { ?>
                         <td><?php echo ( $property->{$attribute['id']} ? txp_currency($property->{$attribute['id']}) : "-" ); ?></td>
+                    <?php } elseif ($attribute['type'] == 'multiselect') { ?>
+                        <td><?php echo ( is_array($property->{$attribute['id']}) && !empty($property->{$attribute['id']}) ? implode(', ', $property->{$attribute['id']}) : "-" ); ?></td>    
                     <?php } else { ?>
                         <td><?php echo ( $property->{$attribute['id']} ? ucwords( $property->{$attribute['id']} ) : "-" ); ?></td>
                     <?php } ?>

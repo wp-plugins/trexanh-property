@@ -372,12 +372,25 @@ class PropertyForm {
                 case "select":
                     $select = "<select name='$element_name' id='$element_name'>";
                     $select .= "<option value=''" . (('' == $value) ? " selected" : '') . ">-</option>";
-                    foreach ($attribute['options'] as $option) {
-                        $select .= "<option value='$option'" . (($option == $value) ? " selected" : '') . ">$option</option>";
+                    if (is_array($attribute['options'])) {
+                        foreach ($attribute['options'] as $option) {
+                            $select .= "<option value='$option'" . (($option == $value) ? " selected" : '') . ">$option</option>";
+                        }                        
                     }
                     $select .= "</select>";
                     $result['html'] = $select;
                     break;
+                case "multiselect":
+                    $select = "<select name='{$element_name}[]' id='{$element_name}[]' multiple>";
+                    if (is_array($attribute['options'])) {                        
+                        $value_arr = (array) unserialize($value);
+                        foreach ($attribute['options'] as $option) {
+                            $select .= "<option value='$option'" . ((in_array($option, $value_arr)) ? " selected" : '') . ">$option</option>";
+                        }                        
+                    }
+                    $select .= "</select>";
+                    $result['html'] = $select;
+                    break;    
             }
             return $result;
         }
@@ -519,8 +532,13 @@ class PropertyForm {
         
         if ( ! empty( $options['custom_attributes'] ) ) {
             foreach ( $options['custom_attributes'] as $attribute ) {
-                if ( isset( $_REQUEST[$attribute['id']] ) ) {
-                    update_post_meta( $post_id, $attribute['id'], sanitize_text_field( $_REQUEST[$attribute['id']] ) );
+                $attribute_value = $_REQUEST[$attribute['id']];
+                if ( isset( $attribute_value ) ) {
+                    if (is_array($attribute_value)) {
+                        update_post_meta( $post_id, $attribute['id'], $attribute_value );
+                    } else {
+                        update_post_meta( $post_id, $attribute['id'], sanitize_text_field( $attribute_value ) );
+                    }                    
                 } else {
                     //@note: should note delete meta, 
                     //we may delete other plugin post's data
